@@ -1,0 +1,3 @@
+[submodule "ZendeskSellApi"]
+	path = ZendeskSellApi
+	url = https://github.com/Walkman100/ZendeskSellApiClient

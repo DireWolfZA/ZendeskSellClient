@@ -11,4 +11,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="ZendeskSellApi\ZendeskSell\ZendeskSell.csproj" />
+  </ItemGroup>
+
 </Project>
