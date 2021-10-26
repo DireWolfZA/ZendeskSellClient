@@ -1,4 +1,4 @@
-namespace ZendeskSellClient {
+namespace Forms {
     partial class ZendeskSellClient {
         /// <summary>
         ///  Required designer variable.
@@ -23,10 +23,19 @@ namespace ZendeskSellClient {
         ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZendeskSellClient));
+            this.SuspendLayout();
+            // 
+            // ZendeskSellClient
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1006, 719);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "ZendeskSellClient";
             this.Text = "ZendeskSellClient";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

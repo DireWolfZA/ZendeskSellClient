@@ -6,6 +6,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationManifest>Properties\App.manifest</ApplicationManifest>
     <ApplicationIcon>Properties\ZendeskSell.ico</ApplicationIcon>
+    <RootNamespace />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
