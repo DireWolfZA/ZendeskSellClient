@@ -13,6 +13,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Ookii.Dialogs\**" />
+    <Compile Remove="WalkmanLib\Tests\**" />
+    <Compile Remove="ZendeskSellApi\**" />
+    <EmbeddedResource Remove="Ookii.Dialogs\**" />
+    <EmbeddedResource Remove="WalkmanLib\Tests\**" />
+    <EmbeddedResource Remove="ZendeskSellApi\**" />
+    <None Remove="Ookii.Dialogs\**" />
+    <None Remove="WalkmanLib\Tests\**" />
+    <None Remove="ZendeskSellApi\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="WalkmanLib\CustomMsgBox.cs" />
+    <Compile Remove="WalkmanLib\CustomMsgBox.Designer.cs" />
+    <Compile Remove="WalkmanLib\WalkmanLibContextMenu.cs" />
+    <Compile Remove="WalkmanLib\WalkmanLibRestartManager.cs" />
+    <Compile Remove="WalkmanLib\WalkmanLibStreamCopy.cs" />
+    <Compile Remove="WalkmanLib\WalkmanLibSystemHandles.cs" />
+    <Compile Remove="WalkmanLib\WalkmanLibUpdates.cs" />
+    <Compile Remove="WalkmanLib\WalkmanLibWin32.cs" />
+    <Compile Remove="WalkmanLib\WalkmanLibWinVersion.cs" />
+    <Compile Remove="WalkmanLib\Windows7ProgressBar.cs" />
+    <EmbeddedResource Remove="WalkmanLib\CustomMsgBox.resx" />
+    <None Remove="WalkmanLib\.git" />
+    <None Remove="WalkmanLib\.gitignore" />
+    <None Remove="WalkmanLib\LICENSE.md" />
+    <None Remove="WalkmanLib\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="Ookii.Dialogs\Ookii.Dialogs.csproj" />
     <ProjectReference Include="ZendeskSellApi\ZendeskSell\ZendeskSell.csproj" />
   </ItemGroup>
 
