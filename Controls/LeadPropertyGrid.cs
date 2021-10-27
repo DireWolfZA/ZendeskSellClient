@@ -8,6 +8,8 @@ namespace Controls {
         private readonly Dictionary<int, string> users;
         private readonly Dictionary<int, string> sources;
 
+        private readonly Dictionary<string, Control> customFieldControls = new Dictionary<string, Control>();
+
         public LeadPropertyGrid(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<int, string> users, Dictionary<int, string> sources) {
             this.customFields = customFields;
             this.users = users;
@@ -25,6 +27,7 @@ namespace Controls {
             cbxSource.Items.Clear();
             cbxSource.Items.Add("");
             cbxSource.Items.AddRange(sources.Values.ToArray());
+            ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
             Forms.ZendeskSellClient.ApplyTheme(Controls);
         }
@@ -62,6 +65,8 @@ namespace Controls {
             txtAddress.Tag = data.Address;
             txtTags.Text = string.Join(',', data.Tags);
             txtTags.Tag = data.Tags;
+
+            ZendeskPropertyGridMethods.SetCustomFieldValues(customFields, customFieldControls, data.CustomFields);
         }
 
         public Models.Lead GetData() {

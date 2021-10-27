@@ -35,5 +35,69 @@ namespace Controls {
             sc.Panel1.VerticalScroll.Value = sc.Panel2.VerticalScroll.Value;
             sc.Tag = false;
         }
+
+        internal static void CreateCustomFields(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<string, Control> customFieldControls,
+                                                Panel customFieldLabels, Panel customFieldValues) {
+            int yPos = 0;
+            foreach (var field in customFields) {
+                var fieldLabel = new TextBox() {
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    BorderStyle = BorderStyle.None,
+                    Location = new System.Drawing.Point(0, yPos + 3),
+                    ReadOnly = true,
+                    Size = new System.Drawing.Size(customFieldLabels.Width, 16),
+                    Text = field.Name
+                };
+                customFieldLabels.Controls.Add(fieldLabel);
+
+                Control fieldInput;
+                Type type = ZendeskSell.CustomFields.ZendeskTypeToDotNetType.GetType(field.Type);
+
+                if (type == typeof(IEnumerable<string>)) {
+                    fieldInput = new ListBox() {
+                        SelectionMode = SelectionMode.MultiSimple
+                    };
+                    fieldInput.Tag = field.Choices;
+                    ((ListBox)fieldInput).Items.AddRange(field.Choices.Select(c => c.Name).ToArray());
+                } else if (type == typeof(string) && field.Type == "list") {
+                    fieldInput = new ComboBox() {
+                        DropDownStyle = ComboBoxStyle.DropDownList
+                    };
+                    fieldInput.Tag = field.Choices;
+                    ((ComboBox)fieldInput).Items.Add("");
+                    ((ComboBox)fieldInput).Items.AddRange(field.Choices.Select(c => c.Name).ToArray());
+                    ((ComboBox)fieldInput).SelectedIndex = 0;
+                } else if (type == typeof(string) || type == typeof(Models.Address)) {
+                    fieldInput = new TextBox();
+                } else if (type == typeof(bool)) {
+                    fieldInput = new CheckBox();
+                } else {
+                    throw new ApplicationException("Unexpected type: " + type.FullName);
+                }
+
+                fieldInput.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                fieldInput.Location = new System.Drawing.Point(0, yPos);
+                fieldInput.Size = new System.Drawing.Size(customFieldValues.Width, 23);
+                customFieldValues.Controls.Add(fieldInput);
+                customFieldControls.Add(field.Name, fieldInput);
+
+                yPos += 22;
+            }
+        }
+
+        internal static void SetCustomFieldValues(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<string, Control> customFieldControls,
+                                                  Dictionary<string, object> customFieldValues) {
+            foreach (var field in customFieldValues) {
+                string zdType = customFields.First(f => f.Name == field.Key).Type;
+                Type type = ZendeskSell.CustomFields.ZendeskTypeToDotNetType.GetType(zdType);
+
+                if (type == typeof(bool))
+                    ((CheckBox)customFieldControls[field.Key]).Checked = (bool)field.Value;
+                else if (type == typeof(Models.Address))
+                    customFieldControls[field.Key].Text = ((Models.Address)field.Value).ToTextOneLine();
+                else
+                    customFieldControls[field.Key].Text = field.Value.ToString();
+            }
+        }
     }
 }
