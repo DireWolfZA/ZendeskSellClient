@@ -36,6 +36,19 @@ namespace Controls {
             sc.Tag = false;
         }
 
+        internal static void AddressEditButton_Click(TextBox txtAddress) {
+            var address = (Models.Address)txtAddress.Tag;
+
+            var addressEditor = new Forms.AddressEditor(address);
+            if (addressEditor.ShowDialog() == DialogResult.OK) {
+                address = new Models.Address(addressEditor.Address);
+
+                txtAddress.Tag = address;
+                txtAddress.Text = address.ToTextOneLine();
+            }
+        }
+
+        #region Custom Fields
         internal static void CreateCustomFields(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<string, Control> customFieldControls,
                                                 Panel customFieldLabels, Panel customFieldValues) {
             int yPos = 0;
@@ -99,5 +112,6 @@ namespace Controls {
                     customFieldControls[field.Key].Text = field.Value.ToString();
             }
         }
+        #endregion
     }
 }

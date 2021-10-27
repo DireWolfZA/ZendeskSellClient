@@ -2,13 +2,13 @@ using System;
 
 namespace Models {
     public class Address : ZendeskSell.Models.Address {
-        public Address() { }
         public Address(ZendeskSell.Models.Address source) : base(source) { }
+        public Address() { }
 
         private bool IsNull() {
             if (this == null)
                 return true;
-            if (this.Line1 == null && City == null && State == null && PostalCode == null && Country == null)
+            if (Line1 == null && City == null && State == null && PostalCode == null && Country == null)
                 return true;
             return false;
         }

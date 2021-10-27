@@ -17,10 +17,11 @@ namespace Controls {
 
             InitializeComponent();
             txtLink.LinkClicked += ZendeskPropertyGridMethods.LinkLabel_LinkClicked;
+            btnAddressEdit.Click += (s, e) => ZendeskPropertyGridMethods.AddressEditButton_Click(txtAddress);
 
             scMain.Tag = false;
-            scMain.Panel1.Scroll += new ScrollEventHandler((s, e) => ZendeskPropertyGridMethods.SplitContainer_Panel1_Scroll(scMain));
-            scMain.Panel2.Scroll += new ScrollEventHandler((s, e) => ZendeskPropertyGridMethods.SplitContainer_Panel2_Scroll(scMain));
+            scMain.Panel1.Scroll += (s, e) => ZendeskPropertyGridMethods.SplitContainer_Panel1_Scroll(scMain);
+            scMain.Panel2.Scroll += (s, e) => ZendeskPropertyGridMethods.SplitContainer_Panel2_Scroll(scMain);
 
             cbxOwner.Items.Clear();
             cbxOwner.Items.AddRange(users.Values.ToArray());
