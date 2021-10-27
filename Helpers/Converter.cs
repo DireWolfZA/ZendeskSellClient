@@ -31,6 +31,30 @@ namespace Helpers {
                 Tags = leadResponse.Tags,
                 CustomFields = leadResponse.CustomFields,
             };
+        public static ZendeskSell.Leads.LeadRequest Convert(Lead lead) =>
+            new ZendeskSell.Leads.LeadRequest() {
+                OwnerID = lead.OwnerID,
+                FirstName = lead.FirstName,
+                LastName = lead.LastName,
+                OrganizationName = lead.OrganizationName,
+                Status = lead.Status,
+                SourceID = lead.SourceID,
+                Title = lead.Title,
+                Description = lead.Description,
+                Industry = lead.Industry,
+                Website = lead.Website,
+                Email = lead.Email,
+                Phone = lead.Phone,
+                Mobile = lead.Mobile,
+                Fax = lead.Fax,
+                Twitter = lead.Twitter,
+                Facebook = lead.Facebook,
+                LinkedIn = lead.LinkedIn,
+                Skype = lead.Skype,
+                Address = lead.Address,
+                Tags = lead.Tags,
+                CustomFields = lead.CustomFields,
+            };
 
         public static Contact Convert(ZendeskSell.Contacts.ContactResponse contactResponse) =>
             new Contact() {
@@ -64,7 +88,36 @@ namespace Helpers {
                 CreatedAt = contactResponse.CreatedAt.ToString(),
                 UpdatedAt = contactResponse.UpdatedAt.ToString(),
                 Tags = contactResponse.Tags,
-                CustomFields = contactResponse.CustomFields
+                CustomFields = contactResponse.CustomFields,
+            };
+        public static ZendeskSell.Contacts.ContactRequest Convert(Contact contact) =>
+            new ZendeskSell.Contacts.ContactRequest() {
+                OwnerID = contact.OwnerID,
+                Name = contact.Name,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                IsOrganization = contact.IsOrganization,
+                ContactID = contact.ContactID,
+                ParentOrganizationID = contact.ParentOrganizationID,
+                CustomerStatus = contact.CustomerStatus,
+                ProspectStatus = contact.ProspectStatus,
+                Title = contact.Title,
+                Description = contact.Description,
+                Industry = contact.Industry,
+                Website = contact.Website,
+                Email = contact.Email,
+                Phone = contact.Phone,
+                Mobile = contact.Mobile,
+                Fax = contact.Fax,
+                Twitter = contact.Twitter,
+                Facebook = contact.Facebook,
+                Linkedin = contact.Linkedin,
+                Skype = contact.Skype,
+                Address = contact.Address,
+                BillingAddress = contact.BillingAddress,
+                ShippingAddress = contact.ShippingAddress,
+                Tags = contact.Tags,
+                CustomFields = contact.CustomFields,
             };
 
         public static Deal Convert(ZendeskSell.Deals.DealResponse dealResponse) =>
@@ -94,6 +147,25 @@ namespace Helpers {
                 UpdatedAt = dealResponse.UpdatedAt.ToString(),
                 Tags = dealResponse.Tags,
                 CustomFields = dealResponse.CustomFields,
+            };
+        public static ZendeskSell.Deals.DealRequest Convert(Deal deal) =>
+            new ZendeskSell.Deals.DealRequest() {
+                OwnerID = deal.OwnerID,
+                Name = deal.Name,
+                Value = deal.Value,
+                ContactID = deal.ContactID,
+                Currency = deal.Currency,
+                Hot = deal.Hot,
+                StageID = deal.StageID,
+                LastStageChangeAt = System.DateTimeOffset.Parse(deal.LastStageChangeAt),
+                AddedAt = System.DateTimeOffset.Parse(deal.AddedAt),
+                SourceID = deal.SourceID,
+                LossReasonID = deal.LossReasonID,
+                UnqualifiedReasonID = deal.UnqualifiedReasonID,
+                EstimatedCloseDate = System.DateTimeOffset.Parse(deal.EstimatedCloseDate),
+                CustomizedWinLikelihood = deal.CustomizedWinLikelihood,
+                Tags = deal.Tags,
+                CustomFields = deal.CustomFields,
             };
     }
 }
