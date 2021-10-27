@@ -14,12 +14,19 @@ namespace Controls {
             this.sources = sources;
 
             InitializeComponent();
+            txtLink.LinkClicked += ZendeskPropertyGridMethods.LinkLabel_LinkClicked;
+
+            scMain.Tag = false;
+            scMain.Panel1.Scroll += new ScrollEventHandler((s, e) => ZendeskPropertyGridMethods.SplitContainer_Panel1_Scroll(scMain));
+            scMain.Panel2.Scroll += new ScrollEventHandler((s, e) => ZendeskPropertyGridMethods.SplitContainer_Panel2_Scroll(scMain));
 
             cbxOwner.Items.Clear();
             cbxOwner.Items.AddRange(users.Values.ToArray());
             cbxSource.Items.Clear();
             cbxSource.Items.Add("");
             cbxSource.Items.AddRange(sources.Values.ToArray());
+
+            Forms.ZendeskSellClient.ApplyTheme(Controls);
         }
 
         public void SetData(Models.Lead data) {
