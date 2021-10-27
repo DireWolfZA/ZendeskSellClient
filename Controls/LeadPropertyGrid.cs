@@ -71,6 +71,34 @@ namespace Controls {
         }
 
         public Models.Lead GetData() {
+            var rtn = new Models.Lead() {
+                ID = ((Models.Lead)this.Tag).ID,
+
+                OwnerID = users.ContainsValue(cbxOwner.Text) ? users.First(kv => kv.Value == cbxOwner.Text).Key : (int?)null,
+                FirstName = txtFirstName.Text,
+                LastName = txtLastName.Text,
+                OrganizationName = txtCompany.Text,
+                Status = txtStatus.Text,
+                SourceID = sources.ContainsValue(cbxSource.Text) ? sources.First(kv => kv.Value == cbxSource.Text).Key : (int?)null,
+                Title = txtTitle.Text,
+                Description = txtDescription.Text,
+                Industry = txtIndustry.Text,
+                Website = txtWebsite.Text,
+                Email = txtEmail.Text,
+                Phone = txtPhone.Text,
+                Mobile = txtMobile.Text,
+                Fax = txtFax.Text,
+                Twitter = txtTwitter.Text,
+                Facebook = txtFacebook.Text,
+                LinkedIn = txtLinkedin.Text,
+                Skype = txtSkype.Text,
+                Address = (Models.Address)txtAddress.Tag,
+                Tags = (IEnumerable<string>)txtTags.Tag
+            };
+
+            rtn.CustomFields = ZendeskPropertyGridMethods.GetCustomFieldValues(customFields, customFieldControls);
+
+            return rtn;
         }
     }
 }

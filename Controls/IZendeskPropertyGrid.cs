@@ -112,6 +112,25 @@ namespace Controls {
                     customFieldControls[field.Key].Text = field.Value.ToString();
             }
         }
+
+        internal static Dictionary<string, object> GetCustomFieldValues(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields,
+                                                                        Dictionary<string, Control> customFieldControls) {
+            var rtn = new Dictionary<string, object>();
+
+            foreach (var field in customFields) {
+                Control control = customFieldControls[field.Name];
+                Type type = ZendeskSell.CustomFields.ZendeskTypeToDotNetType.GetType(field.Type);
+
+                if (type == typeof(bool))
+                    rtn.Add(field.Name, ((CheckBox)customFieldControls[field.Name]).Checked);
+                else if (type == typeof(Models.Address))
+                    rtn.Add(field.Name, new ZendeskSell.Models.Address((Models.Address)control.Tag));
+                else
+                    rtn.Add(field.Name, control.Text);
+            }
+
+            return rtn;
+        }
         #endregion
     }
 }
