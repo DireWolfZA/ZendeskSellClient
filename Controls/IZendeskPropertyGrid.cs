@@ -48,6 +48,18 @@ namespace Controls {
             }
         }
 
+        internal static void TagEditButton_Click(TextBox txtTags) {
+            var tags = (IEnumerable<string>)txtTags.Tag;
+
+            var tagEditor = new Forms.TagEditor(tags);
+            if (tagEditor.ShowDialog() == DialogResult.OK) {
+                tags = tagEditor.Tags;
+
+                txtTags.Tag = tags;
+                txtTags.Text = string.Join(',', tags); ;
+            }
+        }
+
         #region Custom Fields
         internal static void CreateCustomFields(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<string, Control> customFieldControls,
                                                 Panel customFieldLabels, Panel customFieldValues) {
