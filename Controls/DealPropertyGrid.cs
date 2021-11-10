@@ -9,16 +9,20 @@ namespace Controls {
         private readonly Dictionary<int, string> contacts;
         private readonly Dictionary<int, string> sources;
         private readonly Dictionary<int, string> stages;
-
+        private readonly Dictionary<int, string> lossReasons;
+        private readonly Dictionary<int, string> unqualifiedReasons;
         private readonly Dictionary<string, Control> customFieldControls = new Dictionary<string, Control>();
 
         public DealPropertyGrid(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<int, string> users,
-                                Dictionary<int, string> contacts, Dictionary<int, string> sources, Dictionary<int, string> stages) {
+                                Dictionary<int, string> contacts, Dictionary<int, string> sources, Dictionary<int, string> stages,
+                                Dictionary<int, string> lossReasons, Dictionary<int, string> unqualifiedReasons) {
             this.customFields = customFields;
             this.users = users;
             this.contacts = contacts;
             this.sources = sources;
             this.stages = stages;
+            this.lossReasons = lossReasons;
+            this.unqualifiedReasons = unqualifiedReasons;
 
             InitializeComponent();
             txtLink.LinkClicked += ZendeskPropertyGridMethods.LinkLabel_LinkClicked;
@@ -37,6 +41,13 @@ namespace Controls {
             cbxSource.Items.AddRange(sources.Values.ToArray());
             cbxStage.Items.Clear();
             cbxStage.Items.AddRange(stages.Values.ToArray());
+            cbxLossReason.Items.Clear();
+            cbxLossReason.Items.Add("");
+            cbxLossReason.Items.AddRange(lossReasons.Values.ToArray());
+            cbxUnqualifiedReason.Items.Clear();
+            cbxUnqualifiedReason.Items.Add("");
+            cbxUnqualifiedReason.Items.AddRange(unqualifiedReasons.Values.ToArray());
+
             ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
             Forms.ZendeskSellClient.ApplyTheme(Controls);
@@ -70,8 +81,14 @@ namespace Controls {
             chkHot.Checked = data.Hot;
             txtLastStageChangeAt.Text = data.LastStageChangeAt;
             txtAddedAt.Text = data.AddedAt;
-            txtLossReasonID.Text = data.LossReasonID.ToString();
-            txtUnqualifiedReasonID.Text = data.UnqualifiedReasonID.ToString();
+            if (data.LossReasonID.HasValue)
+                cbxLossReason.Text = lossReasons[data.LossReasonID.Value];
+            else
+                cbxLossReason.SelectedIndex = 0;
+            if (data.UnqualifiedReasonID.HasValue)
+                cbxUnqualifiedReason.Text = sources[data.UnqualifiedReasonID.Value];
+            else
+                cbxUnqualifiedReason.SelectedIndex = 0;
             txtEstimatedCloseDate.Text = data.EstimatedCloseDate;
             txtCustomizedWinLikelihood.Text = data.CustomizedWinLikelihood.ToString();
             txtTags.Text = string.Join(',', data.Tags);
@@ -94,8 +111,8 @@ namespace Controls {
                 Hot = chkHot.Checked,
                 LastStageChangeAt = txtLastStageChangeAt.Text,
                 AddedAt = txtAddedAt.Text,
-                LossReasonID = string.IsNullOrWhiteSpace(txtLossReasonID.Text) ? (int?)null : int.Parse(txtLossReasonID.Text),
-                UnqualifiedReasonID = string.IsNullOrWhiteSpace(txtUnqualifiedReasonID.Text) ? (int?)null : int.Parse(txtUnqualifiedReasonID.Text),
+                LossReasonID = lossReasons.ContainsValue(cbxLossReason.Text) ? lossReasons.First(kv => kv.Value == cbxLossReason.Text).Key : (int?)null,
+                UnqualifiedReasonID = unqualifiedReasons.ContainsValue(cbxUnqualifiedReason.Text) ? unqualifiedReasons.First(kv => kv.Value == cbxUnqualifiedReason.Text).Key : (int?)null,
                 EstimatedCloseDate = txtEstimatedCloseDate.Text,
                 CustomizedWinLikelihood = string.IsNullOrWhiteSpace(txtCustomizedWinLikelihood.Text) ? (int?)null : int.Parse(txtCustomizedWinLikelihood.Text),
                 Tags = (IEnumerable<string>)txtTags.Tag

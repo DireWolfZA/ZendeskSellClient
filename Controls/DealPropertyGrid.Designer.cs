@@ -30,8 +30,8 @@ namespace Controls {
             this.lblTags = new System.Windows.Forms.TextBox();
             this.lblCustomizedWinLikelihood = new System.Windows.Forms.TextBox();
             this.lblEstimatedCloseDate = new System.Windows.Forms.TextBox();
-            this.lblUnqualifiedReasonID = new System.Windows.Forms.TextBox();
-            this.lblLossReasonID = new System.Windows.Forms.TextBox();
+            this.lblUnqualifiedReason = new System.Windows.Forms.TextBox();
+            this.lblLossReason = new System.Windows.Forms.TextBox();
             this.lblAddedAt = new System.Windows.Forms.TextBox();
             this.lblLastStageChangeAt = new System.Windows.Forms.TextBox();
             this.lblStage = new System.Windows.Forms.TextBox();
@@ -63,8 +63,6 @@ namespace Controls {
             this.txtTags = new System.Windows.Forms.TextBox();
             this.txtLink = new System.Windows.Forms.LinkLabel();
             this.txtCustomizedWinLikelihood = new System.Windows.Forms.TextBox();
-            this.txtUnqualifiedReasonID = new System.Windows.Forms.TextBox();
-            this.txtLossReasonID = new System.Windows.Forms.TextBox();
             this.txtAddedAt = new System.Windows.Forms.TextBox();
             this.txtLastStageChangeAt = new System.Windows.Forms.TextBox();
             this.txtValue = new System.Windows.Forms.TextBox();
@@ -78,6 +76,8 @@ namespace Controls {
             this.txtCreatedAt = new System.Windows.Forms.TextBox();
             this.txtCreator = new System.Windows.Forms.TextBox();
             this.txtID = new System.Windows.Forms.TextBox();
+            this.cbxUnqualifiedReason = new System.Windows.Forms.ComboBox();
+            this.cbxLossReason = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.Panel2.SuspendLayout();
@@ -101,8 +101,8 @@ namespace Controls {
             this.scMain.Panel1.Controls.Add(this.lblTags);
             this.scMain.Panel1.Controls.Add(this.lblCustomizedWinLikelihood);
             this.scMain.Panel1.Controls.Add(this.lblEstimatedCloseDate);
-            this.scMain.Panel1.Controls.Add(this.lblUnqualifiedReasonID);
-            this.scMain.Panel1.Controls.Add(this.lblLossReasonID);
+            this.scMain.Panel1.Controls.Add(this.lblUnqualifiedReason);
+            this.scMain.Panel1.Controls.Add(this.lblLossReason);
             this.scMain.Panel1.Controls.Add(this.lblAddedAt);
             this.scMain.Panel1.Controls.Add(this.lblLastStageChangeAt);
             this.scMain.Panel1.Controls.Add(this.lblStage);
@@ -128,6 +128,8 @@ namespace Controls {
             // scMain.Panel2
             // 
             this.scMain.Panel2.AutoScroll = true;
+            this.scMain.Panel2.Controls.Add(this.cbxUnqualifiedReason);
+            this.scMain.Panel2.Controls.Add(this.cbxLossReason);
             this.scMain.Panel2.Controls.Add(this.chkHot);
             this.scMain.Panel2.Controls.Add(this.txtEstimatedCloseDate);
             this.scMain.Panel2.Controls.Add(this.cbxContact);
@@ -139,8 +141,6 @@ namespace Controls {
             this.scMain.Panel2.Controls.Add(this.txtTags);
             this.scMain.Panel2.Controls.Add(this.txtLink);
             this.scMain.Panel2.Controls.Add(this.txtCustomizedWinLikelihood);
-            this.scMain.Panel2.Controls.Add(this.txtUnqualifiedReasonID);
-            this.scMain.Panel2.Controls.Add(this.txtLossReasonID);
             this.scMain.Panel2.Controls.Add(this.txtAddedAt);
             this.scMain.Panel2.Controls.Add(this.txtLastStageChangeAt);
             this.scMain.Panel2.Controls.Add(this.txtValue);
@@ -226,29 +226,29 @@ namespace Controls {
             this.lblEstimatedCloseDate.TabIndex = 23;
             this.lblEstimatedCloseDate.Text = "Estimated Close Date";
             // 
-            // lblUnqualifiedReasonID
+            // lblUnqualifiedReason
             // 
-            this.lblUnqualifiedReasonID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblUnqualifiedReason.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblUnqualifiedReasonID.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblUnqualifiedReasonID.Location = new System.Drawing.Point(3, 485);
-            this.lblUnqualifiedReasonID.Name = "lblUnqualifiedReasonID";
-            this.lblUnqualifiedReasonID.ReadOnly = true;
-            this.lblUnqualifiedReasonID.Size = new System.Drawing.Size(156, 16);
-            this.lblUnqualifiedReasonID.TabIndex = 22;
-            this.lblUnqualifiedReasonID.Text = "Unqualified Reason ID";
+            this.lblUnqualifiedReason.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lblUnqualifiedReason.Location = new System.Drawing.Point(3, 485);
+            this.lblUnqualifiedReason.Name = "lblUnqualifiedReason";
+            this.lblUnqualifiedReason.ReadOnly = true;
+            this.lblUnqualifiedReason.Size = new System.Drawing.Size(156, 16);
+            this.lblUnqualifiedReason.TabIndex = 22;
+            this.lblUnqualifiedReason.Text = "Unqualified Reason";
             // 
-            // lblLossReasonID
+            // lblLossReason
             // 
-            this.lblLossReasonID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblLossReason.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLossReasonID.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblLossReasonID.Location = new System.Drawing.Point(3, 463);
-            this.lblLossReasonID.Name = "lblLossReasonID";
-            this.lblLossReasonID.ReadOnly = true;
-            this.lblLossReasonID.Size = new System.Drawing.Size(156, 16);
-            this.lblLossReasonID.TabIndex = 21;
-            this.lblLossReasonID.Text = "Loss Reason ID";
+            this.lblLossReason.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lblLossReason.Location = new System.Drawing.Point(3, 463);
+            this.lblLossReason.Name = "lblLossReason";
+            this.lblLossReason.ReadOnly = true;
+            this.lblLossReason.Size = new System.Drawing.Size(156, 16);
+            this.lblLossReason.TabIndex = 21;
+            this.lblLossReason.Text = "Loss Reason";
             // 
             // lblAddedAt
             // 
@@ -598,24 +598,6 @@ namespace Controls {
             this.txtCustomizedWinLikelihood.Size = new System.Drawing.Size(264, 23);
             this.txtCustomizedWinLikelihood.TabIndex = 50;
             // 
-            // txtUnqualifiedReasonID
-            // 
-            this.txtUnqualifiedReasonID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtUnqualifiedReasonID.Location = new System.Drawing.Point(3, 482);
-            this.txtUnqualifiedReasonID.Name = "txtUnqualifiedReasonID";
-            this.txtUnqualifiedReasonID.Size = new System.Drawing.Size(264, 23);
-            this.txtUnqualifiedReasonID.TabIndex = 48;
-            // 
-            // txtLossReasonID
-            // 
-            this.txtLossReasonID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLossReasonID.Location = new System.Drawing.Point(3, 460);
-            this.txtLossReasonID.Name = "txtLossReasonID";
-            this.txtLossReasonID.Size = new System.Drawing.Size(264, 23);
-            this.txtLossReasonID.TabIndex = 47;
-            // 
             // txtAddedAt
             // 
             this.txtAddedAt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -741,6 +723,28 @@ namespace Controls {
             this.txtID.Size = new System.Drawing.Size(264, 23);
             this.txtID.TabIndex = 28;
             // 
+            // cbxUnqualifiedReason
+            // 
+            this.cbxUnqualifiedReason.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxUnqualifiedReason.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxUnqualifiedReason.FormattingEnabled = true;
+            this.cbxUnqualifiedReason.Location = new System.Drawing.Point(3, 482);
+            this.cbxUnqualifiedReason.Name = "cbxUnqualifiedReason";
+            this.cbxUnqualifiedReason.Size = new System.Drawing.Size(264, 23);
+            this.cbxUnqualifiedReason.TabIndex = 48;
+            // 
+            // cbxLossReason
+            // 
+            this.cbxLossReason.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxLossReason.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxLossReason.FormattingEnabled = true;
+            this.cbxLossReason.Location = new System.Drawing.Point(3, 460);
+            this.cbxLossReason.Name = "cbxLossReason";
+            this.cbxLossReason.Size = new System.Drawing.Size(264, 23);
+            this.cbxLossReason.TabIndex = 47;
+            // 
             // DealPropertyGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -781,8 +785,8 @@ namespace Controls {
         private System.Windows.Forms.TextBox lblStage;
         private System.Windows.Forms.TextBox lblLastStageChangeAt;
         private System.Windows.Forms.TextBox lblAddedAt;
-        private System.Windows.Forms.TextBox lblLossReasonID;
-        private System.Windows.Forms.TextBox lblUnqualifiedReasonID;
+        private System.Windows.Forms.TextBox lblLossReason;
+        private System.Windows.Forms.TextBox lblUnqualifiedReason;
         private System.Windows.Forms.TextBox lblEstimatedCloseDate;
         private System.Windows.Forms.TextBox lblCustomizedWinLikelihood;
         private System.Windows.Forms.TextBox lblTags;
@@ -790,8 +794,6 @@ namespace Controls {
         private System.Windows.Forms.Panel pnlCustomFieldLabels;
         private System.Windows.Forms.TextBox txtTags;
         private System.Windows.Forms.TextBox txtCustomizedWinLikelihood;
-        private System.Windows.Forms.TextBox txtUnqualifiedReasonID;
-        private System.Windows.Forms.TextBox txtLossReasonID;
         private System.Windows.Forms.TextBox txtAddedAt;
         private System.Windows.Forms.TextBox txtLastStageChangeAt;
         private System.Windows.Forms.TextBox txtValue;
@@ -815,5 +817,7 @@ namespace Controls {
         private System.Windows.Forms.TextBox lblValue;
         private System.Windows.Forms.TextBox txtEstimatedCloseDate;
         private System.Windows.Forms.CheckBox chkHot;
+        private System.Windows.Forms.ComboBox cbxUnqualifiedReason;
+        private System.Windows.Forms.ComboBox cbxLossReason;
     }
 }
