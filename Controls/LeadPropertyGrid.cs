@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Helpers;
 
 namespace Controls {
-    public partial class LeadPropertyGrid : UserControl, IZendeskPropertyGrid<Models.Lead> {
+    public partial class LeadPropertyGrid : IZendeskPropertyGrid<Models.Lead> {
         private readonly IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields;
         private readonly Dictionary<int, string> users;
         private readonly Dictionary<int, string> sources;
@@ -37,7 +37,7 @@ namespace Controls {
                 Theming.ApplyTheme(components.Components);
         }
 
-        public void SetData(Models.Lead data) {
+        public override void SetData(Models.Lead data) {
             this.Tag = data;
             txtID.Text = data.ID.ToString();
             txtLink.Text = data.Link;
@@ -74,7 +74,7 @@ namespace Controls {
             ZendeskPropertyGridMethods.SetCustomFieldValues(customFields, customFieldControls, data.CustomFields);
         }
 
-        public Models.Lead GetData() {
+        public override Models.Lead GetData() {
             var rtn = new Models.Lead() {
                 ID = ((Models.Lead)this.Tag).ID,
 

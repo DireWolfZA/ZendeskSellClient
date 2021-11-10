@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Helpers;
 
 namespace Controls {
-    public partial class DealPropertyGrid : UserControl, IZendeskPropertyGrid<Models.Deal> {
+    public partial class DealPropertyGrid : IZendeskPropertyGrid<Models.Deal> {
         private readonly IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields;
         private readonly Dictionary<int, string> users;
         private readonly Dictionary<int, string> contacts;
@@ -56,7 +56,7 @@ namespace Controls {
                 Theming.ApplyTheme(components.Components);
         }
 
-        public void SetData(Models.Deal data) {
+        public override void SetData(Models.Deal data) {
             this.Tag = data;
             txtID.Text = data.ID.ToString();
             txtLink.Text = data.Link;
@@ -100,7 +100,7 @@ namespace Controls {
             ZendeskPropertyGridMethods.SetCustomFieldValues(customFields, customFieldControls, data.CustomFields);
         }
 
-        public Models.Deal GetData() {
+        public override Models.Deal GetData() {
             var rtn = new Models.Deal() {
                 ID = ((Models.Deal)this.Tag).ID,
 
