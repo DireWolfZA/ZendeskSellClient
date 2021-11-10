@@ -66,7 +66,7 @@ namespace Controls {
             txtFacebook.Text = data.Facebook;
             txtLinkedin.Text = data.LinkedIn;
             txtSkype.Text = data.Skype;
-            txtAddress.Text = data.Address.ToTextOneLine();
+            txtAddress.Text = data.Address?.ToTextOneLine();
             txtAddress.Tag = data.Address;
             txtTags.Text = string.Join(',', data.Tags);
             txtTags.Tag = data.Tags;

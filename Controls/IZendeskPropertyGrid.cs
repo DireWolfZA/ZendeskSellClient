@@ -39,7 +39,7 @@ namespace Controls {
         internal static void AddressEditButton_Click(TextBox txtAddress) {
             var address = (Models.Address)txtAddress.Tag;
 
-            var addressEditor = new Forms.AddressEditor(address);
+            var addressEditor = new Forms.AddressEditor(address ?? new Models.Address());
             if (addressEditor.ShowDialog() == DialogResult.OK) {
                 address = new Models.Address(addressEditor.Address);
 
@@ -51,7 +51,7 @@ namespace Controls {
         internal static void TagEditButton_Click(TextBox txtTags) {
             var tags = (IEnumerable<string>)txtTags.Tag;
 
-            var tagEditor = new Forms.TagEditor(tags);
+            var tagEditor = new Forms.TagEditor(tags ?? new string[0]);
             if (tagEditor.ShowDialog() == DialogResult.OK) {
                 tags = tagEditor.Tags;
 

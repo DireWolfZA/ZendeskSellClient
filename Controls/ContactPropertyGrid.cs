@@ -66,11 +66,11 @@ namespace Controls {
             txtFacebook.Text = data.Facebook;
             txtLinkedin.Text = data.LinkedIn;
             txtSkype.Text = data.Skype;
-            txtAddress.Text = data.Address.ToTextOneLine();
+            txtAddress.Text = data.Address?.ToTextOneLine();
             txtAddress.Tag = data.Address;
-            txtBillingAddress.Text = data.BillingAddress.ToTextOneLine();
+            txtBillingAddress.Text = data.BillingAddress?.ToTextOneLine();
             txtBillingAddress.Tag = data.BillingAddress;
-            txtShippingAddress.Text = data.ShippingAddress.ToTextOneLine();
+            txtShippingAddress.Text = data.ShippingAddress?.ToTextOneLine();
             txtShippingAddress.Tag = data.ShippingAddress;
             txtTags.Text = string.Join(',', data.Tags);
             txtTags.Tag = data.Tags;
