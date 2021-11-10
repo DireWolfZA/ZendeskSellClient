@@ -1,6 +1,5 @@
 namespace Models {
     public class Contact : Base {
-        public string Name { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         // read-only for existing contacts, can be set when creating

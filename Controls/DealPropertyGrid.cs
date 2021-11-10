@@ -89,7 +89,7 @@ namespace Controls {
             else
                 cbxLossReason.SelectedIndex = 0;
             if (data.UnqualifiedReasonID.HasValue)
-                cbxUnqualifiedReason.Text = sources[data.UnqualifiedReasonID.Value];
+                cbxUnqualifiedReason.Text = unqualifiedReasons[data.UnqualifiedReasonID.Value];
             else
                 cbxUnqualifiedReason.SelectedIndex = 0;
             txtEstimatedCloseDate.Text = data.EstimatedCloseDate;

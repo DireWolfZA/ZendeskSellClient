@@ -9,6 +9,7 @@ namespace Models {
         public string UpdatedAt { get; set; }
 
         public int? OwnerID { get; set; }
+        public string Name { get; set; }
         public IEnumerable<string> Tags { get; set; }
         public Dictionary<string, object> CustomFields { get; set; }
     }

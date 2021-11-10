@@ -11,6 +11,7 @@ namespace Helpers {
                 UpdatedAt = leadResponse.UpdatedAt.ToString(),
 
                 OwnerID = leadResponse.OwnerID,
+                Name = string.Join(' ', leadResponse.FirstName, leadResponse.LastName),
                 FirstName = leadResponse.FirstName,
                 LastName = leadResponse.LastName,
                 OrganizationName = leadResponse.OrganizationName,
