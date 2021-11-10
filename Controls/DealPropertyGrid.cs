@@ -102,7 +102,7 @@ namespace Controls {
 
         public override Models.Deal GetData() {
             var rtn = new Models.Deal() {
-                ID = ((Models.Deal)this.Tag).ID,
+                ID = (this.Tag as Models.Deal ?? new Models.Deal()).ID,
 
                 OwnerID = users.ContainsValue(cbxOwner.Text) ? users.First(kv => kv.Value == cbxOwner.Text).Key : (int?)null,
                 ContactID = contacts.First(kv => kv.Value == cbxContact.Text).Key,
@@ -118,7 +118,7 @@ namespace Controls {
                 UnqualifiedReasonID = unqualifiedReasons.ContainsValue(cbxUnqualifiedReason.Text) ? unqualifiedReasons.First(kv => kv.Value == cbxUnqualifiedReason.Text).Key : (int?)null,
                 EstimatedCloseDate = txtEstimatedCloseDate.Text,
                 CustomizedWinLikelihood = string.IsNullOrWhiteSpace(txtCustomizedWinLikelihood.Text) ? (int?)null : int.Parse(txtCustomizedWinLikelihood.Text),
-                Tags = (IEnumerable<string>)txtTags.Tag
+                Tags = txtTags.Tag as IEnumerable<string> ?? new string[0]
             };
 
             rtn.CustomFields = ZendeskPropertyGridMethods.GetCustomFieldValues(customFields, customFieldControls);

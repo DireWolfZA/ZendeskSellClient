@@ -76,7 +76,7 @@ namespace Controls {
 
         public override Models.Lead GetData() {
             var rtn = new Models.Lead() {
-                ID = ((Models.Lead)this.Tag).ID,
+                ID = (this.Tag as Models.Lead ?? new Models.Lead()).ID,
 
                 OwnerID = users.ContainsValue(cbxOwner.Text) ? users.First(kv => kv.Value == cbxOwner.Text).Key : (int?)null,
                 FirstName = txtFirstName.Text,
@@ -96,8 +96,8 @@ namespace Controls {
                 Facebook = txtFacebook.Text,
                 LinkedIn = txtLinkedin.Text,
                 Skype = txtSkype.Text,
-                Address = (Models.Address)txtAddress.Tag,
-                Tags = (IEnumerable<string>)txtTags.Tag
+                Address = txtAddress.Tag as Models.Address ?? new Models.Address(),
+                Tags = txtTags.Tag as IEnumerable<string> ?? new string[0]
             };
 
             rtn.CustomFields = ZendeskPropertyGridMethods.GetCustomFieldValues(customFields, customFieldControls);

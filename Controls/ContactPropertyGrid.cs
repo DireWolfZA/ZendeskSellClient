@@ -80,8 +80,8 @@ namespace Controls {
 
         public override Models.Contact GetData() {
             var rtn = new Models.Contact() {
-                ID = ((Models.Contact)this.Tag).ID,
-                IsOrganization = bool.Parse(txtIsOrganization.Text),
+                ID = (this.Tag as Models.Contact ?? new Models.Contact()).ID,
+                IsOrganization = bool.TryParse(txtIsOrganization.Text, out var result) ? result : false,
 
                 OwnerID = users.ContainsValue(cbxOwner.Text) ? users.First(kv => kv.Value == cbxOwner.Text).Key : (int?)null,
                 Name = txtName.Text,
@@ -103,10 +103,10 @@ namespace Controls {
                 Facebook = txtFacebook.Text,
                 LinkedIn = txtLinkedin.Text,
                 Skype = txtSkype.Text,
-                Address = (Models.Address)txtAddress.Tag,
-                BillingAddress = (Models.Address)txtBillingAddress.Tag,
-                ShippingAddress = (Models.Address)txtShippingAddress.Tag,
-                Tags = (IEnumerable<string>)txtTags.Tag
+                Address = txtAddress.Tag as Models.Address ?? new Models.Address(),
+                BillingAddress = txtBillingAddress.Tag as Models.Address ?? new Models.Address(),
+                ShippingAddress = txtShippingAddress.Tag as Models.Address ?? new Models.Address(),
+                Tags = txtTags.Tag as IEnumerable<string> ?? new string[0]
             };
 
             rtn.CustomFields = ZendeskPropertyGridMethods.GetCustomFieldValues(customFields, customFieldControls);
