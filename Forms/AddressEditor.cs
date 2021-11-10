@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using Helpers;
 using ZendeskSell.Models;
 
 namespace Forms {
@@ -6,7 +7,10 @@ namespace Forms {
         public AddressEditor(Address address) : this() => Address = address;
         public AddressEditor() {
             InitializeComponent();
-            ZendeskSellClient.ApplyTheme(this);
+
+            Theming.ApplyTheme(this);
+            if (components != null)
+                Theming.ApplyTheme(components.Components);
         }
 
         public Address Address {

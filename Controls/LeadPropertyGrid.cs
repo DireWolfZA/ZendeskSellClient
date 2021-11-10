@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Helpers;
 
 namespace Controls {
     public partial class LeadPropertyGrid : UserControl, IZendeskPropertyGrid<Models.Lead> {
@@ -31,7 +32,9 @@ namespace Controls {
             cbxSource.Items.AddRange(sources.Values.ToArray());
             ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
-            Forms.ZendeskSellClient.ApplyTheme(Controls);
+            Theming.ApplyTheme(Controls);
+            if (components != null)
+                Theming.ApplyTheme(components.Components);
         }
 
         public void SetData(Models.Lead data) {

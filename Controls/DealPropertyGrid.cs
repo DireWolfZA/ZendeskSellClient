@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Helpers;
 
 namespace Controls {
     public partial class DealPropertyGrid : UserControl, IZendeskPropertyGrid<Models.Deal> {
@@ -50,7 +51,9 @@ namespace Controls {
 
             ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
-            Forms.ZendeskSellClient.ApplyTheme(Controls);
+            Theming.ApplyTheme(Controls);
+            if (components != null)
+                Theming.ApplyTheme(components.Components);
         }
 
         public void SetData(Models.Deal data) {

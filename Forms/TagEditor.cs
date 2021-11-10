@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Helpers;
 
 namespace Forms {
     public partial class TagEditor : Form {
         public TagEditor(IEnumerable<string> tags) : this() => Tags = tags;
         public TagEditor() {
             InitializeComponent();
-            ZendeskSellClient.ApplyTheme(this);
+
+            Theming.ApplyTheme(this);
+            if (components != null)
+                Theming.ApplyTheme(components.Components);
         }
 
         public IEnumerable<string> Tags {

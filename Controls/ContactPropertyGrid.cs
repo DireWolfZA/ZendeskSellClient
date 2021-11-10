@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Helpers;
 
 namespace Controls {
     public partial class ContactPropertyGrid : UserControl, IZendeskPropertyGrid<Models.Contact> {
@@ -26,9 +27,12 @@ namespace Controls {
 
             cbxOwner.Items.Clear();
             cbxOwner.Items.AddRange(users.Values.ToArray());
+
             ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
-            Forms.ZendeskSellClient.ApplyTheme(Controls);
+            Theming.ApplyTheme(Controls);
+            if (components != null)
+                Theming.ApplyTheme(components.Components);
         }
 
         public void SetData(Models.Contact data) {
