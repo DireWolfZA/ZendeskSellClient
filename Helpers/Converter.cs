@@ -166,7 +166,7 @@ namespace Helpers {
                 SourceID = deal.SourceID,
                 LossReasonID = deal.LossReasonID,
                 UnqualifiedReasonID = deal.UnqualifiedReasonID,
-                EstimatedCloseDate = System.DateTimeOffset.Parse(deal.EstimatedCloseDate),
+                EstimatedCloseDate = string.IsNullOrWhiteSpace(deal.EstimatedCloseDate) ? (System.DateTimeOffset?)null : System.DateTimeOffset.Parse(deal.EstimatedCloseDate),
                 CustomizedWinLikelihood = deal.CustomizedWinLikelihood,
                 Tags = deal.Tags,
                 CustomFields = deal.CustomFields,

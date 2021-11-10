@@ -34,6 +34,8 @@ namespace Helpers {
         public static T Handle<T>(ZendeskSellObjectResponse<T> response) where T : class {
             if (response?.Errors != null)
                 throw ZendeskError.FromErrors(response.Errors);
+            if (response == null)
+                throw new ApplicationException("No Data returned");
 
             return response.Data;
         }
