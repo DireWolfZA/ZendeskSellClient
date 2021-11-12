@@ -1,6 +1,6 @@
 [submodule "ZendeskSellApi"]
 	path = ZendeskSellApi
-	url = https://github.com/Walkman100/ZendeskSellApiClient
+	url = https://github.com/DireWolfZA/ZendeskSellApiClient
 [submodule "WalkmanLib"]
 	path = WalkmanLib
 	url = https://github.com/Walkman100/WalkmanLib
