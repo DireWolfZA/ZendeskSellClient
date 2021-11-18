@@ -8,5 +8,8 @@ namespace Helpers {
             PropertyInfo doubleBufferPropertyInfo = control.GetType().GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             doubleBufferPropertyInfo.SetValue(control, enable, null);
         }
+
+        public static string EmptyToNull(this string input) =>
+            string.IsNullOrWhiteSpace(input) ? null : input;
     }
 }

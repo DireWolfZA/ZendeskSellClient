@@ -51,9 +51,9 @@ namespace Controls {
 
                 Discount = string.IsNullOrWhiteSpace(txtDiscount.Text) ? (int?)null : int.Parse(txtDiscount.Text),
                 ProductID = products.ContainsValue(cbxProduct.Text) ? products.First(kv => kv.Value == cbxProduct.Text).Key : (int?)null,
-                Value = txtValue.Text,
-                Variation = txtVariation.Text,
-                Currency = txtCurrency.Text,
+                Value = txtValue.Text.EmptyToNull(),
+                Variation = txtVariation.Text.EmptyToNull(),
+                Currency = txtCurrency.Text.EmptyToNull(),
                 Quantity = (int)numQuantity.Value,
             };
 
