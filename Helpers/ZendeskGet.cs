@@ -44,5 +44,16 @@ namespace Helpers {
             if (response?.Errors != null)
                 throw ZendeskError.FromErrors(response.Errors);
         }
+
+        public async static Task<ZendeskSell.Orders.OrderResponse> GetOrder(ZendeskSell.Orders.IOrderActions orderActions, int dealID) {
+            var orders = await GetAll((pn, pc) => orderActions.GetAsync(pn, pc, dealID));
+            if (orders.Count() == 0)
+                return Handle(await orderActions.CreateAsync(new ZendeskSell.Orders.OrderRequest() {
+                    DealID = dealID,
+                    Discount = 0
+                }));
+            else
+                return orders.First();
+        }
     }
 }
