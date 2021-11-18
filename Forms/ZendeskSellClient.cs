@@ -19,12 +19,19 @@ namespace Forms {
         }
 
         private void ZendeskSellClient_Shown(object sender, EventArgs e) {
-
+            btnSettings.PerformClick();
         }
 
         private void btnSettings_Click(object _, EventArgs __) {
-
+            var inputDialog = new Ookii.Dialogs.InputDialog() {
+                MainInstruction = "Input Access Token:",
+                WindowTitle = "Zendesk Sell Token"
+            };
+            if (inputDialog.ShowDialog() == DialogResult.OK)
+                sellClient = new ZendeskSell.ZendeskSellClient(inputDialog.Input);
         }
+
+        private ZendeskSell.IZendeskSellClient sellClient;
 
         private void cbxType_SelectedIndexChanged(object sender, EventArgs e) {
 
