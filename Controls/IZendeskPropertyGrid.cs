@@ -111,17 +111,22 @@ namespace Controls {
         }
 
         internal static void SetCustomFieldValues(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<string, Control> customFieldControls,
-                                                  Dictionary<string, object> customFieldValues) {
-            foreach (var field in customFieldValues) {
-                string zdType = customFields.First(f => f.Name == field.Key).Type;
-                Type type = ZendeskSell.CustomFields.ZendeskTypeToDotNetType.GetType(zdType);
+                                                   Dictionary<string, object> customFieldValues) {
+            foreach (var kv in customFieldControls) {
+                if (customFieldValues.ContainsKey(kv.Key)) {
+                    var field = customFieldValues[kv.Key];
+                    string zdType = customFields.First(f => f.Name == kv.Key).Type;
+                    Type type = ZendeskSell.CustomFields.ZendeskTypeToDotNetType.GetType(zdType);
 
-                if (type == typeof(bool))
-                    ((CheckBox)customFieldControls[field.Key]).Checked = (bool)field.Value;
-                else if (type == typeof(Models.Address))
-                    customFieldControls[field.Key].Text = ((Models.Address)field.Value).ToTextOneLine();
-                else
-                    customFieldControls[field.Key].Text = field.Value.ToString();
+                    if (type == typeof(bool))
+                        ((CheckBox)customFieldControls[kv.Key]).Checked = (bool)field;
+                    else if (type == typeof(Models.Address))
+                        customFieldControls[kv.Key].Text = ((Models.Address)field).ToTextOneLine();
+                    else
+                        customFieldControls[kv.Key].Text = field.ToString();
+                } else {
+                    kv.Value.Text = "";
+                }
             }
         }
 
