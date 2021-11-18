@@ -171,5 +171,34 @@ namespace Helpers {
                 Tags = deal.Tags,
                 CustomFields = deal.CustomFields,
             };
+
+        public static LineItem Convert(ZendeskSell.LineItems.LineItemResponse lineItemResponse,
+                                       ZendeskSell.Orders.OrderResponse orderResponse) =>
+            new LineItem() {
+                ID = lineItemResponse.ID,
+                CreatedAt = lineItemResponse.CreatedAt.ToString(),
+                UpdatedAt = lineItemResponse.UpdatedAt.ToString(),
+                Name = lineItemResponse.Name,
+                SKU = lineItemResponse.SKU,
+                Description = lineItemResponse.Description,
+                Price = lineItemResponse.Price,
+
+                Discount = orderResponse.Discount,
+                ProductID = lineItemResponse.ProductID,
+                Value = lineItemResponse.Value,
+                Variation = lineItemResponse.Variation,
+                Currency = lineItemResponse.Currency,
+                Quantity = lineItemResponse.Quantity,
+            };
+        public static (ZendeskSell.LineItems.LineItemRequest, ZendeskSell.Orders.OrderRequest) Convert(LineItem lineItem, ZendeskSell.Orders.OrderResponse order) =>
+            (new ZendeskSell.LineItems.LineItemRequest() {
+                ProductID = lineItem.ProductID,
+                Value = lineItem.Value,
+                Variation = lineItem.Variation,
+                Currency = lineItem.Currency,
+                Quantity = lineItem.Quantity,
+            }, new ZendeskSell.Orders.OrderRequest(order) {
+                Discount = lineItem.Discount
+            });
     }
 }
