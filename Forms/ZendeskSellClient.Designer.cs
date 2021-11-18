@@ -69,6 +69,7 @@ namespace Forms {
             this.lstItems.TabIndex = 0;
             this.lstItems.UseCompatibleStateImageBehavior = false;
             this.lstItems.View = System.Windows.Forms.View.Details;
+            this.lstItems.SelectedIndexChanged += new System.EventHandler(this.lstItems_SelectedIndexChanged);
             // 
             // colHeadID
             // 
@@ -112,6 +113,7 @@ namespace Forms {
             this.cbxType.Name = "cbxType";
             this.cbxType.Size = new System.Drawing.Size(175, 23);
             this.cbxType.TabIndex = 3;
+            this.cbxType.SelectedIndexChanged += new System.EventHandler(this.cbxType_SelectedIndexChanged);
             // 
             // btnGetAll
             // 
@@ -121,6 +123,7 @@ namespace Forms {
             this.btnGetAll.TabIndex = 4;
             this.btnGetAll.Text = "Get All";
             this.btnGetAll.UseVisualStyleBackColor = true;
+            this.btnGetAll.Click += new System.EventHandler(this.btnGetAll_Click);
             // 
             // btnGetOne
             // 
@@ -130,6 +133,7 @@ namespace Forms {
             this.btnGetOne.TabIndex = 5;
             this.btnGetOne.Text = "Get One";
             this.btnGetOne.UseVisualStyleBackColor = true;
+            this.btnGetOne.Click += new System.EventHandler(this.btnGetOne_Click);
             // 
             // numOneID
             // 
@@ -149,6 +153,7 @@ namespace Forms {
             this.btnCreate.TabIndex = 7;
             this.btnCreate.Text = "Create...";
             this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // btnUpdate
             // 
@@ -159,6 +164,7 @@ namespace Forms {
             this.btnUpdate.TabIndex = 8;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // grpMain
             // 
@@ -191,6 +197,7 @@ namespace Forms {
             this.btnDelete.TabIndex = 11;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // numDealID
             // 
@@ -220,6 +227,7 @@ namespace Forms {
             this.btnSettings.TabIndex = 10;
             this.btnSettings.Text = "Settings";
             this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // ZendeskSellClient
             // 
@@ -232,6 +240,7 @@ namespace Forms {
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ZendeskSellClient";
             this.Text = "ZendeskSellClient";
+            this.Shown += new System.EventHandler(this.ZendeskSellClient_Shown);
             this.scMain.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).EndInit();
             this.scMain.ResumeLayout(false);
