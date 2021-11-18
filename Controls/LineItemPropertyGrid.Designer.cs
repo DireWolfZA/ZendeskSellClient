@@ -404,11 +404,7 @@ namespace Controls {
             this.numQuantity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.numQuantity.Location = new System.Drawing.Point(3, 304);
-            this.numQuantity.Maximum = new decimal(new int[] {
-            -559939585,
-            902409669,
-            54,
-            0});
+            this.numQuantity.Maximum = int.MaxValue;
             this.numQuantity.Name = "numQuantity";
             this.numQuantity.Size = new System.Drawing.Size(264, 23);
             this.numQuantity.TabIndex = 27;
