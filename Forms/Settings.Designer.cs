@@ -54,6 +54,7 @@ namespace Forms {
             this.btnClose.TabIndex = 4;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSave
             // 
@@ -86,6 +87,7 @@ namespace Forms {
             this.btnShowSettingsFile.TabIndex = 7;
             this.btnShowSettingsFile.Text = "Show Settings File";
             this.btnShowSettingsFile.UseVisualStyleBackColor = true;
+            this.btnShowSettingsFile.Click += new System.EventHandler(this.btnShowSettingsFile_Click);
             // 
             // lblTheme
             // 
@@ -104,6 +106,7 @@ namespace Forms {
             this.cbxTheme.Name = "cbxTheme";
             this.cbxTheme.Size = new System.Drawing.Size(291, 23);
             this.cbxTheme.TabIndex = 3;
+            this.cbxTheme.SelectedIndexChanged += new System.EventHandler(this.cbxTheme_SelectedIndexChanged);
             // 
             // lblAccessToken
             // 
@@ -122,6 +125,7 @@ namespace Forms {
             this.txtAccessToken.Name = "txtAccessToken";
             this.txtAccessToken.Size = new System.Drawing.Size(291, 23);
             this.txtAccessToken.TabIndex = 1;
+            this.txtAccessToken.TextChanged += new System.EventHandler(this.txtAccessToken_TextChanged);
             // 
             // Settings
             // 

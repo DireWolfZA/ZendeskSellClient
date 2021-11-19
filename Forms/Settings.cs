@@ -32,6 +32,8 @@ namespace Forms {
                 _settingsPath = new FileInfo(configFileName).FullName;
             }
 
+            cbxTheme.Items.AddRange(Enum.GetNames(typeof(ThemeNames)));
+
             Loaded = true;
             if (File.Exists(_settingsPath)) {
                 LoadSettings();
@@ -46,9 +48,68 @@ namespace Forms {
                 this.CenterToParent();
         }
 
+        public enum ThemeNames {
+            Default,
+            Inverted,
+            SystemDark,
+            Dark,
+            Test
+        }
+
+        public WalkmanLib.Theme GetTheme() {
+            switch (Theme) {
+                case ThemeNames.Default:
+                    return WalkmanLib.Theme.Default;
+                case ThemeNames.Inverted:
+                    return WalkmanLib.Theme.Inverted;
+                case ThemeNames.SystemDark:
+                    return WalkmanLib.Theme.SystemDark;
+                case ThemeNames.Dark:
+                    return WalkmanLib.Theme.Dark;
+                case ThemeNames.Test:
+                    return WalkmanLib.Theme.Test;
+                default:
+                    throw new ApplicationException("Invalid Theme Name: " + Theme.ToString());
+            }
+        }
+
+        public void ApplyTheme() {
+            Theming.ApplyTheme(this);
+            Theming.ApplyTheme(components?.Components);
+        }
+
         #region Properties
         public string AccessToken { get; private set; }
         public ThemeNames Theme { get; private set; }
+        #endregion
+
+        #region GUI Methods
+        private void txtAccessToken_TextChanged(object _, EventArgs __) {
+            AccessToken = txtAccessToken.Text;
+            SaveSettings();
+        }
+        private void cbxTheme_SelectedIndexChanged(object _, EventArgs __) {
+            Theme = (ThemeNames)cbxTheme.SelectedIndex;
+            SaveSettings();
+            ApplyTheme();
+        }
+
+        private void btnClose_Click(object _, EventArgs __) {
+            this.Hide();
+        }
+        private void btnShowSettingsFile_Click(object _, EventArgs __) {
+            switch (WalkmanLib.GetOS()) {
+                case WalkmanLib.OS.Windows:
+                    Process.Start("explorer.exe", "/select, " + _settingsPath);
+                    break;
+                case WalkmanLib.OS.Linux:
+                    Process.Start("xdg-open", Path.GetDirectoryName(_settingsPath));
+                    break;
+                case WalkmanLib.OS.MacOS:
+                    Process.Start("open", $"-R \"{_settingsPath}\"");
+                    break;
+            }
+        }
         #endregion
 
         #region Settings Saving & Loading
