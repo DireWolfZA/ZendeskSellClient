@@ -41,16 +41,25 @@ namespace Forms {
         }
 
         private void ZendeskSellClient_Shown(object sender, EventArgs e) {
-            btnSettings.PerformClick();
+            if (string.IsNullOrWhiteSpace(Settings.I.AccessToken))
+                btnSettings.PerformClick();
         }
 
         private void btnSettings_Click(object _, EventArgs __) {
-            var inputDialog = new Ookii.Dialogs.InputDialog() {
-                MainInstruction = "Input Access Token:",
-                WindowTitle = "Zendesk Sell Token"
-            };
-            if (inputDialog.ShowDialog() == DialogResult.OK)
-                sellClient = new ZendeskSell.ZendeskSellClient(inputDialog.Input);
+            Settings.I.Show(this);
+            Settings.I.Activate();
+            Settings.I.BringToFront();
+            Settings.I.Focus();
+        }
+
+        public void AccessTokenChanged(string accessToken) {
+            if (string.IsNullOrWhiteSpace(accessToken)) {
+                cbxType.Enabled = false;
+                grpMain.Enabled = false;
+            } else {
+                cbxType.Enabled = true;
+                sellClient = new ZendeskSell.ZendeskSellClient(accessToken);
+            }
         }
 
         private ZendeskSell.IZendeskSellClient sellClient;

@@ -101,6 +101,7 @@ namespace Forms {
         private void txtAccessToken_TextChanged(object _, EventArgs __) {
             AccessToken = txtAccessToken.Text;
             SaveSettings();
+            ZendeskSellClient.I.AccessTokenChanged(AccessToken);
         }
         private void cbxTheme_SelectedIndexChanged(object _, EventArgs __) {
             Theme = (ThemeNames)cbxTheme.SelectedIndex;
