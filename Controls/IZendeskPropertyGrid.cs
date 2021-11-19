@@ -4,7 +4,10 @@ using System.Linq;
 using System.Windows.Forms;
 
 namespace Controls {
-    public abstract class IZendeskPropertyGrid<T> : UserControl where T : Models.Base {
+    public abstract class IZendeskPropertyGrid : UserControl {
+        public abstract void ApplyTheme();
+    }
+    public abstract class IZendeskPropertyGrid<T> : IZendeskPropertyGrid where T : Models.Base {
         public abstract void SetData(T data);
         public abstract T GetData();
     }

@@ -19,6 +19,10 @@ namespace Controls {
             cbxProduct.Items.Add("");
             cbxProduct.Items.AddRange(products.Values.ToArray());
 
+            ApplyTheme();
+        }
+
+        public override void ApplyTheme() {
             Theming.ApplyTheme(Controls);
             Theming.ApplyTheme(components?.Components);
         }

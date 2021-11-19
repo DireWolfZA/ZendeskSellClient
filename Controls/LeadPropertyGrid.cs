@@ -32,6 +32,10 @@ namespace Controls {
             cbxSource.Items.AddRange(sources.Values.ToArray());
             ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
+            ApplyTheme();
+        }
+
+        public override void ApplyTheme() {
             Theming.ApplyTheme(Controls);
             Theming.ApplyTheme(components?.Components);
         }

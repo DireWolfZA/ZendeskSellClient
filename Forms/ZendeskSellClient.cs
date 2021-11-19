@@ -16,6 +16,7 @@ namespace Forms {
         public void ApplyTheme() {
             Theming.ApplyTheme(this);
             Theming.ApplyTheme(components?.Components);
+            GetPropertyGrid()?.ApplyTheme();
         }
 
         private void ZendeskSellClient_Shown(object sender, EventArgs e) {
@@ -105,6 +106,8 @@ namespace Forms {
             scMain.Panel2.Tag = grid;
             scMain.Panel2.Controls.Add(grid);
         }
+        private IZendeskPropertyGrid GetPropertyGrid() =>
+            (IZendeskPropertyGrid)scMain.Panel2.Tag;
         private IZendeskPropertyGrid<T> GetPropertyGrid<T>() where T : Models.Base =>
             (IZendeskPropertyGrid<T>)scMain.Panel2.Tag;
 
