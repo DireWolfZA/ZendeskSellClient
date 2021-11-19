@@ -1,0 +1,119 @@
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
+using Helpers;
+
+namespace Forms {
+    public partial class Settings : Form {
+        public Settings() {
+            InitializeComponent();
+        }
+
+        private string _settingsPath;
+        public bool Loaded { get; private set; } = false;
+
+        public void Init() {
+            string configFileName = "ZendeskSellClient.xml";
+            if (Environment.GetEnvironmentVariable("OS") == "Windows_NT") {
+                if (!Directory.Exists(Path.Combine(Environment.GetEnvironmentVariable("AppData"), "WalkmanOSS")))
+                    Directory.CreateDirectory(Path.Combine(Environment.GetEnvironmentVariable("AppData"), "WalkmanOSS"));
+                _settingsPath = Path.Combine(Environment.GetEnvironmentVariable("AppData"), "WalkmanOSS", configFileName);
+            } else {
+                if (!Directory.Exists(Path.Combine(Environment.GetEnvironmentVariable("HOME"), ".config", "WalkmanOSS")))
+                    Directory.CreateDirectory(Path.Combine(Environment.GetEnvironmentVariable("HOME"), ".config", "WalkmanOSS"));
+                _settingsPath = Path.Combine(Environment.GetEnvironmentVariable("HOME"), ".config", "WalkmanOSS", configFileName);
+            }
+
+            if (File.Exists(Path.Combine(Application.StartupPath, configFileName))) {
+                _settingsPath = Path.Combine(Application.StartupPath, configFileName);
+            } else if (File.Exists(configFileName)) {
+                _settingsPath = new FileInfo(configFileName).FullName;
+            }
+
+            Loaded = true;
+            if (File.Exists(_settingsPath)) {
+                LoadSettings();
+            } else {
+                // set initial settings
+                cbxTheme.SelectedIndex = 0;
+            }
+        }
+
+        private void this_VisibleChanged(object _, EventArgs __) {
+            if (this.Visible)
+                this.CenterToParent();
+        }
+
+        #region Properties
+        public string AccessToken { get; private set; }
+        public ThemeNames Theme { get; private set; }
+        #endregion
+
+        #region Settings Saving & Loading
+        private void LoadSettings(object _, EventArgs __) => LoadSettings();
+        private void LoadSettings() {
+            if (!Loaded)
+                return;
+            _loading = true;
+            try {
+                using (var reader = XmlReader.Create(_settingsPath)) {
+                    try {
+                        reader.Read();
+                    } catch (XmlException) {
+                        return;
+                    }
+
+                    if (reader.IsStartElement() && reader.Name == "ZendeskSellClient") {
+                        if (reader.Read() && reader.IsStartElement() && reader.Name == "Settings" && reader.Read()) {
+                            while (reader.IsStartElement()) {
+                                switch (reader.Name ?? "") {
+                                    case "AccessToken": {
+                                        reader.Read();
+                                        txtAccessToken.Text = reader.Value.Trim();
+                                        break;
+                                    }
+                                    case "Theme": {
+                                        reader.Read();
+                                        Enum.TryParse(reader.Value, out ThemeNames var);
+                                        cbxTheme.SelectedIndex = (int)var;
+                                        break;
+                                    }
+                                    default: {
+                                        reader.Read(); // skip unknown values
+                                        break;
+                                    }
+                                }
+
+                                reader.Read();
+                                reader.Read();
+                            }
+                        }
+                    }
+                }
+            } finally {
+                _loading = false;
+            }
+        }
+
+        private bool _loading = false; // so that we don't save while loading settings
+
+        private void SaveSettings(object _, EventArgs __) => SaveSettings();
+        internal void SaveSettings() {
+            if (!Loaded || _loading)
+                return;
+            using (var writer = XmlWriter.Create(_settingsPath, new XmlWriterSettings() { Indent = true })) {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("ZendeskSellClient");
+                writer.WriteStartElement("Settings");
+                writer.WriteElementString("AccessToken", AccessToken);
+                writer.WriteElementString("Theme", Theme.ToString());
+                writer.WriteEndElement(); // Settings
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+            }
+        }
+        #endregion
+    }
+}
