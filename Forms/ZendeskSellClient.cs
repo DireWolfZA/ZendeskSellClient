@@ -50,6 +50,18 @@ namespace Forms {
 
             lstItems.Items.Clear();
 
+            if (cbxType.Text == "Line Items") {
+                lblDealID.Visible = true;
+                numDealID.Visible = true;
+                btnUpdate.Visible = false;
+                colHeadOwner.Text = "SKU";
+            } else {
+                lblDealID.Visible = false;
+                numDealID.Visible = false;
+                btnUpdate.Visible = true;
+                colHeadOwner.Text = "Owner";
+            }
+
             try {
                 users = (await ZendeskGet.GetAll((pn, pc) => sellClient.Users.GetAsync(pn, pc))).ToDictionary(u => u.ID, u => u.Name);
 
@@ -71,6 +83,10 @@ namespace Forms {
                         dealUnqualifiedReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.DealUnqualifiedReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
                         var contacts = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).ToDictionary(c => c.ID, c => c.Name);
                         SetPropertyGrid(new DealPropertyGrid(dealCustomFields, users, contacts, dealSources, dealStages, dealLossReasons, dealUnqualifiedReasons));
+                        break;
+                    case "Line Items":
+                        products = (await ZendeskGet.GetAll((pn, pc) => sellClient.Products.GetAsync(pn, pc))).ToDictionary(p => p.ID, p => p.Name);
+                        SetPropertyGrid(new LineItemPropertyGrid(products));
                         break;
                 }
                 grpMain.Enabled = true;
@@ -97,7 +113,12 @@ namespace Forms {
             item.Tag = data;
             item.Text = data.ID.ToString();
             item.SubItems[1].Text = data.Name;
-            item.SubItems[2].Text = users[data.OwnerID.Value];
+            if (data.OwnerID.HasValue && users.ContainsKey(data.OwnerID.Value))
+                item.SubItems[2].Text = users[data.OwnerID.Value];
+            else if (data is Models.LineItem li)
+                item.SubItems[2].Text = li.SKU;
+            else
+                item.SubItems[2].Text = data.OwnerID.ToString();
 
             return item;
         }
@@ -121,6 +142,10 @@ namespace Forms {
                         break;
                     case "Deals":
                         items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Deals.GetAsync(pn, pc))).Select(Converter.Convert);
+                        break;
+                    case "Line Items":
+                        var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        items = (await ZendeskGet.GetAll((pn, pc) => sellClient.LineItems.GetAsync(order.ID, pn, pc))).Select(li => Converter.Convert(li, order));
                         break;
                 }
 
@@ -146,7 +171,11 @@ namespace Forms {
                     GetPropertyGrid<Models.Contact>().SetData((Models.Contact)item);
                     break;
                 case "Deals":
+                    numDealID.Value = item.ID;
                     GetPropertyGrid<Models.Deal>().SetData((Models.Deal)item);
+                    break;
+                case "Line Items":
+                    GetPropertyGrid<Models.LineItem>().SetData((Models.LineItem)item);
                     break;
             }
             btnUpdate.Enabled = true;
@@ -170,6 +199,11 @@ namespace Forms {
                     case "Deals":
                         Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.GetOneAsync(idToGet)));
                         GetPropertyGrid<Models.Deal>().SetData(deal);
+                        break;
+                    case "Line Items":
+                        var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        Models.LineItem lineitem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.GetOneAsync(order.ID, idToGet)), order);
+                        GetPropertyGrid<Models.LineItem>().SetData(lineitem);
                         break;
                 }
             } finally {
@@ -201,6 +235,20 @@ namespace Forms {
                         Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.CreateAsync(Converter.Convert(pgD.GetData()))));
                         pgD.SetData(deal);
                         numOneID.Value = deal.ID;
+                        break;
+                    case "Line Items":
+                        // get existing or create order for deal
+                        var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        // get lineItem data to create
+                        var pgI = GetPropertyGrid<Models.LineItem>();
+                        // convert to ZendeskSellApi data
+                        var (lineItemRequest, orderRequest) = Converter.Convert(pgI.GetData(), order);
+                        // update order
+                        order = ZendeskGet.Handle(await sellClient.Orders.UpdateAsync(order.ID, orderRequest));
+                        // create item and set PropertyGrid data
+                        Models.LineItem lineItem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.CreateAsync(order.ID, lineItemRequest)), order);
+                        pgI.SetData(lineItem);
+                        numOneID.Value = lineItem.ID;
                         break;
                 }
             } finally {
@@ -245,6 +293,10 @@ namespace Forms {
                         break;
                     case "Deals":
                         ZendeskGet.Handle(await sellClient.Deals.DeleteAsync(idToDelete));
+                        break;
+                    case "Line Items":
+                        var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        ZendeskGet.Handle(await sellClient.LineItems.DeleteAsync(order.ID, idToDelete));
                         break;
                 }
             } finally {
