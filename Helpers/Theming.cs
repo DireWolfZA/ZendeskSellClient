@@ -9,6 +9,7 @@ namespace Helpers {
             if (form == null)
                 return;
 
+            var theme = WalkmanLib.Theme.Dark;
             WalkmanLib.ApplyTheme(theme, form, true);
 
             if (!toolStripManagerRendererSet) {
@@ -28,6 +29,15 @@ namespace Helpers {
                 ToolStripManager.Renderer = new WalkmanLib.CustomPaint.ToolStripSystemRendererWithDisabled(theme.ToolStripItemDisabledText);
                 toolStripManagerRendererSet = true;
             }
+        }
+
+        public static void AddListViewCustomPaint(ListView listView) {
+            var theme = WalkmanLib.Theme.Dark;
+            listView.DrawItem += WalkmanLib.CustomPaint.ListView_DrawDefaultItem;
+            listView.DrawSubItem += WalkmanLib.CustomPaint.ListView_DrawDefaultSubItem;
+            listView.DrawColumnHeader += WalkmanLib.CustomPaint.ListView_DrawCustomColumnHeader;
+
+            listView.Tag = theme.ListViewColumnColors;
         }
     }
 }

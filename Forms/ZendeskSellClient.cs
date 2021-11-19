@@ -13,7 +13,13 @@ namespace Forms {
             ApplyTheme();
         }
 
+        private bool haveAddedCustomPaint = false;
         public void ApplyTheme() {
+            if (!haveAddedCustomPaint) {
+                Theming.AddListViewCustomPaint(lstItems);
+                haveAddedCustomPaint = true;
+            }
+
             Theming.ApplyTheme(this);
             Theming.ApplyTheme(components?.Components);
             GetPropertyGrid()?.ApplyTheme();
