@@ -33,8 +33,7 @@ namespace Controls {
             ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
             Theming.ApplyTheme(Controls);
-            if (components != null)
-                Theming.ApplyTheme(components.Components);
+            Theming.ApplyTheme(components?.Components);
         }
 
         public override void SetData(Models.Lead data) {

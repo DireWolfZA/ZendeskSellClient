@@ -9,8 +9,7 @@ namespace Forms {
             InitializeComponent();
 
             Theming.ApplyTheme(this);
-            if (components != null)
-                Theming.ApplyTheme(components.Components);
+            Theming.ApplyTheme(components?.Components);
         }
 
         public Address Address {

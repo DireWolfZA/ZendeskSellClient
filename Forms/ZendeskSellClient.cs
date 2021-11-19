@@ -15,8 +15,7 @@ namespace Forms {
 
         public void ApplyTheme() {
             Theming.ApplyTheme(this);
-            if (components != null)
-                Theming.ApplyTheme(components.Components);
+            Theming.ApplyTheme(components?.Components);
         }
 
         private void ZendeskSellClient_Shown(object sender, EventArgs e) {

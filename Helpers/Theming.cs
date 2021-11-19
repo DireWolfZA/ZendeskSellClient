@@ -6,7 +6,9 @@ namespace Helpers {
         private static bool toolStripManagerRendererSet = false;
 
         public static void ApplyTheme(Form form) {
-            var theme = WalkmanLib.Theme.Dark;
+            if (form == null)
+                return;
+
             WalkmanLib.ApplyTheme(theme, form, true);
 
             if (!toolStripManagerRendererSet) {
@@ -16,6 +18,9 @@ namespace Helpers {
         }
 
         public static void ApplyTheme(System.Collections.IEnumerable controls) {
+            if (controls == null)
+                return;
+
             var theme = WalkmanLib.Theme.Dark;
             WalkmanLib.ApplyTheme(theme, controls, true);
 

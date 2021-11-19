@@ -20,8 +20,7 @@ namespace Controls {
             cbxProduct.Items.AddRange(products.Values.ToArray());
 
             Theming.ApplyTheme(Controls);
-            if (components != null)
-                Theming.ApplyTheme(components.Components);
+            Theming.ApplyTheme(components?.Components);
         }
 
         public override void SetData(Models.LineItem data) {
