@@ -34,6 +34,7 @@ namespace Forms {
                 Theming.AddListViewCustomPaint(lstItems);
                 haveAddedCustomPaint = true;
             }
+            lstItems.Tag = Settings.I.GetTheme().ListViewColumnColors;
 
             Theming.ApplyTheme(this);
             Theming.ApplyTheme(components?.Components);

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Windows.Forms;
+using Forms;
 
 namespace Helpers {
     public static class Theming {
@@ -9,7 +10,7 @@ namespace Helpers {
             if (form == null)
                 return;
 
-            var theme = WalkmanLib.Theme.Dark;
+            var theme = Settings.I.GetTheme();
             WalkmanLib.ApplyTheme(theme, form, true);
 
             if (!toolStripManagerRendererSet) {
@@ -22,7 +23,7 @@ namespace Helpers {
             if (controls == null)
                 return;
 
-            var theme = WalkmanLib.Theme.Dark;
+            var theme = Settings.I.GetTheme();
             WalkmanLib.ApplyTheme(theme, controls, true);
 
             if (!toolStripManagerRendererSet) {
@@ -32,12 +33,9 @@ namespace Helpers {
         }
 
         public static void AddListViewCustomPaint(ListView listView) {
-            var theme = WalkmanLib.Theme.Dark;
             listView.DrawItem += WalkmanLib.CustomPaint.ListView_DrawDefaultItem;
             listView.DrawSubItem += WalkmanLib.CustomPaint.ListView_DrawDefaultSubItem;
             listView.DrawColumnHeader += WalkmanLib.CustomPaint.ListView_DrawCustomColumnHeader;
-
-            listView.Tag = theme.ListViewColumnColors;
         }
     }
 }
