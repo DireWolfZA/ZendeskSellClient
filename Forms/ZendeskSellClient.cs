@@ -153,20 +153,105 @@ namespace Forms {
             btnDelete.Enabled = true;
         }
 
-        private void btnGetOne_Click(object sender, EventArgs e) {
+        private async void btnGetOne_Click(object sender, EventArgs e) {
+            btnGetOne.Enabled = false;
+            int idToGet = (int)numOneID.Value;
 
+            try {
+                switch (cbxType.Text) {
+                    case "Leads":
+                        Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.GetOneAsync(idToGet)));
+                        GetPropertyGrid<Models.Lead>().SetData(lead);
+                        break;
+                    case "Contacts":
+                        Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.GetOneAsync(idToGet)));
+                        GetPropertyGrid<Models.Contact>().SetData(contact);
+                        break;
+                    case "Deals":
+                        Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.GetOneAsync(idToGet)));
+                        GetPropertyGrid<Models.Deal>().SetData(deal);
+                        break;
+                }
+            } finally {
+                btnGetOne.Enabled = true;
+            }
+            btnUpdate.Enabled = true;
+            btnDelete.Enabled = true;
         }
 
-        private void btnCreate_Click(object sender, EventArgs e) {
+        private async void btnCreate_Click(object sender, EventArgs e) {
+            btnCreate.Enabled = false;
 
+            try {
+                switch (cbxType.Text) {
+                    case "Leads":
+                        var pgL = GetPropertyGrid<Models.Lead>();
+                        Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.CreateAsync(Converter.Convert(pgL.GetData()))));
+                        pgL.SetData(lead);
+                        numOneID.Value = lead.ID;
+                        break;
+                    case "Contacts":
+                        var pgC = GetPropertyGrid<Models.Contact>();
+                        Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.CreateAsync(Converter.Convert(pgC.GetData()))));
+                        pgC.SetData(contact);
+                        numOneID.Value = contact.ID;
+                        break;
+                    case "Deals":
+                        var pgD = GetPropertyGrid<Models.Deal>();
+                        Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.CreateAsync(Converter.Convert(pgD.GetData()))));
+                        pgD.SetData(deal);
+                        numOneID.Value = deal.ID;
+                        break;
+                }
+            } finally {
+                btnCreate.Enabled = true;
+            }
+            btnCreate.Enabled = true;
+            btnUpdate.Enabled = true;
+            btnDelete.Enabled = true;
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e) {
+        private async void btnUpdate_Click(object sender, EventArgs e) {
+            btnUpdate.Enabled = false;
 
+            try {
+                switch (cbxType.Text) {
+                    case "Leads":
+                        ZendeskGet.Handle(await sellClient.Leads.UpdateAsync((int)numOneID.Value, Converter.Convert(GetPropertyGrid<Models.Lead>().GetData())));
+                        break;
+                    case "Contacts":
+                        ZendeskGet.Handle(await sellClient.Contacts.UpdateAsync((int)numOneID.Value, Converter.Convert(GetPropertyGrid<Models.Contact>().GetData())));
+                        break;
+                    case "Deals":
+                        ZendeskGet.Handle(await sellClient.Deals.UpdateAsync((int)numOneID.Value, Converter.Convert(GetPropertyGrid<Models.Deal>().GetData())));
+                        break;
+                }
+            } finally {
+                btnUpdate.Enabled = true;
+            }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e) {
+        private async void btnDelete_Click(object sender, EventArgs e) {
+            btnDelete.Enabled = false;
+            int idToDelete = (int)numOneID.Value;
 
+            try {
+                switch (cbxType.Text) {
+                    case "Leads":
+                        ZendeskGet.Handle(await sellClient.Leads.DeleteAsync(idToDelete));
+                        break;
+                    case "Contacts":
+                        ZendeskGet.Handle(await sellClient.Contacts.DeleteAsync(idToDelete));
+                        break;
+                    case "Deals":
+                        ZendeskGet.Handle(await sellClient.Deals.DeleteAsync(idToDelete));
+                        break;
+                }
+            } finally {
+                btnDelete.Enabled = true;
+            }
+            btnUpdate.Enabled = false;
+            btnDelete.Enabled = false;
         }
     }
 }
