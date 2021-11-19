@@ -107,12 +107,50 @@ namespace Forms {
             (Models.Base)item.Tag;
 
 
-        private void btnGetAll_Click(object sender, EventArgs e) {
+        private async void btnGetAll_Click(object sender, EventArgs e) {
+            btnGetAll.Enabled = false;
+            IEnumerable<Models.Base> items = null;
 
+            try {
+                switch (cbxType.Text) {
+                    case "Leads":
+                        items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Leads.GetAsync(pn, pc))).Select(Converter.Convert);
+                        break;
+                    case "Contacts":
+                        items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).Select(Converter.Convert);
+                        break;
+                    case "Deals":
+                        items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Deals.GetAsync(pn, pc))).Select(Converter.Convert);
+                        break;
+                }
+
+                lstItems.Items.Clear();
+                lstItems.Items.AddRange(items.Select(CreateItem).ToArray());
+                lstItems.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            } finally {
+                btnGetAll.Enabled = true;
+            }
         }
 
         private void lstItems_SelectedIndexChanged(object sender, EventArgs e) {
+            if (lstItems.SelectedItems.Count != 1)
+                return;
 
+            var item = GetData(lstItems.SelectedItems[0]);
+            numOneID.Value = item.ID;
+            switch (cbxType.Text) {
+                case "Leads":
+                    GetPropertyGrid<Models.Lead>().SetData((Models.Lead)item);
+                    break;
+                case "Contacts":
+                    GetPropertyGrid<Models.Contact>().SetData((Models.Contact)item);
+                    break;
+                case "Deals":
+                    GetPropertyGrid<Models.Deal>().SetData((Models.Deal)item);
+                    break;
+            }
+            btnUpdate.Enabled = true;
+            btnDelete.Enabled = true;
         }
 
         private void btnGetOne_Click(object sender, EventArgs e) {
