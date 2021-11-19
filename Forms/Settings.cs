@@ -7,8 +7,21 @@ using Helpers;
 
 namespace Forms {
     public partial class Settings : Form {
+        // essentially VB.Net's auto default form instance but for C#. see https://stackoverflow.com/a/4699360/2999220
+        [ThreadStatic]
+        private static Settings instance;
         public Settings() {
             InitializeComponent();
+            instance = this;
+        }
+        public static Settings I {
+            get {
+                if (instance == null) {
+                    instance = new Settings();
+                    instance.FormClosed += delegate { instance = null; };
+                }
+                return instance;
+            }
         }
 
         private string _settingsPath;
@@ -76,6 +89,7 @@ namespace Forms {
         public void ApplyTheme() {
             Theming.ApplyTheme(this);
             Theming.ApplyTheme(components?.Components);
+            ZendeskSellClient.I.ApplyTheme();
         }
 
         #region Properties

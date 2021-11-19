@@ -7,10 +7,25 @@ using Helpers;
 
 namespace Forms {
     public partial class ZendeskSellClient : Form {
+        // essentially VB.Net's auto default form instance but for C#. see https://stackoverflow.com/a/4699360/2999220
+        [ThreadStatic]
+        private static ZendeskSellClient instance;
         public ZendeskSellClient() {
             InitializeComponent();
+            instance = this;
             lstItems.DoubleBuffered(true);
+
+            Settings.I.Init();
             ApplyTheme();
+        }
+        public static ZendeskSellClient I {
+            get {
+                if (instance == null) {
+                    instance = new ZendeskSellClient();
+                    instance.FormClosed += delegate { instance = null; };
+                }
+                return instance;
+            }
         }
 
         private bool haveAddedCustomPaint = false;
