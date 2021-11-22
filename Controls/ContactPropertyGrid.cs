@@ -43,8 +43,7 @@ namespace Controls {
 
             txtID.Text = data.ID.ToString();
             txtLink.Text = data.Link;
-            if (users.ContainsKey(data.CreatorID))
-                txtCreator.Text = users[data.CreatorID];
+            txtCreator.Text = users.ContainsKey(data.CreatorID) ? users[data.CreatorID] : null;
             txtCreatedAt.Text = data.CreatedAt;
             txtUpdatedAt.Text = data.UpdatedAt;
             txtIsOrganization.Text = data.IsOrganization.ToString();

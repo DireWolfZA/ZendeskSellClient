@@ -63,19 +63,16 @@ namespace Controls {
             this.Tag = data;
             txtID.Text = data.ID.ToString();
             txtLink.Text = data.Link;
-            if (users.ContainsKey(data.CreatorID))
-                txtCreator.Text = users[data.CreatorID];
+            txtCreator.Text = users.ContainsKey(data.CreatorID) ? users[data.CreatorID] : null;
             txtCreatedAt.Text = data.CreatedAt;
             txtUpdatedAt.Text = data.UpdatedAt;
             txtLastActivityAt.Text = data.LastActivityAt;
-            if (data.LastStageChangeByID.HasValue)
-                txtLastStageChangeBy.Text = users[data.LastStageChangeByID.Value];
+            txtLastStageChangeBy.Text = data.LastStageChangeByID.HasValue ? users[data.LastStageChangeByID.Value] : null;
             txtDropboxEmail.Text = data.DropboxEmail;
-            if (data.OrganizationID.HasValue)
-                txtOrganization.Text = contacts[data.OrganizationID.Value];
+            txtOrganization.Text = data.OrganizationID.HasValue ? contacts[data.OrganizationID.Value] : null;
 
-            cbxOwner.Text = users[data.OwnerID.Value];
-            cbxContact.Text = contacts[data.ContactID];
+            cbxOwner.Text = data.OwnerID.HasValue ? users[data.OwnerID.Value] : null;
+            cbxContact.Text = contacts.ContainsKey(data.ContactID) ? contacts[data.ContactID] : null;
             if (data.SourceID.HasValue)
                 cbxSource.Text = sources[data.SourceID.Value];
             else
@@ -83,7 +80,7 @@ namespace Controls {
             txtName.Text = data.Name;
             txtCurrency.Text = data.Currency;
             txtValue.Text = data.Value;
-            cbxStage.Text = stages[data.StageID.Value];
+            cbxStage.Text = data.StageID.HasValue ? stages[data.StageID.Value] : null;
             chkHot.Checked = data.Hot;
             txtLastStageChangeAt.Text = data.LastStageChangeAt;
             txtAddedAt.Text = data.AddedAt;
