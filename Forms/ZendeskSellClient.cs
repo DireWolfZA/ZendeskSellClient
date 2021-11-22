@@ -93,6 +93,8 @@ namespace Forms {
                 colHeadOwner.Text = "Owner";
             }
 
+            lstItems.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
             try {
                 users = (await ZendeskGet.GetAll((pn, pc) => sellClient.Users.GetAsync(pn, pc))).ToDictionary(u => u.ID, u => u.Name);
 
