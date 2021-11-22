@@ -8,6 +8,7 @@ namespace Forms {
         public TagEditor(IEnumerable<string> tags) : this() => Tags = tags;
         public TagEditor() {
             InitializeComponent();
+            this.Icon = Properties.Resources.ZendeskSell;
 
             Theming.ApplyTheme(this);
             Theming.ApplyTheme(components?.Components);

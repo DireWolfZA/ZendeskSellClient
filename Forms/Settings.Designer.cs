@@ -157,7 +157,6 @@ namespace Forms {
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.button1);
             this.Name = "Settings";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.VisibleChanged += new System.EventHandler(this.this_VisibleChanged);

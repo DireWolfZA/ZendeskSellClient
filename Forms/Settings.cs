@@ -12,6 +12,7 @@ namespace Forms {
         private static Settings instance;
         public Settings() {
             InitializeComponent();
+            this.Icon = Properties.Resources.ZendeskSell;
             instance = this;
         }
         public static Settings I {

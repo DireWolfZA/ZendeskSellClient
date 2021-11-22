@@ -174,7 +174,6 @@ namespace Forms {
             this.Controls.Add(this.lblCity);
             this.Controls.Add(this.lblLine1);
             this.Name = "AddressEditor";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Address";
             this.ResumeLayout(false);

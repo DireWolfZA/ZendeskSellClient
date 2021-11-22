@@ -23,7 +23,6 @@ namespace Forms {
         ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZendeskSellClient));
             this.lstItems = new System.Windows.Forms.ListView();
             this.colHeadID = new System.Windows.Forms.ColumnHeader();
             this.colHeadName = new System.Windows.Forms.ColumnHeader();
@@ -51,21 +50,19 @@ namespace Forms {
             // lstItems
             // 
             this.lstItems.AllowColumnReorder = true;
-            this.lstItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colHeadID,
             this.colHeadName,
             this.colHeadOwner});
+            this.lstItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstItems.FullRowSelect = true;
             this.lstItems.GridLines = true;
             this.lstItems.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstItems.HideSelection = false;
-            this.lstItems.Location = new System.Drawing.Point(3, 3);
+            this.lstItems.Location = new System.Drawing.Point(0, 0);
             this.lstItems.MultiSelect = false;
             this.lstItems.Name = "lstItems";
-            this.lstItems.Size = new System.Drawing.Size(294, 628);
+            this.lstItems.Size = new System.Drawing.Size(300, 621);
             this.lstItems.TabIndex = 0;
             this.lstItems.UseCompatibleStateImageBehavior = false;
             this.lstItems.View = System.Windows.Forms.View.Details;
@@ -237,7 +234,6 @@ namespace Forms {
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.cbxType);
             this.Controls.Add(this.grpMain);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ZendeskSellClient";
             this.Text = "ZendeskSellClient";
             this.Shown += new System.EventHandler(this.ZendeskSellClient_Shown);

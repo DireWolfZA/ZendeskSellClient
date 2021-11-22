@@ -73,7 +73,6 @@ namespace Forms {
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Name = "TagEditor";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Tags (One per line)";
             this.ResumeLayout(false);

@@ -12,6 +12,7 @@ namespace Forms {
         private static ZendeskSellClient instance;
         public ZendeskSellClient() {
             InitializeComponent();
+            this.Icon = Properties.Resources.ZendeskSell;
             instance = this;
             lstItems.DoubleBuffered(true);
 

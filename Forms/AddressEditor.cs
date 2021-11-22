@@ -7,6 +7,7 @@ namespace Forms {
         public AddressEditor(Address address) : this() => Address = address;
         public AddressEditor() {
             InitializeComponent();
+            this.Icon = Properties.Resources.ZendeskSell;
 
             Theming.ApplyTheme(this);
             Theming.ApplyTheme(components?.Components);
