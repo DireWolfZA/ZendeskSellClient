@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Models {
     public class Base {
@@ -10,7 +11,7 @@ namespace Models {
 
         public int? OwnerID { get; set; }
         public string Name { get; set; }
-        public IEnumerable<string> Tags { get; set; }
-        public Dictionary<string, object> CustomFields { get; set; }
+        public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
+        public Dictionary<string, object> CustomFields { get; set; } = new Dictionary<string, object>();
     }
 }

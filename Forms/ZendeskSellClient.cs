@@ -202,8 +202,10 @@ namespace Forms {
         }
 
         private void lstItems_SelectedIndexChanged(object sender, EventArgs e) {
-            if (lstItems.SelectedItems.Count != 1)
+            if (lstItems.SelectedItems.Count != 1) {
+                SetPGEmptyData();
                 return;
+            }
 
             var item = GetData(lstItems.SelectedItems[0]);
             numOneID.Value = item.ID;
@@ -365,6 +367,25 @@ namespace Forms {
             }
             btnUpdate.Enabled = false;
             btnDelete.Enabled = false;
+            GetItem(idToDelete)?.Remove();
+            SetPGEmptyData();
+        }
+
+        private void SetPGEmptyData() {
+            switch (cbxType.Text) {
+                case "Leads":
+                    GetPropertyGrid<Models.Lead>().SetData(new Models.Lead());
+                    break;
+                case "Contacts":
+                    GetPropertyGrid<Models.Contact>().SetData(new Models.Contact());
+                    break;
+                case "Deals":
+                    GetPropertyGrid<Models.Deal>().SetData(new Models.Deal());
+                    break;
+                case "Line Items":
+                    GetPropertyGrid<Models.LineItem>().SetData(new Models.LineItem());
+                    break;
+            }
         }
     }
 }
