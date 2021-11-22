@@ -53,6 +53,7 @@ namespace Forms {
             } else {
                 // set initial settings
                 cbxTheme.SelectedIndex = 0;
+                chkAutoGetAll.Checked = true;
             }
         }
 
@@ -95,6 +96,7 @@ namespace Forms {
         #region Properties
         public string AccessToken { get; private set; }
         public ThemeNames Theme { get; private set; }
+        public bool AutoGetAll { get; private set; }
         #endregion
 
         #region GUI Methods
@@ -107,6 +109,10 @@ namespace Forms {
             Theme = (ThemeNames)cbxTheme.SelectedIndex;
             SaveSettings();
             ApplyTheme();
+        }
+        private void chkAutoGetAll_CheckedChanged(object _, EventArgs __) {
+            AutoGetAll = chkAutoGetAll.Checked;
+            SaveSettings();
         }
 
         private void btnClose_Click(object _, EventArgs __) {
@@ -156,6 +162,12 @@ namespace Forms {
                                         cbxTheme.SelectedIndex = (int)var;
                                         break;
                                     }
+                                    case "AutoGetAll": {
+                                        reader.Read();
+                                        bool.TryParse(reader.Value, out bool var);
+                                        chkAutoGetAll.Checked = var;
+                                        break;
+                                    }
                                     default: {
                                         reader.Read(); // skip unknown values
                                         break;
@@ -183,10 +195,13 @@ namespace Forms {
                 writer.WriteStartDocument();
                 writer.WriteStartElement("ZendeskSellClient");
                 writer.WriteStartElement("Settings");
+
                 writer.WriteElementString("AccessToken", AccessToken);
                 writer.WriteElementString("Theme", Theme.ToString());
+                writer.WriteElementString("AutoGetAll", AutoGetAll.ToString());
+
                 writer.WriteEndElement(); // Settings
-                writer.WriteEndElement();
+                writer.WriteEndElement(); // ZendeskSellClient
                 writer.WriteEndDocument();
             }
         }

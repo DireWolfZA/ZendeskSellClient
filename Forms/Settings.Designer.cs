@@ -33,6 +33,7 @@ namespace Forms {
             this.cbxTheme = new System.Windows.Forms.ComboBox();
             this.lblAccessToken = new System.Windows.Forms.Label();
             this.txtAccessToken = new System.Windows.Forms.TextBox();
+            this.chkAutoGetAll = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
@@ -48,7 +49,7 @@ namespace Forms {
             // 
             this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(12, 64);
+            this.btnClose.Location = new System.Drawing.Point(12, 89);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 4;
@@ -59,7 +60,7 @@ namespace Forms {
             // btnSave
             // 
             this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnSave.Location = new System.Drawing.Point(93, 64);
+            this.btnSave.Location = new System.Drawing.Point(93, 89);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 5;
@@ -70,7 +71,7 @@ namespace Forms {
             // btnReload
             // 
             this.btnReload.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnReload.Location = new System.Drawing.Point(174, 64);
+            this.btnReload.Location = new System.Drawing.Point(174, 89);
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(96, 23);
             this.btnReload.TabIndex = 6;
@@ -81,7 +82,7 @@ namespace Forms {
             // btnShowSettingsFile
             // 
             this.btnShowSettingsFile.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnShowSettingsFile.Location = new System.Drawing.Point(276, 64);
+            this.btnShowSettingsFile.Location = new System.Drawing.Point(276, 89);
             this.btnShowSettingsFile.Name = "btnShowSettingsFile";
             this.btnShowSettingsFile.Size = new System.Drawing.Size(110, 23);
             this.btnShowSettingsFile.TabIndex = 7;
@@ -127,13 +128,25 @@ namespace Forms {
             this.txtAccessToken.TabIndex = 1;
             this.txtAccessToken.TextChanged += new System.EventHandler(this.txtAccessToken_TextChanged);
             // 
+            // chkAutoGetAll
+            // 
+            this.chkAutoGetAll.AutoEllipsis = true;
+            this.chkAutoGetAll.Location = new System.Drawing.Point(12, 64);
+            this.chkAutoGetAll.Name = "chkAutoGetAll";
+            this.chkAutoGetAll.Size = new System.Drawing.Size(374, 19);
+            this.chkAutoGetAll.TabIndex = 8;
+            this.chkAutoGetAll.Text = "Get all items after changing type";
+            this.chkAutoGetAll.UseVisualStyleBackColor = true;
+            this.chkAutoGetAll.CheckedChanged += new System.EventHandler(this.chkAutoGetAll_CheckedChanged);
+            // 
             // Settings
             // 
             this.AcceptButton = this.btnClose;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(398, 99);
+            this.ClientSize = new System.Drawing.Size(398, 124);
+            this.Controls.Add(this.chkAutoGetAll);
             this.Controls.Add(this.txtAccessToken);
             this.Controls.Add(this.lblAccessToken);
             this.Controls.Add(this.cbxTheme);
@@ -164,5 +177,6 @@ namespace Forms {
         private System.Windows.Forms.ComboBox cbxTheme;
         private System.Windows.Forms.Label lblAccessToken;
         private System.Windows.Forms.TextBox txtAccessToken;
+        private System.Windows.Forms.CheckBox chkAutoGetAll;
     }
 }

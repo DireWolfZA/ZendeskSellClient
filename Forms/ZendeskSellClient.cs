@@ -120,12 +120,14 @@ namespace Forms {
                         SetPropertyGrid(new LineItemPropertyGrid(products));
                         break;
                 }
-                grpMain.Enabled = true;
             } finally {
                 cbxType.Enabled = true;
                 btnUpdate.Enabled = false;
                 btnDelete.Enabled = false;
             }
+            grpMain.Enabled = true;
+            if (Settings.I.AutoGetAll)
+                btnGetAll.PerformClick();
         }
 
 
