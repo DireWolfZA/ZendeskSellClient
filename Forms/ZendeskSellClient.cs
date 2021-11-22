@@ -164,6 +164,13 @@ namespace Forms {
         private Models.Base GetData(ListViewItem item) =>
             (Models.Base)item.Tag;
 
+        private ListViewItem GetItem(int id) =>
+            lstItems.Items.Cast<ListViewItem>().FirstOrDefault(d => GetData(d).ID == id);
+        private ListViewItem AddOrUpdateData(Models.Base data) {
+            var item = GetItem(data.ID);
+            return item != null ? UpdateItem(item, data) : lstItems.Items.Add(CreateItem(data));
+        }
+
 
         private async void btnGetAll_Click(object sender, EventArgs e) {
             btnGetAll.Enabled = false;
@@ -228,19 +235,23 @@ namespace Forms {
                     case "Leads":
                         Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.GetOneAsync(idToGet)));
                         GetPropertyGrid<Models.Lead>().SetData(lead);
+                        AddOrUpdateData(lead).Selected = true;
                         break;
                     case "Contacts":
                         Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.GetOneAsync(idToGet)));
                         GetPropertyGrid<Models.Contact>().SetData(contact);
+                        AddOrUpdateData(contact).Selected = true;
                         break;
                     case "Deals":
                         Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.GetOneAsync(idToGet)));
                         GetPropertyGrid<Models.Deal>().SetData(deal);
+                        AddOrUpdateData(deal).Selected = true;
                         break;
                     case "Line Items":
                         var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
                         Models.LineItem lineitem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.GetOneAsync(order.ID, idToGet)), order);
                         GetPropertyGrid<Models.LineItem>().SetData(lineitem);
+                        AddOrUpdateData(lineitem).Selected = true;
                         break;
                 }
             } finally {
@@ -260,18 +271,21 @@ namespace Forms {
                         Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.CreateAsync(Converter.Convert(pgL.GetData()))));
                         pgL.SetData(lead);
                         numOneID.Value = lead.ID;
+                        AddOrUpdateData(lead).Selected = true;
                         break;
                     case "Contacts":
                         var pgC = GetPropertyGrid<Models.Contact>();
                         Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.CreateAsync(Converter.Convert(pgC.GetData()))));
                         pgC.SetData(contact);
                         numOneID.Value = contact.ID;
+                        AddOrUpdateData(contact).Selected = true;
                         break;
                     case "Deals":
                         var pgD = GetPropertyGrid<Models.Deal>();
                         Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.CreateAsync(Converter.Convert(pgD.GetData()))));
                         pgD.SetData(deal);
                         numOneID.Value = deal.ID;
+                        AddOrUpdateData(deal).Selected = true;
                         break;
                     case "Line Items":
                         // get existing or create order for deal
@@ -286,6 +300,7 @@ namespace Forms {
                         Models.LineItem lineItem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.CreateAsync(order.ID, lineItemRequest)), order);
                         pgI.SetData(lineItem);
                         numOneID.Value = lineItem.ID;
+                        AddOrUpdateData(lineItem).Selected = true;
                         break;
                 }
             } finally {
@@ -302,13 +317,22 @@ namespace Forms {
             try {
                 switch (cbxType.Text) {
                     case "Leads":
-                        ZendeskGet.Handle(await sellClient.Leads.UpdateAsync((int)numOneID.Value, Converter.Convert(GetPropertyGrid<Models.Lead>().GetData())));
+                        var pgL = GetPropertyGrid<Models.Lead>();
+                        Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.UpdateAsync((int)numOneID.Value, Converter.Convert(pgL.GetData()))));
+                        pgL.SetData(lead);
+                        AddOrUpdateData(lead).Selected = true;
                         break;
                     case "Contacts":
-                        ZendeskGet.Handle(await sellClient.Contacts.UpdateAsync((int)numOneID.Value, Converter.Convert(GetPropertyGrid<Models.Contact>().GetData())));
+                        var pgC = GetPropertyGrid<Models.Contact>();
+                        Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.UpdateAsync((int)numOneID.Value, Converter.Convert(pgC.GetData()))));
+                        pgC.SetData(contact);
+                        AddOrUpdateData(contact).Selected = true;
                         break;
                     case "Deals":
-                        ZendeskGet.Handle(await sellClient.Deals.UpdateAsync((int)numOneID.Value, Converter.Convert(GetPropertyGrid<Models.Deal>().GetData())));
+                        var pgD = GetPropertyGrid<Models.Deal>();
+                        Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.UpdateAsync((int)numOneID.Value, Converter.Convert(pgD.GetData()))));
+                        pgD.SetData(deal);
+                        AddOrUpdateData(deal).Selected = true;
                         break;
                 }
             } finally {
