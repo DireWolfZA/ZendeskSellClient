@@ -137,7 +137,7 @@ namespace Forms {
             // 
             // numOneID
             // 
-            this.numOneID.Location = new System.Drawing.Point(87, 28);
+            this.numOneID.Location = new System.Drawing.Point(87, 26);
             this.numOneID.Maximum = int.MaxValue;
             this.numOneID.Name = "numOneID";
             this.numOneID.Size = new System.Drawing.Size(105, 23);
@@ -147,21 +147,21 @@ namespace Forms {
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(279, 26);
+            this.btnCreate.Location = new System.Drawing.Point(441, 26);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
-            this.btnCreate.TabIndex = 5;
-            this.btnCreate.Text = "Create...";
+            this.btnCreate.TabIndex = 7;
+            this.btnCreate.Text = "Create";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // btnUpdate
             // 
             this.btnUpdate.Enabled = false;
-            this.btnUpdate.Location = new System.Drawing.Point(360, 26);
+            this.btnUpdate.Location = new System.Drawing.Point(279, 26);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
-            this.btnUpdate.TabIndex = 6;
+            this.btnUpdate.TabIndex = 5;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -191,10 +191,10 @@ namespace Forms {
             // btnDelete
             // 
             this.btnDelete.Enabled = false;
-            this.btnDelete.Location = new System.Drawing.Point(441, 26);
+            this.btnDelete.Location = new System.Drawing.Point(360, 26);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 7;
+            this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);

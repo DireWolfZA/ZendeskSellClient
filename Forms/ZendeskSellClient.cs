@@ -183,7 +183,11 @@ namespace Forms {
             lstItems.Items.Cast<ListViewItem>().FirstOrDefault(d => GetData(d).ID == id);
         private ListViewItem AddOrUpdateData(Models.Base data) {
             var item = GetItem(data.ID);
-            return item != null ? UpdateItem(item, data) : lstItems.Items.Add(CreateItem(data));
+            try { // just so I don't have to create a variable, resize columns, then return
+                return item != null ? UpdateItem(item, data) : lstItems.Items.Add(CreateItem(data));
+            } finally {
+                lstItems.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            }
         }
 
 
@@ -294,67 +298,6 @@ namespace Forms {
             btnDelete.Enabled = true;
         }
 
-        private async void btnCreate_Click(object sender, EventArgs e) {
-            btnCreate.Enabled = false;
-
-            try {
-                switch (cbxType.Text) {
-                    case "Leads":
-                        var pgL = GetPropertyGrid<Models.Lead>();
-                        using (labelManager.SetStatus("Creating Lead")) {
-                            Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.CreateAsync(Converter.Convert(pgL.GetData()))));
-                            pgL.SetData(lead);
-                            numOneID.Value = lead.ID;
-                            AddOrUpdateData(lead).Selected = true;
-                        }
-                        break;
-                    case "Contacts":
-                        var pgC = GetPropertyGrid<Models.Contact>();
-                        using (labelManager.SetStatus("Creating Contact")) {
-                            Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.CreateAsync(Converter.Convert(pgC.GetData()))));
-                            pgC.SetData(contact);
-                            numOneID.Value = contact.ID;
-                            AddOrUpdateData(contact).Selected = true;
-                        }
-                        break;
-                    case "Deals":
-                        using (labelManager.SetStatus("Creating Deal")) {
-                            var pgD = GetPropertyGrid<Models.Deal>();
-                            Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.CreateAsync(Converter.Convert(pgD.GetData()))));
-                            pgD.SetData(deal);
-                            numOneID.Value = deal.ID;
-                            AddOrUpdateData(deal).Selected = true;
-                        }
-                        break;
-                    case "Line Items":
-                        // get existing or create order for deal
-                        ZendeskSell.Orders.OrderResponse order;
-                        using (labelManager.SetStatus("Getting Order for DealID"))
-                            order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
-                        // get lineItem data to create
-                        var pgI = GetPropertyGrid<Models.LineItem>();
-                        // convert to ZendeskSellApi data
-                        var (lineItemRequest, orderRequest) = Converter.Convert(pgI.GetData(), order);
-                        // update order
-                        using (labelManager.SetStatus("Updating Order for DealID"))
-                            order = ZendeskGet.Handle(await sellClient.Orders.UpdateAsync(order.ID, orderRequest));
-                        // create item and set PropertyGrid data
-                        using (labelManager.SetStatus("Creating LineItem")) {
-                            Models.LineItem lineItem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.CreateAsync(order.ID, lineItemRequest)), order);
-                            pgI.SetData(lineItem);
-                            numOneID.Value = lineItem.ID;
-                            AddOrUpdateData(lineItem).Selected = true;
-                        }
-                        break;
-                }
-            } finally {
-                btnCreate.Enabled = true;
-            }
-            btnCreate.Enabled = true;
-            btnUpdate.Enabled = true;
-            btnDelete.Enabled = true;
-        }
-
         private async void btnUpdate_Click(object sender, EventArgs e) {
             btnUpdate.Enabled = false;
 
@@ -440,6 +383,67 @@ namespace Forms {
                     GetPropertyGrid<Models.LineItem>().SetData(new Models.LineItem());
                     break;
             }
+        }
+
+        private async void btnCreate_Click(object sender, EventArgs e) {
+            btnCreate.Enabled = false;
+
+            try {
+                switch (cbxType.Text) {
+                    case "Leads":
+                        var pgL = GetPropertyGrid<Models.Lead>();
+                        using (labelManager.SetStatus("Creating Lead")) {
+                            Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.CreateAsync(Converter.Convert(pgL.GetData()))));
+                            pgL.SetData(lead);
+                            numOneID.Value = lead.ID;
+                            AddOrUpdateData(lead).Selected = true;
+                        }
+                        break;
+                    case "Contacts":
+                        var pgC = GetPropertyGrid<Models.Contact>();
+                        using (labelManager.SetStatus("Creating Contact")) {
+                            Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.CreateAsync(Converter.Convert(pgC.GetData()))));
+                            pgC.SetData(contact);
+                            numOneID.Value = contact.ID;
+                            AddOrUpdateData(contact).Selected = true;
+                        }
+                        break;
+                    case "Deals":
+                        using (labelManager.SetStatus("Creating Deal")) {
+                            var pgD = GetPropertyGrid<Models.Deal>();
+                            Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.CreateAsync(Converter.Convert(pgD.GetData()))));
+                            pgD.SetData(deal);
+                            numOneID.Value = deal.ID;
+                            AddOrUpdateData(deal).Selected = true;
+                        }
+                        break;
+                    case "Line Items":
+                        // get existing or create order for deal
+                        ZendeskSell.Orders.OrderResponse order;
+                        using (labelManager.SetStatus("Getting Order for DealID"))
+                            order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        // get lineItem data to create
+                        var pgI = GetPropertyGrid<Models.LineItem>();
+                        // convert to ZendeskSellApi data
+                        var (lineItemRequest, orderRequest) = Converter.Convert(pgI.GetData(), order);
+                        // update order
+                        using (labelManager.SetStatus("Updating Order for DealID"))
+                            order = ZendeskGet.Handle(await sellClient.Orders.UpdateAsync(order.ID, orderRequest));
+                        // create item and set PropertyGrid data
+                        using (labelManager.SetStatus("Creating LineItem")) {
+                            Models.LineItem lineItem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.CreateAsync(order.ID, lineItemRequest)), order);
+                            pgI.SetData(lineItem);
+                            numOneID.Value = lineItem.ID;
+                            AddOrUpdateData(lineItem).Selected = true;
+                        }
+                        break;
+                }
+            } finally {
+                btnCreate.Enabled = true;
+            }
+            btnCreate.Enabled = true;
+            btnUpdate.Enabled = true;
+            btnDelete.Enabled = true;
         }
     }
 }
