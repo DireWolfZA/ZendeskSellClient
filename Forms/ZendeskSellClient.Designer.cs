@@ -39,12 +39,15 @@ namespace Forms {
             this.numDealID = new System.Windows.Forms.NumericUpDown();
             this.lblDealID = new System.Windows.Forms.Label();
             this.btnSettings = new System.Windows.Forms.Button();
+            this.statusStripMain = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numOneID)).BeginInit();
             this.grpMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDealID)).BeginInit();
+            this.statusStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // lstItems
@@ -92,7 +95,7 @@ namespace Forms {
             // scMain.Panel1
             // 
             this.scMain.Panel1.Controls.Add(this.lstItems);
-            this.scMain.Size = new System.Drawing.Size(863, 634);
+            this.scMain.Size = new System.Drawing.Size(863, 621);
             this.scMain.SplitterDistance = 300;
             this.scMain.TabIndex = 8;
             // 
@@ -180,7 +183,7 @@ namespace Forms {
             this.grpMain.Enabled = false;
             this.grpMain.Location = new System.Drawing.Point(12, 12);
             this.grpMain.Name = "grpMain";
-            this.grpMain.Size = new System.Drawing.Size(875, 695);
+            this.grpMain.Size = new System.Drawing.Size(875, 682);
             this.grpMain.TabIndex = 0;
             this.grpMain.TabStop = false;
             this.grpMain.Text = "Type:";
@@ -226,11 +229,28 @@ namespace Forms {
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
+            // statusStripMain
+            // 
+            this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.statusStripMain.Location = new System.Drawing.Point(0, 697);
+            this.statusStripMain.Name = "statusStripMain";
+            this.statusStripMain.Size = new System.Drawing.Size(899, 22);
+            this.statusStripMain.TabIndex = 3;
+            this.statusStripMain.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(117, 17);
+            this.statusLabel.Text = "Choose an item Type";
+            // 
             // ZendeskSellClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(899, 719);
+            this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.cbxType);
             this.Controls.Add(this.grpMain);
@@ -244,7 +264,10 @@ namespace Forms {
             this.grpMain.ResumeLayout(false);
             this.grpMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDealID)).EndInit();
+            this.statusStripMain.ResumeLayout(false);
+            this.statusStripMain.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -266,5 +289,7 @@ namespace Forms {
         private System.Windows.Forms.ColumnHeader colHeadOwner;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.StatusStrip statusStripMain;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
     }
 }
