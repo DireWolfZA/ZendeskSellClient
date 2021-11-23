@@ -128,7 +128,10 @@ namespace Controls {
                     else
                         customFieldControls[kv.Key].Text = field.ToString();
                 } else {
-                    kv.Value.Text = "";
+                    if (kv.Value is CheckBox chk)
+                        chk.Checked = false;
+                    else
+                        kv.Value.Text = "";
                 }
             }
         }

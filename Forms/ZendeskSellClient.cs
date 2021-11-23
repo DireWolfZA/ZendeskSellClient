@@ -83,6 +83,9 @@ namespace Forms {
             grpMain.Enabled = false;
 
             lstItems.Items.Clear();
+            if (scMain.Panel2.Tag != null)
+                scMain.Panel2.Controls.RemoveAt(0);
+            scMain.Panel2.Tag = null;
 
             if (cbxType.Text == "Line Items") {
                 lblDealID.Visible = true;
@@ -149,9 +152,6 @@ namespace Forms {
 
 
         private void SetPropertyGrid<T>(IZendeskPropertyGrid<T> grid) where T : Models.Base {
-            if (scMain.Panel2.Tag != null)
-                scMain.Panel2.Controls.RemoveAt(0);
-
             grid.Dock = DockStyle.Fill;
             scMain.Panel2.Tag = grid;
             scMain.Panel2.Controls.Add(grid);
