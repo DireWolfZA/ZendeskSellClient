@@ -194,17 +194,23 @@ namespace Forms {
             try {
                 switch (cbxType.Text) {
                     case "Leads":
-                        items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Leads.GetAsync(pn, pc))).Select(Converter.Convert);
+                        using (labelManager.SetStatus("Getting All Leads"))
+                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Leads.GetAsync(pn, pc))).Select(Converter.Convert);
                         break;
                     case "Contacts":
-                        items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).Select(Converter.Convert);
+                        using (labelManager.SetStatus("Getting All Contacts"))
+                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).Select(Converter.Convert);
                         break;
                     case "Deals":
-                        items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Deals.GetAsync(pn, pc))).Select(Converter.Convert);
+                        using (labelManager.SetStatus("Getting All Deals"))
+                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Deals.GetAsync(pn, pc))).Select(Converter.Convert);
                         break;
                     case "Line Items":
-                        var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
-                        items = (await ZendeskGet.GetAll((pn, pc) => sellClient.LineItems.GetAsync(order.ID, pn, pc))).Select(li => Converter.Convert(li, order));
+                        ZendeskSell.Orders.OrderResponse order;
+                        using (labelManager.SetStatus("Getting Order for DealID"))
+                            order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        using (labelManager.SetStatus("Getting Order's LineItems"))
+                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.LineItems.GetAsync(order.ID, pn, pc))).Select(li => Converter.Convert(li, order));
                         break;
                 }
 
@@ -250,25 +256,35 @@ namespace Forms {
             try {
                 switch (cbxType.Text) {
                     case "Leads":
-                        Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.GetOneAsync(idToGet)));
-                        GetPropertyGrid<Models.Lead>().SetData(lead);
-                        AddOrUpdateData(lead).Selected = true;
+                        using (labelManager.SetStatus("Getting Lead")) {
+                            Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.GetOneAsync(idToGet)));
+                            GetPropertyGrid<Models.Lead>().SetData(lead);
+                            AddOrUpdateData(lead).Selected = true;
+                        }
                         break;
                     case "Contacts":
-                        Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.GetOneAsync(idToGet)));
-                        GetPropertyGrid<Models.Contact>().SetData(contact);
-                        AddOrUpdateData(contact).Selected = true;
+                        using (labelManager.SetStatus("Getting Contact")) {
+                            Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.GetOneAsync(idToGet)));
+                            GetPropertyGrid<Models.Contact>().SetData(contact);
+                            AddOrUpdateData(contact).Selected = true;
+                        }
                         break;
                     case "Deals":
-                        Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.GetOneAsync(idToGet)));
-                        GetPropertyGrid<Models.Deal>().SetData(deal);
-                        AddOrUpdateData(deal).Selected = true;
+                        using (labelManager.SetStatus("Getting Deal")) {
+                            Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.GetOneAsync(idToGet)));
+                            GetPropertyGrid<Models.Deal>().SetData(deal);
+                            AddOrUpdateData(deal).Selected = true;
+                        }
                         break;
                     case "Line Items":
-                        var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
-                        Models.LineItem lineitem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.GetOneAsync(order.ID, idToGet)), order);
-                        GetPropertyGrid<Models.LineItem>().SetData(lineitem);
-                        AddOrUpdateData(lineitem).Selected = true;
+                        ZendeskSell.Orders.OrderResponse order;
+                        using (labelManager.SetStatus("Getting Order for DealID"))
+                            order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        using (labelManager.SetStatus("Getting LineItem")) {
+                            Models.LineItem lineitem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.GetOneAsync(order.ID, idToGet)), order);
+                            GetPropertyGrid<Models.LineItem>().SetData(lineitem);
+                            AddOrUpdateData(lineitem).Selected = true;
+                        }
                         break;
                 }
             } finally {
@@ -285,39 +301,50 @@ namespace Forms {
                 switch (cbxType.Text) {
                     case "Leads":
                         var pgL = GetPropertyGrid<Models.Lead>();
-                        Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.CreateAsync(Converter.Convert(pgL.GetData()))));
-                        pgL.SetData(lead);
-                        numOneID.Value = lead.ID;
-                        AddOrUpdateData(lead).Selected = true;
+                        using (labelManager.SetStatus("Creating Lead")) {
+                            Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.CreateAsync(Converter.Convert(pgL.GetData()))));
+                            pgL.SetData(lead);
+                            numOneID.Value = lead.ID;
+                            AddOrUpdateData(lead).Selected = true;
+                        }
                         break;
                     case "Contacts":
                         var pgC = GetPropertyGrid<Models.Contact>();
-                        Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.CreateAsync(Converter.Convert(pgC.GetData()))));
-                        pgC.SetData(contact);
-                        numOneID.Value = contact.ID;
-                        AddOrUpdateData(contact).Selected = true;
+                        using (labelManager.SetStatus("Creating Contact")) {
+                            Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.CreateAsync(Converter.Convert(pgC.GetData()))));
+                            pgC.SetData(contact);
+                            numOneID.Value = contact.ID;
+                            AddOrUpdateData(contact).Selected = true;
+                        }
                         break;
                     case "Deals":
-                        var pgD = GetPropertyGrid<Models.Deal>();
-                        Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.CreateAsync(Converter.Convert(pgD.GetData()))));
-                        pgD.SetData(deal);
-                        numOneID.Value = deal.ID;
-                        AddOrUpdateData(deal).Selected = true;
+                        using (labelManager.SetStatus("Creating Deal")) {
+                            var pgD = GetPropertyGrid<Models.Deal>();
+                            Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.CreateAsync(Converter.Convert(pgD.GetData()))));
+                            pgD.SetData(deal);
+                            numOneID.Value = deal.ID;
+                            AddOrUpdateData(deal).Selected = true;
+                        }
                         break;
                     case "Line Items":
                         // get existing or create order for deal
-                        var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        ZendeskSell.Orders.OrderResponse order;
+                        using (labelManager.SetStatus("Getting Order for DealID"))
+                            order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
                         // get lineItem data to create
                         var pgI = GetPropertyGrid<Models.LineItem>();
                         // convert to ZendeskSellApi data
                         var (lineItemRequest, orderRequest) = Converter.Convert(pgI.GetData(), order);
                         // update order
-                        order = ZendeskGet.Handle(await sellClient.Orders.UpdateAsync(order.ID, orderRequest));
+                        using (labelManager.SetStatus("Updating Order for DealID"))
+                            order = ZendeskGet.Handle(await sellClient.Orders.UpdateAsync(order.ID, orderRequest));
                         // create item and set PropertyGrid data
-                        Models.LineItem lineItem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.CreateAsync(order.ID, lineItemRequest)), order);
-                        pgI.SetData(lineItem);
-                        numOneID.Value = lineItem.ID;
-                        AddOrUpdateData(lineItem).Selected = true;
+                        using (labelManager.SetStatus("Creating LineItem")) {
+                            Models.LineItem lineItem = Converter.Convert(ZendeskGet.Handle(await sellClient.LineItems.CreateAsync(order.ID, lineItemRequest)), order);
+                            pgI.SetData(lineItem);
+                            numOneID.Value = lineItem.ID;
+                            AddOrUpdateData(lineItem).Selected = true;
+                        }
                         break;
                 }
             } finally {
@@ -335,21 +362,27 @@ namespace Forms {
                 switch (cbxType.Text) {
                     case "Leads":
                         var pgL = GetPropertyGrid<Models.Lead>();
-                        Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.UpdateAsync((int)numOneID.Value, Converter.Convert(pgL.GetData()))));
-                        pgL.SetData(lead);
-                        AddOrUpdateData(lead).Selected = true;
+                        using (labelManager.SetStatus("Updating Lead")) {
+                            Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.UpdateAsync((int)numOneID.Value, Converter.Convert(pgL.GetData()))));
+                            pgL.SetData(lead);
+                            AddOrUpdateData(lead).Selected = true;
+                        }
                         break;
                     case "Contacts":
                         var pgC = GetPropertyGrid<Models.Contact>();
-                        Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.UpdateAsync((int)numOneID.Value, Converter.Convert(pgC.GetData()))));
-                        pgC.SetData(contact);
-                        AddOrUpdateData(contact).Selected = true;
+                        using (labelManager.SetStatus("Updating Contact")) {
+                            Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.UpdateAsync((int)numOneID.Value, Converter.Convert(pgC.GetData()))));
+                            pgC.SetData(contact);
+                            AddOrUpdateData(contact).Selected = true;
+                        }
                         break;
                     case "Deals":
                         var pgD = GetPropertyGrid<Models.Deal>();
-                        Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.UpdateAsync((int)numOneID.Value, Converter.Convert(pgD.GetData()))));
-                        pgD.SetData(deal);
-                        AddOrUpdateData(deal).Selected = true;
+                        using (labelManager.SetStatus("Updating Deal")) {
+                            Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.UpdateAsync((int)numOneID.Value, Converter.Convert(pgD.GetData()))));
+                            pgD.SetData(deal);
+                            AddOrUpdateData(deal).Selected = true;
+                        }
                         break;
                 }
             } finally {
@@ -364,17 +397,23 @@ namespace Forms {
             try {
                 switch (cbxType.Text) {
                     case "Leads":
-                        ZendeskGet.Handle(await sellClient.Leads.DeleteAsync(idToDelete));
+                        using (labelManager.SetStatus("Deleting Lead"))
+                            ZendeskGet.Handle(await sellClient.Leads.DeleteAsync(idToDelete));
                         break;
                     case "Contacts":
-                        ZendeskGet.Handle(await sellClient.Contacts.DeleteAsync(idToDelete));
+                        using (labelManager.SetStatus("Deleting Contact"))
+                            ZendeskGet.Handle(await sellClient.Contacts.DeleteAsync(idToDelete));
                         break;
                     case "Deals":
-                        ZendeskGet.Handle(await sellClient.Deals.DeleteAsync(idToDelete));
+                        using (labelManager.SetStatus("Deleting Deal"))
+                            ZendeskGet.Handle(await sellClient.Deals.DeleteAsync(idToDelete));
                         break;
                     case "Line Items":
-                        var order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
-                        ZendeskGet.Handle(await sellClient.LineItems.DeleteAsync(order.ID, idToDelete));
+                        ZendeskSell.Orders.OrderResponse order;
+                        using (labelManager.SetStatus("Getting Order for DealID"))
+                            order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
+                        using (labelManager.SetStatus("Deleting LineItem"))
+                            ZendeskGet.Handle(await sellClient.LineItems.DeleteAsync(order.ID, idToDelete));
                         break;
                 }
             } finally {
