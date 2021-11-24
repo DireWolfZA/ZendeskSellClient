@@ -12,7 +12,7 @@ namespace Forms {
         private static Settings instance;
         public Settings() {
             InitializeComponent();
-            this.Icon = Properties.Resources.ZendeskSell;
+            this.Icon = Properties.Resources.Settings;
             instance = this;
         }
         public static Settings I {
@@ -97,6 +97,7 @@ namespace Forms {
         #region Properties
         public string AccessToken { get; private set; }
         public ThemeNames Theme { get; private set; }
+        public bool AutoRefreshDeps { get; private set; }
         public bool AutoGetAll { get; private set; }
         #endregion
 
@@ -110,6 +111,10 @@ namespace Forms {
             Theme = (ThemeNames)cbxTheme.SelectedIndex;
             SaveSettings();
             ApplyTheme();
+        }
+        private void chkAutoRefreshDeps_CheckedChanged(object _, EventArgs __) {
+            AutoRefreshDeps = chkAutoRefreshDeps.Checked;
+            SaveSettings();
         }
         private void chkAutoGetAll_CheckedChanged(object _, EventArgs __) {
             AutoGetAll = chkAutoGetAll.Checked;
@@ -163,6 +168,12 @@ namespace Forms {
                                         cbxTheme.SelectedIndex = (int)var;
                                         break;
                                     }
+                                    case "AutoRefreshDeps": {
+                                        reader.Read();
+                                        bool.TryParse(reader.Value, out bool var);
+                                        chkAutoRefreshDeps.Checked = var;
+                                        break;
+                                    }
                                     case "AutoGetAll": {
                                         reader.Read();
                                         bool.TryParse(reader.Value, out bool var);
@@ -199,6 +210,7 @@ namespace Forms {
 
                 writer.WriteElementString("AccessToken", AccessToken);
                 writer.WriteElementString("Theme", Theme.ToString());
+                writer.WriteElementString("AutoRefreshDeps", AutoRefreshDeps.ToString());
                 writer.WriteElementString("AutoGetAll", AutoGetAll.ToString());
 
                 writer.WriteEndElement(); // Settings
