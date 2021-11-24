@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationManifest>Properties\App.manifest</ApplicationManifest>
-    <ApplicationIcon>Properties\ZendeskSell.ico</ApplicationIcon>
+    <ApplicationIcon>Properties\Images\ZendeskSell.ico</ApplicationIcon>
     <RootNamespace />
   </PropertyGroup>
 
