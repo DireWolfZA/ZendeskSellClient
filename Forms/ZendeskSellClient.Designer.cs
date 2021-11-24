@@ -23,6 +23,7 @@ namespace Forms {
         ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.lstItems = new System.Windows.Forms.ListView();
             this.colHeadID = new System.Windows.Forms.ColumnHeader();
             this.colHeadName = new System.Windows.Forms.ColumnHeader();
@@ -42,6 +43,7 @@ namespace Forms {
             this.btnSettings = new System.Windows.Forms.Button();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.SuspendLayout();
@@ -198,6 +200,7 @@ namespace Forms {
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(24, 24);
             this.btnRefresh.TabIndex = 2;
+            this.toolTip.SetToolTip(this.btnRefresh, "Refresh current Type Dependencies");
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -268,6 +271,7 @@ namespace Forms {
             this.Controls.Add(this.cbxType);
             this.Controls.Add(this.grpMain);
             this.Name = "ZendeskSellClient";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZendeskSellClient";
             this.Shown += new System.EventHandler(this.ZendeskSellClient_Shown);
             this.scMain.Panel1.ResumeLayout(false);
@@ -305,5 +309,6 @@ namespace Forms {
         private System.Windows.Forms.StatusStrip statusStripMain;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
