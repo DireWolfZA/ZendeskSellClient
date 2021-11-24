@@ -78,8 +78,65 @@ namespace Forms {
         private Dictionary<int, string> dealUnqualifiedReasons;
         private Dictionary<int, string> products;
 
+        private async void btnRefresh_Click(object sender, EventArgs e) {
+            cbxType.Enabled = false;
+            btnRefresh.Enabled = false;
+            grpMain.Enabled = false;
+
+            lstItems.SelectedItems.Clear();
+            if (scMain.Panel2.Tag != null)
+                scMain.Panel2.Controls.RemoveAt(0);
+            scMain.Panel2.Tag = null;
+
+            try {
+                using (labelManager.SetStatus("Getting Sell Users"))
+                    users = (await ZendeskGet.GetAll((pn, pc) => sellClient.Users.GetAsync(pn, pc))).ToDictionary(u => u.ID, u => u.Name);
+
+                switch (cbxType.Text) {
+                    case "Leads":
+                        using (labelManager.SetStatus("Getting Lead Custom Fields"))
+                            leadCustomFields = await ZendeskGet.GetAll((pn, pc) => sellClient.CustomFields.GetLeads());
+                        using (labelManager.SetStatus("Getting Lead Sources"))
+                            leadSources = (await ZendeskGet.GetAll((pn, pc) => sellClient.LeadSources.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
+                        SetPropertyGrid(new LeadPropertyGrid(leadCustomFields, users, leadSources));
+                        break;
+                    case "Contacts":
+                        using (labelManager.SetStatus("Getting Contact Custom Fields"))
+                            contactCustomFields = await ZendeskGet.GetAll((pn, pc) => sellClient.CustomFields.GetContacts());
+                        SetPropertyGrid(new ContactPropertyGrid(contactCustomFields, users));
+                        break;
+                    case "Deals":
+                        using (labelManager.SetStatus("Getting Deal Custom Fields"))
+                            dealCustomFields = await ZendeskGet.GetAll((pn, pc) => sellClient.CustomFields.GetDeals());
+                        using (labelManager.SetStatus("Getting Deal Sources"))
+                            dealSources = (await ZendeskGet.GetAll((pn, pc) => sellClient.DealSources.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
+                        using (labelManager.SetStatus("Getting Deal Stages"))
+                            dealStages = (await ZendeskGet.GetAll((pn, pc) => sellClient.Stages.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
+                        using (labelManager.SetStatus("Getting Deal Loss Reasons"))
+                            dealLossReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.DealLossReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
+                        using (labelManager.SetStatus("Getting Deal Unqualified Reasons"))
+                            dealUnqualifiedReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.DealUnqualifiedReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
+                        Dictionary<int, string> contacts;
+                        using (labelManager.SetStatus("Getting Contacts"))
+                            contacts = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).ToDictionary(c => c.ID, c => c.Name);
+                        SetPropertyGrid(new DealPropertyGrid(dealCustomFields, users, contacts, dealSources, dealStages, dealLossReasons, dealUnqualifiedReasons));
+                        break;
+                    case "Line Items":
+                        using (labelManager.SetStatus("Getting Products"))
+                            products = (await ZendeskGet.GetAll((pn, pc) => sellClient.Products.GetAsync(pn, pc))).ToDictionary(p => p.ID, p => p.Name);
+                        SetPropertyGrid(new LineItemPropertyGrid(products));
+                        break;
+                }
+            } finally {
+                cbxType.Enabled = true;
+                btnRefresh.Enabled = true;
+                grpMain.Enabled = true;
+            }
+        }
+
         private async void cbxType_SelectedIndexChanged(object sender, EventArgs e) {
             cbxType.Enabled = false;
+            btnRefresh.Enabled = false;
             grpMain.Enabled = false;
 
             lstItems.Items.Clear();
@@ -152,6 +209,7 @@ namespace Forms {
                 }
             } finally {
                 cbxType.Enabled = true;
+                btnRefresh.Enabled = true;
                 btnUpdate.Enabled = false;
                 btnDelete.Enabled = false;
             }

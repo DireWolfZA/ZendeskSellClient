@@ -35,6 +35,7 @@ namespace Forms {
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.grpMain = new System.Windows.Forms.GroupBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.numDealID = new System.Windows.Forms.NumericUpDown();
             this.lblDealID = new System.Windows.Forms.Label();
@@ -97,7 +98,7 @@ namespace Forms {
             this.scMain.Panel1.Controls.Add(this.lstItems);
             this.scMain.Size = new System.Drawing.Size(863, 621);
             this.scMain.SplitterDistance = 300;
-            this.scMain.TabIndex = 8;
+            this.scMain.TabIndex = 9;
             // 
             // cbxType
             // 
@@ -120,7 +121,7 @@ namespace Forms {
             this.btnGetAll.Location = new System.Drawing.Point(6, 26);
             this.btnGetAll.Name = "btnGetAll";
             this.btnGetAll.Size = new System.Drawing.Size(75, 23);
-            this.btnGetAll.TabIndex = 2;
+            this.btnGetAll.TabIndex = 3;
             this.btnGetAll.Text = "Get All";
             this.btnGetAll.UseVisualStyleBackColor = true;
             this.btnGetAll.Click += new System.EventHandler(this.btnGetAll_Click);
@@ -130,7 +131,7 @@ namespace Forms {
             this.btnGetOne.Location = new System.Drawing.Point(198, 26);
             this.btnGetOne.Name = "btnGetOne";
             this.btnGetOne.Size = new System.Drawing.Size(75, 23);
-            this.btnGetOne.TabIndex = 4;
+            this.btnGetOne.TabIndex = 5;
             this.btnGetOne.Text = "Get One";
             this.btnGetOne.UseVisualStyleBackColor = true;
             this.btnGetOne.Click += new System.EventHandler(this.btnGetOne_Click);
@@ -141,7 +142,7 @@ namespace Forms {
             this.numOneID.Maximum = int.MaxValue;
             this.numOneID.Name = "numOneID";
             this.numOneID.Size = new System.Drawing.Size(105, 23);
-            this.numOneID.TabIndex = 3;
+            this.numOneID.TabIndex = 4;
             this.numOneID.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numOneID.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
             // 
@@ -150,7 +151,7 @@ namespace Forms {
             this.btnCreate.Location = new System.Drawing.Point(441, 26);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
-            this.btnCreate.TabIndex = 7;
+            this.btnCreate.TabIndex = 8;
             this.btnCreate.Text = "Create";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
@@ -161,7 +162,7 @@ namespace Forms {
             this.btnUpdate.Location = new System.Drawing.Point(279, 26);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
-            this.btnUpdate.TabIndex = 5;
+            this.btnUpdate.TabIndex = 6;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -171,6 +172,7 @@ namespace Forms {
             this.grpMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpMain.Controls.Add(this.btnRefresh);
             this.grpMain.Controls.Add(this.btnDelete);
             this.grpMain.Controls.Add(this.numDealID);
             this.grpMain.Controls.Add(this.lblDealID);
@@ -188,13 +190,24 @@ namespace Forms {
             this.grpMain.TabStop = false;
             this.grpMain.Text = "Type:";
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Image = global::Properties.Resources.Refresh;
+            this.btnRefresh.Location = new System.Drawing.Point(764, 0);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(24, 24);
+            this.btnRefresh.TabIndex = 2;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
             // btnDelete
             // 
             this.btnDelete.Enabled = false;
             this.btnDelete.Location = new System.Drawing.Point(360, 26);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 6;
+            this.btnDelete.TabIndex = 7;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -291,5 +304,6 @@ namespace Forms {
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.StatusStrip statusStripMain;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }
