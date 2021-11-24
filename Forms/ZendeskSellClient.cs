@@ -158,6 +158,29 @@ namespace Forms {
 
             lstItems.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
+            if (Settings.I.AutoRefreshDeps) {
+                users = null;
+                switch (cbxType.Text) {
+                    case "Leads":
+                        leadCustomFields = null;
+                        leadSources = null;
+                        break;
+                    case "Contacts":
+                        contactCustomFields = null;
+                        break;
+                    case "Deals":
+                        dealCustomFields = null;
+                        dealSources = null;
+                        dealStages = null;
+                        dealLossReasons = null;
+                        dealUnqualifiedReasons = null;
+                        break;
+                    case "Line Items":
+                        products = null;
+                        break;
+                }
+            }
+
             try {
                 if (users == null)
                     using (labelManager.SetStatus("Getting Sell Users"))
