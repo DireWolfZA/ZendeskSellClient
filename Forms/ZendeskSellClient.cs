@@ -72,6 +72,7 @@ namespace Forms {
         private IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> dealCustomFields;
         private Dictionary<int, string> users;
         private Dictionary<int, string> leadSources;
+        private Dictionary<int, string> leadUnqualifiedReasons;
         private Dictionary<int, string> dealSources;
         private Dictionary<int, string> dealStages;
         private Dictionary<int, string> dealLossReasons;
@@ -98,7 +99,9 @@ namespace Forms {
                             leadCustomFields = await ZendeskGet.GetAll((pn, pc) => sellClient.CustomFields.GetLeads());
                         using (labelManager.SetStatus("Getting Lead Sources"))
                             leadSources = (await ZendeskGet.GetAll((pn, pc) => sellClient.LeadSources.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
-                        SetPropertyGrid(new LeadPropertyGrid(leadCustomFields, users, leadSources));
+                        using (labelManager.SetStatus("Getting Lead Unqualified Reasons"))
+                            leadUnqualifiedReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.LeadUnqualifiedReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
+                        SetPropertyGrid(new LeadPropertyGrid(leadCustomFields, users, leadSources, leadUnqualifiedReasons));
                         break;
                     case "Contacts":
                         using (labelManager.SetStatus("Getting Contact Custom Fields"))
@@ -164,6 +167,7 @@ namespace Forms {
                     case "Leads":
                         leadCustomFields = null;
                         leadSources = null;
+                        leadUnqualifiedReasons = null;
                         break;
                     case "Contacts":
                         contactCustomFields = null;
@@ -194,7 +198,10 @@ namespace Forms {
                         if (leadSources == null)
                             using (labelManager.SetStatus("Getting Lead Sources"))
                                 leadSources = (await ZendeskGet.GetAll((pn, pc) => sellClient.LeadSources.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
-                        SetPropertyGrid(new LeadPropertyGrid(leadCustomFields, users, leadSources));
+                        if (leadUnqualifiedReasons == null)
+                            using (labelManager.SetStatus("Getting Lead Unqualified Reasons"))
+                                leadUnqualifiedReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.LeadUnqualifiedReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
+                        SetPropertyGrid(new LeadPropertyGrid(leadCustomFields, users, leadSources, leadUnqualifiedReasons));
                         break;
                     case "Contacts":
                         if (contactCustomFields == null)

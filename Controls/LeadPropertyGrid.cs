@@ -8,13 +8,16 @@ namespace Controls {
         private readonly IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields;
         private readonly Dictionary<int, string> users;
         private readonly Dictionary<int, string> sources;
+        private readonly Dictionary<int, string> unqualifiedReasons;
 
         private readonly Dictionary<string, Control> customFieldControls = new Dictionary<string, Control>();
 
-        public LeadPropertyGrid(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<int, string> users, Dictionary<int, string> sources) {
+        public LeadPropertyGrid(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields,
+                                Dictionary<int, string> users, Dictionary<int, string> sources, Dictionary<int, string> unqualifiedReasons) {
             this.customFields = customFields;
             this.users = users;
             this.sources = sources;
+            this.unqualifiedReasons = unqualifiedReasons;
 
             InitializeComponent();
             txtLink.LinkClicked += ZendeskPropertyGridMethods.LinkLabel_LinkClicked;
