@@ -33,6 +33,10 @@ namespace Controls {
             cbxSource.Items.Clear();
             cbxSource.Items.Add("");
             cbxSource.Items.AddRange(sources.Values.ToArray());
+            cbxUnqualifiedReason.Items.Clear();
+            cbxUnqualifiedReason.Items.Add("");
+            cbxUnqualifiedReason.Items.AddRange(unqualifiedReasons.Values.ToArray());
+
             ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
             ApplyTheme();

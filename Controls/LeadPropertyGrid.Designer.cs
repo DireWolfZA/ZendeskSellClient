@@ -24,6 +24,7 @@ namespace Controls {
         /// </summary>
         private void InitializeComponent() {
             this.scMain = new System.Windows.Forms.SplitContainer();
+            this.lblUnqualifiedReason = new System.Windows.Forms.TextBox();
             this.pnlCustomFieldLabels = new System.Windows.Forms.Panel();
             this.lblCustomFields = new System.Windows.Forms.Label();
             this.lblTags = new System.Windows.Forms.TextBox();
@@ -53,6 +54,7 @@ namespace Controls {
             this.lblLink = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.TextBox();
             this.lblReadOnly = new System.Windows.Forms.Label();
+            this.cbxUnqualifiedReason = new System.Windows.Forms.ComboBox();
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.cbxSource = new System.Windows.Forms.ComboBox();
             this.cbxOwner = new System.Windows.Forms.ComboBox();
@@ -98,6 +100,7 @@ namespace Controls {
             // scMain.Panel1
             // 
             this.scMain.Panel1.AutoScroll = true;
+            this.scMain.Panel1.Controls.Add(this.lblUnqualifiedReason);
             this.scMain.Panel1.Controls.Add(this.pnlCustomFieldLabels);
             this.scMain.Panel1.Controls.Add(this.lblCustomFields);
             this.scMain.Panel1.Controls.Add(this.lblTags);
@@ -132,6 +135,7 @@ namespace Controls {
             // scMain.Panel2
             // 
             this.scMain.Panel2.AutoScroll = true;
+            this.scMain.Panel2.Controls.Add(this.cbxUnqualifiedReason);
             this.scMain.Panel2.Controls.Add(this.txtStatus);
             this.scMain.Panel2.Controls.Add(this.cbxSource);
             this.scMain.Panel2.Controls.Add(this.cbxOwner);
@@ -161,27 +165,39 @@ namespace Controls {
             this.scMain.Panel2.Controls.Add(this.txtCreator);
             this.scMain.Panel2.Controls.Add(this.txtID);
             this.scMain.Panel2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.scMain.Size = new System.Drawing.Size(436, 648);
+            this.scMain.Size = new System.Drawing.Size(436, 670);
             this.scMain.SplitterDistance = 162;
             this.scMain.TabIndex = 0;
+            // 
+            // lblUnqualifiedReason
+            // 
+            this.lblUnqualifiedReason.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUnqualifiedReason.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lblUnqualifiedReason.Location = new System.Drawing.Point(3, 287);
+            this.lblUnqualifiedReason.Name = "lblUnqualifiedReason";
+            this.lblUnqualifiedReason.ReadOnly = true;
+            this.lblUnqualifiedReason.Size = new System.Drawing.Size(156, 16);
+            this.lblUnqualifiedReason.TabIndex = 13;
+            this.lblUnqualifiedReason.Text = "Unqualified Reason";
             // 
             // pnlCustomFieldLabels
             // 
             this.pnlCustomFieldLabels.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlCustomFieldLabels.AutoSize = true;
-            this.pnlCustomFieldLabels.Location = new System.Drawing.Point(3, 632);
+            this.pnlCustomFieldLabels.Location = new System.Drawing.Point(3, 654);
             this.pnlCustomFieldLabels.Name = "pnlCustomFieldLabels";
             this.pnlCustomFieldLabels.Size = new System.Drawing.Size(156, 13);
-            this.pnlCustomFieldLabels.TabIndex = 28;
+            this.pnlCustomFieldLabels.TabIndex = 29;
             // 
             // lblCustomFields
             // 
             this.lblCustomFields.AutoSize = true;
-            this.lblCustomFields.Location = new System.Drawing.Point(3, 614);
+            this.lblCustomFields.Location = new System.Drawing.Point(3, 636);
             this.lblCustomFields.Name = "lblCustomFields";
             this.lblCustomFields.Size = new System.Drawing.Size(82, 15);
-            this.lblCustomFields.TabIndex = 27;
+            this.lblCustomFields.TabIndex = 28;
             this.lblCustomFields.Text = "Custom Fields";
             // 
             // lblTags
@@ -189,11 +205,11 @@ namespace Controls {
             this.lblTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTags.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblTags.Location = new System.Drawing.Point(3, 573);
+            this.lblTags.Location = new System.Drawing.Point(3, 595);
             this.lblTags.Name = "lblTags";
             this.lblTags.ReadOnly = true;
             this.lblTags.Size = new System.Drawing.Size(156, 16);
-            this.lblTags.TabIndex = 26;
+            this.lblTags.TabIndex = 27;
             this.lblTags.Text = "Tags";
             // 
             // lblAddress
@@ -201,11 +217,11 @@ namespace Controls {
             this.lblAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblAddress.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblAddress.Location = new System.Drawing.Point(3, 551);
+            this.lblAddress.Location = new System.Drawing.Point(3, 573);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.ReadOnly = true;
             this.lblAddress.Size = new System.Drawing.Size(156, 16);
-            this.lblAddress.TabIndex = 25;
+            this.lblAddress.TabIndex = 26;
             this.lblAddress.Text = "Address";
             // 
             // lblSkype
@@ -213,11 +229,11 @@ namespace Controls {
             this.lblSkype.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSkype.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblSkype.Location = new System.Drawing.Point(3, 529);
+            this.lblSkype.Location = new System.Drawing.Point(3, 551);
             this.lblSkype.Name = "lblSkype";
             this.lblSkype.ReadOnly = true;
             this.lblSkype.Size = new System.Drawing.Size(156, 16);
-            this.lblSkype.TabIndex = 24;
+            this.lblSkype.TabIndex = 25;
             this.lblSkype.Text = "Skype";
             // 
             // lblLinkedin
@@ -225,11 +241,11 @@ namespace Controls {
             this.lblLinkedin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLinkedin.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblLinkedin.Location = new System.Drawing.Point(3, 507);
+            this.lblLinkedin.Location = new System.Drawing.Point(3, 529);
             this.lblLinkedin.Name = "lblLinkedin";
             this.lblLinkedin.ReadOnly = true;
             this.lblLinkedin.Size = new System.Drawing.Size(156, 16);
-            this.lblLinkedin.TabIndex = 23;
+            this.lblLinkedin.TabIndex = 24;
             this.lblLinkedin.Text = "LinkedIn";
             // 
             // lblFacebook
@@ -237,11 +253,11 @@ namespace Controls {
             this.lblFacebook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFacebook.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblFacebook.Location = new System.Drawing.Point(3, 485);
+            this.lblFacebook.Location = new System.Drawing.Point(3, 507);
             this.lblFacebook.Name = "lblFacebook";
             this.lblFacebook.ReadOnly = true;
             this.lblFacebook.Size = new System.Drawing.Size(156, 16);
-            this.lblFacebook.TabIndex = 22;
+            this.lblFacebook.TabIndex = 23;
             this.lblFacebook.Text = "Facebook";
             // 
             // lblTwitter
@@ -249,11 +265,11 @@ namespace Controls {
             this.lblTwitter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTwitter.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblTwitter.Location = new System.Drawing.Point(3, 463);
+            this.lblTwitter.Location = new System.Drawing.Point(3, 485);
             this.lblTwitter.Name = "lblTwitter";
             this.lblTwitter.ReadOnly = true;
             this.lblTwitter.Size = new System.Drawing.Size(156, 16);
-            this.lblTwitter.TabIndex = 21;
+            this.lblTwitter.TabIndex = 22;
             this.lblTwitter.Text = "Twitter";
             // 
             // lblFax
@@ -261,11 +277,11 @@ namespace Controls {
             this.lblFax.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFax.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblFax.Location = new System.Drawing.Point(3, 441);
+            this.lblFax.Location = new System.Drawing.Point(3, 463);
             this.lblFax.Name = "lblFax";
             this.lblFax.ReadOnly = true;
             this.lblFax.Size = new System.Drawing.Size(156, 16);
-            this.lblFax.TabIndex = 20;
+            this.lblFax.TabIndex = 21;
             this.lblFax.Text = "Fax";
             // 
             // lblMobile
@@ -273,11 +289,11 @@ namespace Controls {
             this.lblMobile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMobile.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblMobile.Location = new System.Drawing.Point(3, 419);
+            this.lblMobile.Location = new System.Drawing.Point(3, 441);
             this.lblMobile.Name = "lblMobile";
             this.lblMobile.ReadOnly = true;
             this.lblMobile.Size = new System.Drawing.Size(156, 16);
-            this.lblMobile.TabIndex = 19;
+            this.lblMobile.TabIndex = 20;
             this.lblMobile.Text = "Mobile";
             // 
             // lblPhone
@@ -285,11 +301,11 @@ namespace Controls {
             this.lblPhone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPhone.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblPhone.Location = new System.Drawing.Point(3, 397);
+            this.lblPhone.Location = new System.Drawing.Point(3, 419);
             this.lblPhone.Name = "lblPhone";
             this.lblPhone.ReadOnly = true;
             this.lblPhone.Size = new System.Drawing.Size(156, 16);
-            this.lblPhone.TabIndex = 18;
+            this.lblPhone.TabIndex = 19;
             this.lblPhone.Text = "Phone";
             // 
             // lblEmail
@@ -297,11 +313,11 @@ namespace Controls {
             this.lblEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblEmail.Location = new System.Drawing.Point(3, 375);
+            this.lblEmail.Location = new System.Drawing.Point(3, 397);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.ReadOnly = true;
             this.lblEmail.Size = new System.Drawing.Size(156, 16);
-            this.lblEmail.TabIndex = 17;
+            this.lblEmail.TabIndex = 18;
             this.lblEmail.Text = "Email";
             // 
             // lblWebsite
@@ -309,11 +325,11 @@ namespace Controls {
             this.lblWebsite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblWebsite.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblWebsite.Location = new System.Drawing.Point(3, 353);
+            this.lblWebsite.Location = new System.Drawing.Point(3, 375);
             this.lblWebsite.Name = "lblWebsite";
             this.lblWebsite.ReadOnly = true;
             this.lblWebsite.Size = new System.Drawing.Size(156, 16);
-            this.lblWebsite.TabIndex = 16;
+            this.lblWebsite.TabIndex = 17;
             this.lblWebsite.Text = "Website";
             // 
             // lblIndustry
@@ -321,11 +337,11 @@ namespace Controls {
             this.lblIndustry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblIndustry.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblIndustry.Location = new System.Drawing.Point(3, 331);
+            this.lblIndustry.Location = new System.Drawing.Point(3, 353);
             this.lblIndustry.Name = "lblIndustry";
             this.lblIndustry.ReadOnly = true;
             this.lblIndustry.Size = new System.Drawing.Size(156, 16);
-            this.lblIndustry.TabIndex = 15;
+            this.lblIndustry.TabIndex = 16;
             this.lblIndustry.Text = "Industry";
             // 
             // lblDescription
@@ -333,11 +349,11 @@ namespace Controls {
             this.lblDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblDescription.Location = new System.Drawing.Point(3, 309);
+            this.lblDescription.Location = new System.Drawing.Point(3, 331);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.ReadOnly = true;
             this.lblDescription.Size = new System.Drawing.Size(156, 16);
-            this.lblDescription.TabIndex = 14;
+            this.lblDescription.TabIndex = 15;
             this.lblDescription.Text = "Description";
             // 
             // lblTitle
@@ -345,11 +361,11 @@ namespace Controls {
             this.lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lblTitle.Location = new System.Drawing.Point(3, 287);
+            this.lblTitle.Location = new System.Drawing.Point(3, 309);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.ReadOnly = true;
             this.lblTitle.Size = new System.Drawing.Size(156, 16);
-            this.lblTitle.TabIndex = 13;
+            this.lblTitle.TabIndex = 14;
             this.lblTitle.Text = "Title";
             // 
             // lblSource
@@ -502,6 +518,17 @@ namespace Controls {
             this.lblReadOnly.TabIndex = 0;
             this.lblReadOnly.Text = "Read-Only";
             // 
+            // cbxUnqualifiedReason
+            // 
+            this.cbxUnqualifiedReason.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxUnqualifiedReason.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxUnqualifiedReason.FormattingEnabled = true;
+            this.cbxUnqualifiedReason.Location = new System.Drawing.Point(3, 284);
+            this.cbxUnqualifiedReason.Name = "cbxUnqualifiedReason";
+            this.cbxUnqualifiedReason.Size = new System.Drawing.Size(264, 23);
+            this.cbxUnqualifiedReason.TabIndex = 41;
+            // 
             // txtStatus
             // 
             this.txtStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -509,7 +536,7 @@ namespace Controls {
             this.txtStatus.Location = new System.Drawing.Point(3, 240);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.Size = new System.Drawing.Size(264, 23);
-            this.txtStatus.TabIndex = 36;
+            this.txtStatus.TabIndex = 39;
             // 
             // cbxSource
             // 
@@ -520,7 +547,7 @@ namespace Controls {
             this.cbxSource.Location = new System.Drawing.Point(3, 262);
             this.cbxSource.Name = "cbxSource";
             this.cbxSource.Size = new System.Drawing.Size(264, 23);
-            this.cbxSource.TabIndex = 37;
+            this.cbxSource.TabIndex = 40;
             // 
             // cbxOwner
             // 
@@ -531,25 +558,25 @@ namespace Controls {
             this.cbxOwner.Location = new System.Drawing.Point(3, 152);
             this.cbxOwner.Name = "cbxOwner";
             this.cbxOwner.Size = new System.Drawing.Size(264, 23);
-            this.cbxOwner.TabIndex = 32;
+            this.cbxOwner.TabIndex = 35;
             // 
             // pnlCustomFieldValues
             // 
             this.pnlCustomFieldValues.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlCustomFieldValues.AutoSize = true;
-            this.pnlCustomFieldValues.Location = new System.Drawing.Point(3, 632);
+            this.pnlCustomFieldValues.Location = new System.Drawing.Point(3, 654);
             this.pnlCustomFieldValues.Name = "pnlCustomFieldValues";
             this.pnlCustomFieldValues.Size = new System.Drawing.Size(264, 13);
-            this.pnlCustomFieldValues.TabIndex = 54;
+            this.pnlCustomFieldValues.TabIndex = 58;
             // 
             // btnTagsEdit
             // 
             this.btnTagsEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTagsEdit.Location = new System.Drawing.Point(244, 570);
+            this.btnTagsEdit.Location = new System.Drawing.Point(244, 592);
             this.btnTagsEdit.Name = "btnTagsEdit";
             this.btnTagsEdit.Size = new System.Drawing.Size(23, 23);
-            this.btnTagsEdit.TabIndex = 53;
+            this.btnTagsEdit.TabIndex = 57;
             this.btnTagsEdit.Text = "E";
             this.btnTagsEdit.UseVisualStyleBackColor = true;
             // 
@@ -557,19 +584,19 @@ namespace Controls {
             // 
             this.txtTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTags.Location = new System.Drawing.Point(3, 570);
+            this.txtTags.Location = new System.Drawing.Point(3, 592);
             this.txtTags.Name = "txtTags";
             this.txtTags.ReadOnly = true;
             this.txtTags.Size = new System.Drawing.Size(241, 23);
-            this.txtTags.TabIndex = 52;
+            this.txtTags.TabIndex = 56;
             // 
             // btnAddressEdit
             // 
             this.btnAddressEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddressEdit.Location = new System.Drawing.Point(244, 548);
+            this.btnAddressEdit.Location = new System.Drawing.Point(244, 570);
             this.btnAddressEdit.Name = "btnAddressEdit";
             this.btnAddressEdit.Size = new System.Drawing.Size(23, 23);
-            this.btnAddressEdit.TabIndex = 51;
+            this.btnAddressEdit.TabIndex = 55;
             this.btnAddressEdit.Text = "E";
             this.btnAddressEdit.UseVisualStyleBackColor = true;
             // 
@@ -581,7 +608,7 @@ namespace Controls {
             this.txtLink.Location = new System.Drawing.Point(3, 41);
             this.txtLink.Name = "txtLink";
             this.txtLink.Size = new System.Drawing.Size(264, 15);
-            this.txtLink.TabIndex = 28;
+            this.txtLink.TabIndex = 31;
             this.txtLink.TabStop = true;
             this.txtLink.Text = "https://";
             // 
@@ -589,119 +616,119 @@ namespace Controls {
             // 
             this.txtAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAddress.Location = new System.Drawing.Point(3, 548);
+            this.txtAddress.Location = new System.Drawing.Point(3, 570);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.ReadOnly = true;
             this.txtAddress.Size = new System.Drawing.Size(241, 23);
-            this.txtAddress.TabIndex = 50;
+            this.txtAddress.TabIndex = 54;
             // 
             // txtSkype
             // 
             this.txtSkype.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSkype.Location = new System.Drawing.Point(3, 526);
+            this.txtSkype.Location = new System.Drawing.Point(3, 548);
             this.txtSkype.Name = "txtSkype";
             this.txtSkype.Size = new System.Drawing.Size(264, 23);
-            this.txtSkype.TabIndex = 49;
+            this.txtSkype.TabIndex = 53;
             // 
             // txtLinkedin
             // 
             this.txtLinkedin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLinkedin.Location = new System.Drawing.Point(3, 504);
+            this.txtLinkedin.Location = new System.Drawing.Point(3, 526);
             this.txtLinkedin.Name = "txtLinkedin";
             this.txtLinkedin.Size = new System.Drawing.Size(264, 23);
-            this.txtLinkedin.TabIndex = 48;
+            this.txtLinkedin.TabIndex = 52;
             // 
             // txtFacebook
             // 
             this.txtFacebook.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFacebook.Location = new System.Drawing.Point(3, 482);
+            this.txtFacebook.Location = new System.Drawing.Point(3, 504);
             this.txtFacebook.Name = "txtFacebook";
             this.txtFacebook.Size = new System.Drawing.Size(264, 23);
-            this.txtFacebook.TabIndex = 47;
+            this.txtFacebook.TabIndex = 51;
             // 
             // txtTwitter
             // 
             this.txtTwitter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTwitter.Location = new System.Drawing.Point(3, 460);
+            this.txtTwitter.Location = new System.Drawing.Point(3, 482);
             this.txtTwitter.Name = "txtTwitter";
             this.txtTwitter.Size = new System.Drawing.Size(264, 23);
-            this.txtTwitter.TabIndex = 46;
+            this.txtTwitter.TabIndex = 50;
             // 
             // txtFax
             // 
             this.txtFax.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFax.Location = new System.Drawing.Point(3, 438);
+            this.txtFax.Location = new System.Drawing.Point(3, 460);
             this.txtFax.Name = "txtFax";
             this.txtFax.Size = new System.Drawing.Size(264, 23);
-            this.txtFax.TabIndex = 45;
+            this.txtFax.TabIndex = 49;
             // 
             // txtMobile
             // 
             this.txtMobile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMobile.Location = new System.Drawing.Point(3, 416);
+            this.txtMobile.Location = new System.Drawing.Point(3, 438);
             this.txtMobile.Name = "txtMobile";
             this.txtMobile.Size = new System.Drawing.Size(264, 23);
-            this.txtMobile.TabIndex = 44;
+            this.txtMobile.TabIndex = 48;
             // 
             // txtPhone
             // 
             this.txtPhone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPhone.Location = new System.Drawing.Point(3, 394);
+            this.txtPhone.Location = new System.Drawing.Point(3, 416);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(264, 23);
-            this.txtPhone.TabIndex = 43;
+            this.txtPhone.TabIndex = 47;
             // 
             // txtEmail
             // 
             this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtEmail.Location = new System.Drawing.Point(3, 372);
+            this.txtEmail.Location = new System.Drawing.Point(3, 394);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(264, 23);
-            this.txtEmail.TabIndex = 42;
+            this.txtEmail.TabIndex = 46;
             // 
             // txtWebsite
             // 
             this.txtWebsite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtWebsite.Location = new System.Drawing.Point(3, 350);
+            this.txtWebsite.Location = new System.Drawing.Point(3, 372);
             this.txtWebsite.Name = "txtWebsite";
             this.txtWebsite.Size = new System.Drawing.Size(264, 23);
-            this.txtWebsite.TabIndex = 41;
+            this.txtWebsite.TabIndex = 45;
             // 
             // txtIndustry
             // 
             this.txtIndustry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtIndustry.Location = new System.Drawing.Point(3, 328);
+            this.txtIndustry.Location = new System.Drawing.Point(3, 350);
             this.txtIndustry.Name = "txtIndustry";
             this.txtIndustry.Size = new System.Drawing.Size(264, 23);
-            this.txtIndustry.TabIndex = 40;
+            this.txtIndustry.TabIndex = 44;
             // 
             // txtDescription
             // 
             this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDescription.Location = new System.Drawing.Point(3, 306);
+            this.txtDescription.Location = new System.Drawing.Point(3, 328);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(264, 23);
-            this.txtDescription.TabIndex = 39;
+            this.txtDescription.TabIndex = 43;
             // 
             // txtTitle
             // 
             this.txtTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTitle.Location = new System.Drawing.Point(3, 284);
+            this.txtTitle.Location = new System.Drawing.Point(3, 306);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(264, 23);
-            this.txtTitle.TabIndex = 38;
+            this.txtTitle.TabIndex = 42;
             // 
             // txtCompany
             // 
@@ -710,7 +737,7 @@ namespace Controls {
             this.txtCompany.Location = new System.Drawing.Point(3, 218);
             this.txtCompany.Name = "txtCompany";
             this.txtCompany.Size = new System.Drawing.Size(264, 23);
-            this.txtCompany.TabIndex = 35;
+            this.txtCompany.TabIndex = 38;
             // 
             // txtLastName
             // 
@@ -719,7 +746,7 @@ namespace Controls {
             this.txtLastName.Location = new System.Drawing.Point(3, 196);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(264, 23);
-            this.txtLastName.TabIndex = 34;
+            this.txtLastName.TabIndex = 37;
             // 
             // txtFirstName
             // 
@@ -728,7 +755,7 @@ namespace Controls {
             this.txtFirstName.Location = new System.Drawing.Point(3, 174);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(264, 23);
-            this.txtFirstName.TabIndex = 33;
+            this.txtFirstName.TabIndex = 36;
             // 
             // txtUpdatedAt
             // 
@@ -738,7 +765,7 @@ namespace Controls {
             this.txtUpdatedAt.Name = "txtUpdatedAt";
             this.txtUpdatedAt.ReadOnly = true;
             this.txtUpdatedAt.Size = new System.Drawing.Size(264, 23);
-            this.txtUpdatedAt.TabIndex = 31;
+            this.txtUpdatedAt.TabIndex = 34;
             // 
             // txtCreatedAt
             // 
@@ -748,7 +775,7 @@ namespace Controls {
             this.txtCreatedAt.Name = "txtCreatedAt";
             this.txtCreatedAt.ReadOnly = true;
             this.txtCreatedAt.Size = new System.Drawing.Size(264, 23);
-            this.txtCreatedAt.TabIndex = 30;
+            this.txtCreatedAt.TabIndex = 33;
             // 
             // txtCreator
             // 
@@ -758,7 +785,7 @@ namespace Controls {
             this.txtCreator.Name = "txtCreator";
             this.txtCreator.ReadOnly = true;
             this.txtCreator.Size = new System.Drawing.Size(264, 23);
-            this.txtCreator.TabIndex = 29;
+            this.txtCreator.TabIndex = 32;
             // 
             // txtID
             // 
@@ -768,7 +795,7 @@ namespace Controls {
             this.txtID.Name = "txtID";
             this.txtID.ReadOnly = true;
             this.txtID.Size = new System.Drawing.Size(264, 23);
-            this.txtID.TabIndex = 27;
+            this.txtID.TabIndex = 30;
             // 
             // LeadPropertyGrid
             // 
@@ -776,7 +803,7 @@ namespace Controls {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.scMain);
             this.Name = "LeadPropertyGrid";
-            this.Size = new System.Drawing.Size(436, 648);
+            this.Size = new System.Drawing.Size(436, 670);
             this.scMain.Panel1.ResumeLayout(false);
             this.scMain.Panel1.PerformLayout();
             this.scMain.Panel2.ResumeLayout(false);
@@ -847,5 +874,7 @@ namespace Controls {
         private System.Windows.Forms.ComboBox cbxOwner;
         private System.Windows.Forms.ComboBox cbxSource;
         private System.Windows.Forms.TextBox txtStatus;
+        private System.Windows.Forms.ComboBox cbxUnqualifiedReason;
+        private System.Windows.Forms.TextBox lblUnqualifiedReason;
     }
 }
