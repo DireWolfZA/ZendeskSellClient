@@ -5,6 +5,7 @@ namespace Models {
         public string OrganizationName { get; set; }
         public string Status { get; set; }
         public int? SourceID { get; set; }
+        public int? UnqualifiedReasonID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Industry { get; set; }

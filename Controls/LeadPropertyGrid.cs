@@ -64,6 +64,10 @@ namespace Controls {
                 cbxSource.Text = sources[data.SourceID.Value];
             else
                 cbxSource.SelectedIndex = 0;
+            if (data.UnqualifiedReasonID.HasValue)
+                cbxUnqualifiedReason.Text = unqualifiedReasons[data.UnqualifiedReasonID.Value];
+            else
+                cbxUnqualifiedReason.SelectedIndex = 0;
             txtTitle.Text = data.Title;
             txtDescription.Text = data.Description;
             txtIndustry.Text = data.Industry;
@@ -94,6 +98,7 @@ namespace Controls {
                 OrganizationName = txtCompany.Text,
                 Status = txtStatus.Text,
                 SourceID = sources.ContainsValue(cbxSource.Text) ? sources.First(kv => kv.Value == cbxSource.Text).Key : (int?)null,
+                UnqualifiedReasonID = unqualifiedReasons.ContainsValue(cbxUnqualifiedReason.Text) ? unqualifiedReasons.First(kv => kv.Value == cbxUnqualifiedReason.Text).Key : (int?)null,
                 Title = txtTitle.Text,
                 Description = txtDescription.Text,
                 Industry = txtIndustry.Text,
