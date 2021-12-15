@@ -44,6 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="Ookii.Dialogs\Ookii.Dialogs.csproj" />
     <ProjectReference Include="ZendeskSellApi\ZendeskSell\ZendeskSell.csproj" />
   </ItemGroup>

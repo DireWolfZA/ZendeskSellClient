@@ -6,7 +6,7 @@ namespace Controls {
     public partial class LineItemPropertyGrid : IZendeskPropertyGrid<Models.LineItem> {
         private readonly Dictionary<int, string> products;
 
-        public LineItemPropertyGrid(Dictionary<int, string> products) {
+        public LineItemPropertyGrid(Forms.Settings settings, Dictionary<int, string> products) {
             this.products = products;
 
             InitializeComponent();
@@ -19,12 +19,13 @@ namespace Controls {
             cbxProduct.Items.Add("");
             cbxProduct.Items.AddRange(products.Values.ToArray());
 
-            ApplyTheme();
+            ApplyTheme(settings.GetTheme());
+            settings.ThemeChanged += ApplyTheme;
         }
 
-        public override void ApplyTheme() {
-            Theming.ApplyTheme(Controls);
-            Theming.ApplyTheme(components?.Components);
+        public override void ApplyTheme(WalkmanLib.Theme theme) {
+            Theming.ApplyTheme(theme, Controls);
+            Theming.ApplyTheme(theme, components?.Components);
         }
 
         public override void SetData(Models.LineItem data) {

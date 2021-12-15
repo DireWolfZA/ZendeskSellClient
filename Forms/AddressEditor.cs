@@ -4,13 +4,18 @@ using ZendeskSell.Models;
 
 namespace Forms {
     public partial class AddressEditor : Form {
-        public AddressEditor(Address address) : this() => Address = address;
-        public AddressEditor() {
+        public AddressEditor(Settings settings, Address address) : this(settings) => Address = address;
+        public AddressEditor(Settings settings) {
             InitializeComponent();
             this.Icon = Properties.Resources.ZendeskSell;
 
-            Theming.ApplyTheme(this);
-            Theming.ApplyTheme(components?.Components);
+            ApplyTheme(settings.GetTheme());
+            settings.ThemeChanged += ApplyTheme;
+        }
+
+        void ApplyTheme(WalkmanLib.Theme theme) {
+            Theming.ApplyTheme(theme, this);
+            Theming.ApplyTheme(theme, components?.Components);
         }
 
         public Address Address {

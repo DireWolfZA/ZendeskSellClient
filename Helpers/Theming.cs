@@ -1,15 +1,13 @@
 using System.Windows.Forms;
-using Forms;
 
 namespace Helpers {
     public static class Theming {
         private static bool toolStripManagerRendererSet = false;
 
-        public static void ApplyTheme(Form form) {
+        public static void ApplyTheme(WalkmanLib.Theme theme, Form form) {
             if (form == null)
                 return;
 
-            var theme = Settings.I.GetTheme();
             WalkmanLib.ApplyTheme(theme, form, true);
 
             if (!toolStripManagerRendererSet) {
@@ -18,11 +16,10 @@ namespace Helpers {
             }
         }
 
-        public static void ApplyTheme(System.Collections.IEnumerable controls) {
+        public static void ApplyTheme(WalkmanLib.Theme theme, System.Collections.IEnumerable controls) {
             if (controls == null)
                 return;
 
-            var theme = Settings.I.GetTheme();
             WalkmanLib.ApplyTheme(theme, controls, true);
 
             if (!toolStripManagerRendererSet) {

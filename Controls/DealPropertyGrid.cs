@@ -14,7 +14,7 @@ namespace Controls {
         private readonly Dictionary<int, string> unqualifiedReasons;
         private readonly Dictionary<string, Control> customFieldControls = new Dictionary<string, Control>();
 
-        public DealPropertyGrid(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<int, string> users,
+        public DealPropertyGrid(Forms.Settings settings, IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<int, string> users,
                                 Dictionary<int, string> contacts, Dictionary<int, string> sources, Dictionary<int, string> stages,
                                 Dictionary<int, string> lossReasons, Dictionary<int, string> unqualifiedReasons) {
             this.customFields = customFields;
@@ -27,7 +27,7 @@ namespace Controls {
 
             InitializeComponent();
             txtLink.LinkClicked += ZendeskPropertyGridMethods.LinkLabel_LinkClicked;
-            btnTagsEdit.Click += (s, e) => ZendeskPropertyGridMethods.TagEditButton_Click(txtTags);
+            btnTagsEdit.Click += (s, e) => ZendeskPropertyGridMethods.TagEditButton_Click(settings, txtTags);
 
             scMain.Tag = false;
             scMain.Panel1.Scroll += (s, e) => ZendeskPropertyGridMethods.SplitContainer_Panel1_Scroll(scMain);
@@ -51,12 +51,13 @@ namespace Controls {
 
             ZendeskPropertyGridMethods.CreateCustomFields(customFields, customFieldControls, pnlCustomFieldLabels, pnlCustomFieldValues);
 
-            ApplyTheme();
+            ApplyTheme(settings.GetTheme());
+            settings.ThemeChanged += ApplyTheme;
         }
 
-        public override void ApplyTheme() {
-            Theming.ApplyTheme(Controls);
-            Theming.ApplyTheme(components?.Components);
+        public override void ApplyTheme(WalkmanLib.Theme theme) {
+            Theming.ApplyTheme(theme, Controls);
+            Theming.ApplyTheme(theme, components?.Components);
         }
 
         public override void SetData(Models.Deal data) {

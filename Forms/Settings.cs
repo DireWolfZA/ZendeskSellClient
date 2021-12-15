@@ -7,23 +7,17 @@ using Helpers;
 
 namespace Forms {
     public partial class Settings : Form {
-        // essentially VB.Net's auto default form instance but for C#. see https://stackoverflow.com/a/4699360/2999220
-        [ThreadStatic]
-        private static Settings instance;
         public Settings() {
             InitializeComponent();
             this.Icon = Properties.Resources.Settings;
-            instance = this;
+            ThemeChanged += ApplyTheme;
         }
-        public static Settings I {
-            get {
-                if (instance == null) {
-                    instance = new Settings();
-                    instance.FormClosed += delegate { instance = null; };
-                }
-                return instance;
-            }
-        }
+
+        public event AccessTokenChangedEventHandler AccessTokenChanged;
+        public delegate void AccessTokenChangedEventHandler(string text);
+
+        public event ThemeChangedEventHandler ThemeChanged;
+        public delegate void ThemeChangedEventHandler(WalkmanLib.Theme theme);
 
         private string _settingsPath;
         public bool Loaded { get; private set; } = false;
@@ -88,10 +82,9 @@ namespace Forms {
             }
         }
 
-        public void ApplyTheme() {
-            Theming.ApplyTheme(this);
-            Theming.ApplyTheme(components?.Components);
-            ZendeskSellClient.I.ApplyTheme();
+        public void ApplyTheme(WalkmanLib.Theme theme) {
+            Theming.ApplyTheme(theme, this);
+            Theming.ApplyTheme(theme, components?.Components);
         }
 
         #region Properties
@@ -105,12 +98,14 @@ namespace Forms {
         private void txtAccessToken_TextChanged(object _, EventArgs __) {
             AccessToken = txtAccessToken.Text;
             SaveSettings();
-            ZendeskSellClient.I.AccessTokenChanged(AccessToken);
+
+            AccessTokenChanged?.Invoke(AccessToken);
         }
         private void cbxTheme_SelectedIndexChanged(object _, EventArgs __) {
             Theme = (ThemeNames)cbxTheme.SelectedIndex;
             SaveSettings();
-            ApplyTheme();
+            
+            ThemeChanged?.Invoke(GetTheme());
         }
         private void chkAutoRefreshDeps_CheckedChanged(object _, EventArgs __) {
             AutoRefreshDeps = chkAutoRefreshDeps.Checked;

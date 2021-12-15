@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Controls {
     public abstract class IZendeskPropertyGrid : UserControl {
-        public abstract void ApplyTheme();
+        public abstract void ApplyTheme(WalkmanLib.Theme theme);
     }
     public abstract class IZendeskPropertyGrid<T> : IZendeskPropertyGrid where T : Models.Base {
         public abstract void SetData(T data);
@@ -39,10 +39,10 @@ namespace Controls {
             sc.Tag = false;
         }
 
-        internal static void AddressEditButton_Click(TextBox txtAddress) {
+        internal static void AddressEditButton_Click(Forms.Settings settings, TextBox txtAddress) {
             var address = (Models.Address)txtAddress.Tag;
 
-            var addressEditor = new Forms.AddressEditor(address ?? new Models.Address());
+            var addressEditor = new Forms.AddressEditor(settings, address ?? new Models.Address());
             if (addressEditor.ShowDialog() == DialogResult.OK) {
                 address = new Models.Address(addressEditor.Address);
 
@@ -51,10 +51,10 @@ namespace Controls {
             }
         }
 
-        internal static void TagEditButton_Click(TextBox txtTags) {
+        internal static void TagEditButton_Click(Forms.Settings settings, TextBox txtTags) {
             var tags = (IEnumerable<string>)txtTags.Tag;
 
-            var tagEditor = new Forms.TagEditor(tags ?? new string[0]);
+            var tagEditor = new Forms.TagEditor(settings, tags ?? new string[0]);
             if (tagEditor.ShowDialog() == DialogResult.OK) {
                 tags = tagEditor.Tags;
 

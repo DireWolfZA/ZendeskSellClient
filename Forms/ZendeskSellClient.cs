@@ -7,52 +7,44 @@ using Helpers;
 
 namespace Forms {
     public partial class ZendeskSellClient : Form {
-        // essentially VB.Net's auto default form instance but for C#. see https://stackoverflow.com/a/4699360/2999220
-        [ThreadStatic]
-        private static ZendeskSellClient instance;
-        public ZendeskSellClient() {
+        private readonly Settings settings;
+        private readonly StatusLabelManager labelManager;
+        public ZendeskSellClient(Settings settings) {
             InitializeComponent();
             this.Icon = Properties.Resources.ZendeskSell;
-            instance = this;
             lstItems.DoubleBuffered(true);
+
+            this.settings = settings;
             labelManager = new StatusLabelManager(statusLabel);
 
-            Settings.I.Init();
-            ApplyTheme();
-        }
-        public static ZendeskSellClient I {
-            get {
-                if (instance == null) {
-                    instance = new ZendeskSellClient();
-                    instance.FormClosed += delegate { instance = null; };
-                }
-                return instance;
-            }
+            settings.ThemeChanged += ApplyTheme;
+            settings.AccessTokenChanged += AccessTokenChanged;
+            settings.Init(); // this should apply the theme and set access token
         }
 
         private bool haveAddedCustomPaint = false;
-        public void ApplyTheme() {
+        public void ApplyTheme(WalkmanLib.Theme theme) {
             if (!haveAddedCustomPaint) {
                 Theming.AddListViewCustomPaint(lstItems);
                 haveAddedCustomPaint = true;
             }
-            lstItems.Tag = Settings.I.GetTheme().ListViewColumnColors;
+            lstItems.Tag = theme.ListViewColumnColors;
 
-            Theming.ApplyTheme(this);
-            Theming.ApplyTheme(components?.Components);
-            GetPropertyGrid()?.ApplyTheme();
+            Theming.ApplyTheme(theme, this);
+            Theming.ApplyTheme(theme, components?.Components);
+            GetPropertyGrid()?.ApplyTheme(theme);
         }
 
         private void ZendeskSellClient_Shown(object sender, EventArgs e) {
-            if (string.IsNullOrWhiteSpace(Settings.I.AccessToken))
+            if (string.IsNullOrWhiteSpace(settings.AccessToken))
                 btnSettings.PerformClick();
         }
 
         private void btnSettings_Click(object _, EventArgs __) {
-            Settings.I.Show(this);
-            Settings.I.Activate();
-            Settings.I.BringToFront();
-            Settings.I.Focus();
+            settings.Show(this);
+            settings.Activate();
+            settings.BringToFront();
+            settings.Focus();
         }
 
         public void AccessTokenChanged(string accessToken) {
@@ -66,7 +58,6 @@ namespace Forms {
         }
 
         private ZendeskSell.IZendeskSellClient sellClient;
-        private StatusLabelManager labelManager;
         private IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> leadCustomFields;
         private IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> contactCustomFields;
         private IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> dealCustomFields;
@@ -101,12 +92,12 @@ namespace Forms {
                             leadSources = (await ZendeskGet.GetAll((pn, pc) => sellClient.LeadSources.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
                         using (labelManager.SetStatus("Getting Lead Unqualified Reasons"))
                             leadUnqualifiedReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.LeadUnqualifiedReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
-                        SetPropertyGrid(new LeadPropertyGrid(leadCustomFields, users, leadSources, leadUnqualifiedReasons));
+                        SetPropertyGrid(new LeadPropertyGrid(settings, leadCustomFields, users, leadSources, leadUnqualifiedReasons));
                         break;
                     case "Contacts":
                         using (labelManager.SetStatus("Getting Contact Custom Fields"))
                             contactCustomFields = await ZendeskGet.GetAll((pn, pc) => sellClient.CustomFields.GetContacts());
-                        SetPropertyGrid(new ContactPropertyGrid(contactCustomFields, users));
+                        SetPropertyGrid(new ContactPropertyGrid(settings, contactCustomFields, users));
                         break;
                     case "Deals":
                         using (labelManager.SetStatus("Getting Deal Custom Fields"))
@@ -122,12 +113,12 @@ namespace Forms {
                         Dictionary<int, string> contacts;
                         using (labelManager.SetStatus("Getting Contacts"))
                             contacts = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).ToDictionary(c => c.ID, c => c.Name);
-                        SetPropertyGrid(new DealPropertyGrid(dealCustomFields, users, contacts, dealSources, dealStages, dealLossReasons, dealUnqualifiedReasons));
+                        SetPropertyGrid(new DealPropertyGrid(settings, dealCustomFields, users, contacts, dealSources, dealStages, dealLossReasons, dealUnqualifiedReasons));
                         break;
                     case "Line Items":
                         using (labelManager.SetStatus("Getting Products"))
                             products = (await ZendeskGet.GetAll((pn, pc) => sellClient.Products.GetAsync(pn, pc))).ToDictionary(p => p.ID, p => p.Name);
-                        SetPropertyGrid(new LineItemPropertyGrid(products));
+                        SetPropertyGrid(new LineItemPropertyGrid(settings, products));
                         break;
                 }
             } finally {
@@ -161,7 +152,7 @@ namespace Forms {
 
             lstItems.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
-            if (Settings.I.AutoRefreshDeps) {
+            if (settings.AutoRefreshDeps) {
                 users = null;
                 switch (cbxType.Text) {
                     case "Leads":
@@ -201,13 +192,13 @@ namespace Forms {
                         if (leadUnqualifiedReasons == null)
                             using (labelManager.SetStatus("Getting Lead Unqualified Reasons"))
                                 leadUnqualifiedReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.LeadUnqualifiedReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
-                        SetPropertyGrid(new LeadPropertyGrid(leadCustomFields, users, leadSources, leadUnqualifiedReasons));
+                        SetPropertyGrid(new LeadPropertyGrid(settings, leadCustomFields, users, leadSources, leadUnqualifiedReasons));
                         break;
                     case "Contacts":
                         if (contactCustomFields == null)
                             using (labelManager.SetStatus("Getting Contact Custom Fields"))
                                 contactCustomFields = await ZendeskGet.GetAll((pn, pc) => sellClient.CustomFields.GetContacts());
-                        SetPropertyGrid(new ContactPropertyGrid(contactCustomFields, users));
+                        SetPropertyGrid(new ContactPropertyGrid(settings, contactCustomFields, users));
                         break;
                     case "Deals":
                         if (dealCustomFields == null)
@@ -228,13 +219,13 @@ namespace Forms {
                         Dictionary<int, string> contacts;
                         using (labelManager.SetStatus("Getting Contacts"))
                             contacts = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).ToDictionary(c => c.ID, c => c.Name);
-                        SetPropertyGrid(new DealPropertyGrid(dealCustomFields, users, contacts, dealSources, dealStages, dealLossReasons, dealUnqualifiedReasons));
+                        SetPropertyGrid(new DealPropertyGrid(settings, dealCustomFields, users, contacts, dealSources, dealStages, dealLossReasons, dealUnqualifiedReasons));
                         break;
                     case "Line Items":
                         if (products == null)
                             using (labelManager.SetStatus("Getting Products"))
                                 products = (await ZendeskGet.GetAll((pn, pc) => sellClient.Products.GetAsync(pn, pc))).ToDictionary(p => p.ID, p => p.Name);
-                        SetPropertyGrid(new LineItemPropertyGrid(products));
+                        SetPropertyGrid(new LineItemPropertyGrid(settings, products));
                         break;
                 }
             } finally {
@@ -244,7 +235,7 @@ namespace Forms {
                 btnDelete.Enabled = false;
             }
             grpMain.Enabled = true;
-            if (Settings.I.AutoGetAll)
+            if (settings.AutoGetAll)
                 btnGetAll.PerformClick();
         }
 

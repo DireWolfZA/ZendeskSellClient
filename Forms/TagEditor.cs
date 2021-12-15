@@ -5,13 +5,18 @@ using Helpers;
 
 namespace Forms {
     public partial class TagEditor : Form {
-        public TagEditor(IEnumerable<string> tags) : this() => Tags = tags;
-        public TagEditor() {
+        public TagEditor(Settings settings, IEnumerable<string> tags) : this(settings) => Tags = tags;
+        public TagEditor(Settings settings) {
             InitializeComponent();
             this.Icon = Properties.Resources.ZendeskSell;
 
-            Theming.ApplyTheme(this);
-            Theming.ApplyTheme(components?.Components);
+            ApplyTheme(settings.GetTheme());
+            settings.ThemeChanged += ApplyTheme;
+        }
+
+        void ApplyTheme(WalkmanLib.Theme theme) {
+            Theming.ApplyTheme(theme, this);
+            Theming.ApplyTheme(theme, components?.Components);
         }
 
         public IEnumerable<string> Tags {
