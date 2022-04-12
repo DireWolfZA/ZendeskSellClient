@@ -112,12 +112,12 @@ namespace Forms {
                             dealUnqualifiedReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.DealUnqualifiedReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
                         Dictionary<int, string> contacts;
                         using (labelManager.SetStatus("Getting Contacts"))
-                            contacts = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).ToDictionary(c => c.ID, c => c.Name);
+                            contacts = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc), labelManager)).ToDictionary(c => c.ID, c => c.Name);
                         SetPropertyGrid(new DealPropertyGrid(settings, dealCustomFields, users, contacts, dealSources, dealStages, dealLossReasons, dealUnqualifiedReasons));
                         break;
                     case "Line Items":
                         using (labelManager.SetStatus("Getting Products"))
-                            products = (await ZendeskGet.GetAll((pn, pc) => sellClient.Products.GetAsync(pn, pc))).ToDictionary(p => p.ID, p => p.Name);
+                            products = (await ZendeskGet.GetAll((pn, pc) => sellClient.Products.GetAsync(pn, pc), labelManager)).ToDictionary(p => p.ID, p => p.Name);
                         SetPropertyGrid(new LineItemPropertyGrid(settings, products));
                         break;
                 }
@@ -220,13 +220,13 @@ namespace Forms {
                                 dealUnqualifiedReasons = (await ZendeskGet.GetAll((pn, pc) => sellClient.DealUnqualifiedReasons.GetAsync(pn, pc))).ToDictionary(s => s.ID, s => s.Name);
                         Dictionary<int, string> contacts;
                         using (labelManager.SetStatus("Getting Contacts"))
-                            contacts = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).ToDictionary(c => c.ID, c => c.Name);
+                            contacts = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc), labelManager)).ToDictionary(c => c.ID, c => c.Name);
                         SetPropertyGrid(new DealPropertyGrid(settings, dealCustomFields, users, contacts, dealSources, dealStages, dealLossReasons, dealUnqualifiedReasons));
                         break;
                     case "Line Items":
                         if (products == null)
                             using (labelManager.SetStatus("Getting Products"))
-                                products = (await ZendeskGet.GetAll((pn, pc) => sellClient.Products.GetAsync(pn, pc))).ToDictionary(p => p.ID, p => p.Name);
+                                products = (await ZendeskGet.GetAll((pn, pc) => sellClient.Products.GetAsync(pn, pc), labelManager)).ToDictionary(p => p.ID, p => p.Name);
                         SetPropertyGrid(new LineItemPropertyGrid(settings, products));
                         break;
                 }
@@ -292,22 +292,22 @@ namespace Forms {
                 switch (cbxType.Text) {
                     case "Leads":
                         using (labelManager.SetStatus("Getting All Leads"))
-                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Leads.GetAsync(pn, pc))).Select(Converter.Convert);
+                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Leads.GetAsync(pn, pc), labelManager)).Select(Converter.Convert);
                         break;
                     case "Contacts":
                         using (labelManager.SetStatus("Getting All Contacts"))
-                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc))).Select(Converter.Convert);
+                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Contacts.GetAsync(pn, pc), labelManager)).Select(Converter.Convert);
                         break;
                     case "Deals":
                         using (labelManager.SetStatus("Getting All Deals"))
-                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Deals.GetAsync(pn, pc))).Select(Converter.Convert);
+                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.Deals.GetAsync(pn, pc), labelManager)).Select(Converter.Convert);
                         break;
                     case "Line Items":
                         ZendeskSell.Orders.OrderResponse order;
                         using (labelManager.SetStatus("Getting Order for DealID"))
                             order = await ZendeskGet.GetOrder(sellClient.Orders, (int)numDealID.Value);
                         using (labelManager.SetStatus("Getting Order's LineItems"))
-                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.LineItems.GetAsync(order.ID, pn, pc))).Select(li => Converter.Convert(li, order));
+                            items = (await ZendeskGet.GetAll((pn, pc) => sellClient.LineItems.GetAsync(order.ID, pn, pc), labelManager)).Select(li => Converter.Convert(li, order));
                         break;
                 }
 
