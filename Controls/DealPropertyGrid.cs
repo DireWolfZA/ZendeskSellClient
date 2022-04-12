@@ -106,7 +106,7 @@ namespace Controls {
                 ID = (this.Tag as Models.Deal ?? new Models.Deal()).ID,
 
                 OwnerID = users.ContainsValue(cbxOwner.Text) ? users.First(kv => kv.Value == cbxOwner.Text).Key : (int?)null,
-                ContactID = contacts.First(kv => kv.Value == cbxContact.Text).Key,
+                ContactID = contacts.ContainsValue(cbxContact.Text) ? contacts.First(kv => kv.Value == cbxContact.Text).Key : 0,
                 SourceID = sources.ContainsValue(cbxSource.Text) ? sources.First(kv => kv.Value == cbxSource.Text).Key : (int?)null,
                 Name = txtName.Text,
                 Currency = txtCurrency.Text,
