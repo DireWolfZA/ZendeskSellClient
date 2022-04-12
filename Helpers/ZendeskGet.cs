@@ -6,11 +6,20 @@ using ZendeskSell.Models;
 
 namespace Helpers {
     public static class ZendeskGet {
-        public async static Task<IEnumerable<T>> GetAll<T>(Func<int, int, Task<ZendeskSellCollectionResponse<T>>> getFunc) where T : class {
+        private static StatusLabelManagerStatusSet SetStatus(StatusLabelManager labelManager, string statusText, StatusLabelManagerStatusSet oldsetStatus) {
+            if (labelManager == null)
+                return null;
+            if (oldsetStatus != null)
+                oldsetStatus.Dispose();
+            return labelManager.SetStatus(statusText);
+        }
+
+        public async static Task<IEnumerable<T>> GetAll<T>(Func<int, int, Task<ZendeskSellCollectionResponse<T>>> getFunc, StatusLabelManager labelManager = null) where T : class {
             string resultName = typeof(T).Name;
             const int pageAmount = 100;
 
             int pageNumber = 1;
+            StatusLabelManagerStatusSet labelSetStatus = SetStatus(labelManager, $"Page {pageNumber}", null);
             var response = await getFunc(pageNumber, pageAmount);
 
             if (response?.Errors != null)
@@ -20,6 +29,7 @@ namespace Helpers {
 
             while (response.Meta.Count == pageAmount) {
                 pageNumber++;
+                labelSetStatus = SetStatus(labelManager, $"Page {pageNumber}", labelSetStatus);
                 response = await getFunc(pageNumber, pageAmount);
 
                 if (response?.Errors != null)
@@ -28,6 +38,7 @@ namespace Helpers {
                 rtn = rtn.Concat(response.Items.Select(zds => zds.Data));
             }
 
+            labelSetStatus?.Dispose();
             return rtn;
         }
 
