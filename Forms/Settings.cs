@@ -65,22 +65,14 @@ namespace Forms {
             Test
         }
 
-        public WalkmanLib.Theme GetTheme() {
-            switch (Theme) {
-                case ThemeNames.Default:
-                    return WalkmanLib.Theme.Default;
-                case ThemeNames.Inverted:
-                    return WalkmanLib.Theme.Inverted;
-                case ThemeNames.SystemDark:
-                    return WalkmanLib.Theme.SystemDark;
-                case ThemeNames.Dark:
-                    return WalkmanLib.Theme.Dark;
-                case ThemeNames.Test:
-                    return WalkmanLib.Theme.Test;
-                default:
-                    throw new ApplicationException("Invalid Theme Name: " + Theme.ToString());
-            }
-        }
+        public WalkmanLib.Theme GetTheme() => Theme switch {
+            ThemeNames.Default => WalkmanLib.Theme.Default,
+            ThemeNames.Inverted => WalkmanLib.Theme.Inverted,
+            ThemeNames.SystemDark => WalkmanLib.Theme.SystemDark,
+            ThemeNames.Dark => WalkmanLib.Theme.Dark,
+            ThemeNames.Test => WalkmanLib.Theme.Test,
+            _ => throw new ApplicationException("Invalid Theme Name: " + Theme.ToString()),
+        };
 
         public void ApplyTheme(WalkmanLib.Theme theme) {
             Theming.ApplyTheme(theme, this);
