@@ -121,6 +121,8 @@ namespace Forms {
                         SetPropertyGrid(new LineItemPropertyGrid(settings, products));
                         break;
                 }
+            } catch (Exception ex) {
+                ErrorHandler.Handle(ex, $"Error refreshing requirements for {cbxType.Text}! Error message: ");
             } finally {
                 cbxType.Enabled = true;
                 btnRefresh.Enabled = true;
@@ -228,6 +230,8 @@ namespace Forms {
                         SetPropertyGrid(new LineItemPropertyGrid(settings, products));
                         break;
                 }
+            } catch (Exception ex) {
+                ErrorHandler.Handle(ex, $"Error getting requirements for {cbxType.Text}! Error message: ");
             } finally {
                 cbxType.Enabled = true;
                 btnRefresh.Enabled = true;
@@ -310,6 +314,8 @@ namespace Forms {
                 lstItems.Items.Clear();
                 lstItems.Items.AddRange(items.Select(CreateItem).ToArray());
                 lstItems.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            } catch (Exception ex) {
+                ErrorHandler.Handle(ex, $"Error getting {cbxType.Text}! Error message: ");
             } finally {
                 btnGetAll.Enabled = true;
             }
@@ -380,6 +386,8 @@ namespace Forms {
                         }
                         break;
                 }
+            } catch (Exception ex) {
+                ErrorHandler.Handle(ex, $"Error getting {cbxType.Text.Remove(cbxType.Text.Length - 1)}! Error message: ");
             } finally {
                 btnGetOne.Enabled = true;
             }
@@ -417,6 +425,8 @@ namespace Forms {
                         }
                         break;
                 }
+            } catch (Exception ex) {
+                ErrorHandler.Handle(ex, $"Error updating {cbxType.Text.Remove(cbxType.Text.Length - 1)}! Error message: ");
             } finally {
                 btnUpdate.Enabled = true;
             }
@@ -448,6 +458,8 @@ namespace Forms {
                             ZendeskGet.Handle(await sellClient.LineItems.DeleteAsync(order.ID, idToDelete));
                         break;
                 }
+            } catch (Exception ex) {
+                ErrorHandler.Handle(ex, $"Error deleting {cbxType.Text.Remove(cbxType.Text.Length - 1)}! Error message: ");
             } finally {
                 btnDelete.Enabled = true;
             }
@@ -527,6 +539,8 @@ namespace Forms {
                         }
                         break;
                 }
+            } catch (Exception ex) {
+                ErrorHandler.Handle(ex, $"Error creating {cbxType.Text.Remove(cbxType.Text.Length - 1)}! Error message: ");
             } finally {
                 btnCreate.Enabled = true;
             }
