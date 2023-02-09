@@ -32,6 +32,7 @@
     <Compile Remove="WalkmanLib\WalkmanLibRestartManager.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibStreamCopy.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibSystemHandles.cs" />
+    <Compile Remove="WalkmanLib\WalkmanLibThemingMsgBox.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibUpdates.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibWin32.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibWinVersion.cs" />
