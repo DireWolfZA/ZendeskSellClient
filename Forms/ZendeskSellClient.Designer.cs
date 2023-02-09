@@ -107,11 +107,6 @@ namespace Forms {
             this.cbxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxType.Enabled = false;
             this.cbxType.FormattingEnabled = true;
-            this.cbxType.Items.AddRange(new object[] {
-            "Leads",
-            "Contacts",
-            "Deals",
-            "Line Items"});
             this.cbxType.Location = new System.Drawing.Point(57, 9);
             this.cbxType.Name = "cbxType";
             this.cbxType.Size = new System.Drawing.Size(175, 23);
