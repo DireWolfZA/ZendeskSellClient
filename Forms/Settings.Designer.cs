@@ -166,6 +166,7 @@ namespace Forms {
             this.Name = "Settings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Settings_FormClosing);
             this.VisibleChanged += new System.EventHandler(this.this_VisibleChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
