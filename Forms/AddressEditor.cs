@@ -20,11 +20,11 @@ namespace Forms {
 
         public Address Address {
             get => new Address() {
-                Line1 = string.IsNullOrWhiteSpace(txtLine1.Text) ? null : txtLine1.Text,
-                City = string.IsNullOrWhiteSpace(txtCity.Text) ? null : txtCity.Text,
-                State = string.IsNullOrWhiteSpace(txtState.Text) ? null : txtState.Text,
-                PostalCode = string.IsNullOrWhiteSpace(txtPostalCode.Text) ? null : txtPostalCode.Text,
-                Country = string.IsNullOrWhiteSpace(txtCountry.Text) ? null : txtCountry.Text
+                Line1 = txtLine1.Text.EmptyToNull(),
+                City = txtCity.Text.EmptyToNull(),
+                State = txtState.Text.EmptyToNull(),
+                PostalCode = txtPostalCode.Text.EmptyToNull(),
+                Country = txtCountry.Text.EmptyToNull()
             };
             set {
                 txtLine1.Text = value.Line1;
