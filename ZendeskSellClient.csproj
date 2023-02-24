@@ -26,6 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="WalkmanLib\CustomInputDialog.cs" />
+    <Compile Remove="WalkmanLib\CustomInputDialog.Designer.cs" />
     <Compile Remove="WalkmanLib\CustomMsgBox.cs" />
     <Compile Remove="WalkmanLib\CustomMsgBox.Designer.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibContextMenu.cs" />
