@@ -45,9 +45,6 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <ProjectReference Include="Ookii.Dialogs\Ookii.Dialogs.csproj" />
     <ProjectReference Include="ZendeskSellApi\ZendeskSell\ZendeskSell.csproj" />
-    <Reference Include="System.Web.Extensions">
-      <HintPath>C:\Windows\Microsoft.NET\Framework\v4.0.30319\System.Web.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
