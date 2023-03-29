@@ -40,14 +40,17 @@ namespace Forms {
                 _settingsPath = new FileInfo(configFileName).FullName;
             }
 
-            cbxTheme.Items.AddRange(Enum.GetNames(typeof(ThemeNames)));
+            cbxTheme.Items.AddRange(WalkmanLibExtensions.GetNames<ThemeNames>());
 
             Loaded = true;
             if (File.Exists(_settingsPath)) {
                 LoadSettings();
             } else {
                 // set initial settings
-                cbxTheme.SelectedIndex = 0;
+                if (WalkmanLib.GetDarkThemeEnabled() ?? false)
+                    cbxTheme.SelectedIndex = (int)ThemeNames.Default;
+                else
+                    cbxTheme.SelectedIndex = (int)ThemeNames.Dark;
                 chkAutoGetAll.Checked = true;
             }
         }

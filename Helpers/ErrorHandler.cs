@@ -1,10 +1,14 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Helpers {
     class ErrorHandler {
         public static void Handle(Exception ex, string errorMessage = "There was an error! Error message: ") {
+            var settings = Program.Services.GetRequiredService<Forms.Settings>();
+            var mainWindow = Program.Services.GetRequiredService<Forms.ZendeskSellClient>();
+
             if (ex is AggregateException aggregate) {
                 var zdErrors = aggregate.InnerExceptions.OfType<ZendeskError>();
 
@@ -14,9 +18,9 @@ namespace Helpers {
                     errorMessage += $"{zdError.ErrorData.Message}: {zdError.ErrorData.Field} - {zdError.ErrorData.Details}{Environment.NewLine}";
                 }
 
-                MessageBox.Show(errorMessage, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                WalkmanLib.CustomMsgBox(errorMessage, settings.GetTheme(), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning, ownerForm: mainWindow);
             } else {
-                WalkmanLib.ErrorDialog(ex, errorMessage);
+                WalkmanLib.ErrorDialog(ex, settings.GetTheme(), errorMessage, ownerForm: mainWindow);
             }
         }
     }

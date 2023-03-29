@@ -9,8 +9,9 @@
     <RootNamespace />
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  <PropertyGroup Condition="'$(Platform)'=='AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,20 +27,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="WalkmanLib\CustomInputDialog.cs" />
-    <Compile Remove="WalkmanLib\CustomInputDialog.Designer.cs" />
-    <Compile Remove="WalkmanLib\CustomMsgBox.cs" />
-    <Compile Remove="WalkmanLib\CustomMsgBox.Designer.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibContextMenu.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibRestartManager.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibStreamCopy.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibSystemHandles.cs" />
-    <Compile Remove="WalkmanLib\WalkmanLibThemingMsgBox.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibUpdates.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibWin32.cs" />
     <Compile Remove="WalkmanLib\WalkmanLibWinVersion.cs" />
     <Compile Remove="WalkmanLib\Windows7ProgressBar.cs" />
-    <EmbeddedResource Remove="WalkmanLib\CustomMsgBox.resx" />
     <None Remove="WalkmanLib\.git" />
     <None Remove="WalkmanLib\.gitignore" />
     <None Remove="WalkmanLib\LICENSE.md" />
