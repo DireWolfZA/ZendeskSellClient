@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Models {
     public class Base {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string Link { get; set; }
         public int CreatorID { get; set; }
         public string CreatedAt { get; set; }

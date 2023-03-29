@@ -8,7 +8,7 @@ namespace Models {
         public string Value { get; set; }
         public float GetValue() => float.Parse(Value, System.Globalization.NumberFormatInfo.InvariantInfo);
 
-        public int ContactID { get; set; }
+        public long ContactID { get; set; }
         public string Currency { get; set; }
         public bool Hot { get; set; }
         public int? StageID { get; set; }

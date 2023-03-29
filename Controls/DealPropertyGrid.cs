@@ -7,7 +7,7 @@ namespace Controls {
     public partial class DealPropertyGrid : IZendeskPropertyGrid<Models.Deal> {
         private readonly IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields;
         private readonly Dictionary<int, string> users;
-        private readonly Dictionary<int, string> contacts;
+        private readonly Dictionary<long, string> contacts;
         private readonly Dictionary<int, string> sources;
         private readonly Dictionary<int, string> stages;
         private readonly Dictionary<int, string> lossReasons;
@@ -15,7 +15,7 @@ namespace Controls {
         private readonly Dictionary<string, Control> customFieldControls = new Dictionary<string, Control>();
 
         public DealPropertyGrid(Forms.Settings settings, IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<int, string> users,
-                                Dictionary<int, string> contacts, Dictionary<int, string> sources, Dictionary<int, string> stages,
+                                Dictionary<long, string> contacts, Dictionary<int, string> sources, Dictionary<int, string> stages,
                                 Dictionary<int, string> lossReasons, Dictionary<int, string> unqualifiedReasons) {
             this.customFields = customFields;
             this.users = users;

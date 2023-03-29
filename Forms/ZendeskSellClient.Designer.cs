@@ -17,7 +17,6 @@ namespace Forms {
         }
 
         #region Windows Form Designer generated code
-
         /// <summary>
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
@@ -136,7 +135,7 @@ namespace Forms {
             // numOneID
             // 
             this.numOneID.Location = new System.Drawing.Point(87, 26);
-            this.numOneID.Maximum = int.MaxValue;
+            this.numOneID.Maximum = long.MaxValue;
             this.numOneID.Name = "numOneID";
             this.numOneID.Size = new System.Drawing.Size(105, 23);
             this.numOneID.TabIndex = 4;
@@ -213,7 +212,7 @@ namespace Forms {
             // numDealID
             // 
             this.numDealID.Location = new System.Drawing.Point(279, -2);
-            this.numDealID.Maximum = int.MaxValue;
+            this.numDealID.Maximum = long.MaxValue;
             this.numDealID.Name = "numDealID";
             this.numDealID.Size = new System.Drawing.Size(120, 23);
             this.numDealID.TabIndex = 1;
@@ -280,9 +279,7 @@ namespace Forms {
             this.statusStripMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
-
         #endregion
 
         private System.Windows.Forms.ListView lstItems;
