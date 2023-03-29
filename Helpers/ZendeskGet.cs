@@ -46,6 +46,8 @@ namespace Helpers {
             if (response?.Errors != null)
                 throw ZendeskError.FromErrors(response.Errors);
             if (response == null)
+                throw new ApplicationException("No Response returned");
+            if (response.Data == null)
                 throw new ApplicationException("No Data returned");
 
             return response.Data;

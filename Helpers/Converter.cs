@@ -185,7 +185,7 @@ namespace Helpers {
                 Description = lineItemResponse.Description,
                 Price = lineItemResponse.Price,
 
-                Discount = orderResponse.Discount,
+                Discount = orderResponse?.Discount,
                 ProductID = lineItemResponse.ProductID,
                 Value = lineItemResponse.Value,
                 Variation = lineItemResponse.Variation,
