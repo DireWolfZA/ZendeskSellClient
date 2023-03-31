@@ -65,7 +65,6 @@ namespace Forms {
             this.lstItems.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstItems.HideSelection = false;
             this.lstItems.Location = new System.Drawing.Point(0, 0);
-            this.lstItems.MultiSelect = false;
             this.lstItems.Name = "lstItems";
             this.lstItems.Size = new System.Drawing.Size(300, 621);
             this.lstItems.TabIndex = 0;
