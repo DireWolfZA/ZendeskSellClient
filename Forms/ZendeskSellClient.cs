@@ -333,8 +333,10 @@ namespace Forms {
         private void lstItems_SelectedIndexChanged(object _, EventArgs __) {
             if (lstItems.SelectedItems.Count != 1) {
                 SetPGEmptyData();
-                if (lstItems.SelectedItems.Count > 1)
+                if (lstItems.SelectedItems.Count > 1) {
+                    GetPropertyGrid().SetMultiState();
                     numOneID.Value = 0;
+                }
                 return;
             }
 

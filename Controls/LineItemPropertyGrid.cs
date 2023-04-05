@@ -64,6 +64,7 @@ namespace Controls {
             return rtn;
         }
 
+        public override void SetMultiState() { }
         public override Models.LineItem ApplyUpdate(Models.LineItem data) =>
             throw new System.NotImplementedException();
     }

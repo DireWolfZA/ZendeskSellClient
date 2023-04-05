@@ -6,6 +6,7 @@ using System.Windows.Forms;
 namespace Controls {
     public abstract class IZendeskPropertyGrid : UserControl {
         public abstract void ApplyTheme(WalkmanLib.Theme theme);
+        public abstract void SetMultiState();
     }
     public abstract class IZendeskPropertyGrid<T> : IZendeskPropertyGrid where T : Models.Base {
         public abstract void SetData(T data);
@@ -156,6 +157,13 @@ namespace Controls {
             }
 
             return rtn;
+        }
+
+        internal static void SetCustomFieldsMultiState(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<string, Control> customFieldControls) {
+            foreach (var kv in customFieldControls) {
+                if (kv.Value is CheckBox chk)
+                    chk.CheckState = CheckState.Indeterminate;
+            }
         }
 
         internal static Dictionary<string, object> ApplyCustomFieldValues(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields,

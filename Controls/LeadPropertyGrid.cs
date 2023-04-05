@@ -121,6 +121,10 @@ namespace Controls {
             return rtn;
         }
 
+        public override void SetMultiState() {
+            ZendeskPropertyGridMethods.SetCustomFieldsMultiState(customFields, customFieldControls);
+        }
+
         public override Models.Lead ApplyUpdate(Models.Lead data) {
             if (users.ContainsValue(cbxOwner.Text))
                 data.OwnerID = users.First(kv => kv.Value == cbxOwner.Text).Key;

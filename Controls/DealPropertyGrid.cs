@@ -127,6 +127,11 @@ namespace Controls {
             return rtn;
         }
 
+        public override void SetMultiState() {
+            chkHot.CheckState = CheckState.Indeterminate;
+            ZendeskPropertyGridMethods.SetCustomFieldsMultiState(customFields, customFieldControls);
+        }
+
         public override Models.Deal ApplyUpdate(Models.Deal data) {
             if (users.ContainsValue(cbxOwner.Text))
                 data.OwnerID = users.First(kv => kv.Value == cbxOwner.Text).Key;
