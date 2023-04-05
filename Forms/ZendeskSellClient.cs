@@ -459,37 +459,86 @@ namespace Forms {
         private async void btnUpdate_Click(object _, EventArgs __) {
             btnUpdate.Enabled = false;
 
-            try {
-                switch ((DisplayType)cbxType.SelectedIndex) {
-                    case DisplayType.Leads:
-                        var pgL = GetPropertyGrid<Models.Lead>();
-                        using (labelManager.SetStatus("Updating Lead")) {
-                            Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.UpdateAsync((long)numOneID.Value, Converter.Convert(pgL.GetData()))));
-                            pgL.SetData(lead);
-                            AddOrUpdateData(lead).Selected = true;
-                        }
-                        break;
-                    case DisplayType.Contacts:
-                        var pgC = GetPropertyGrid<Models.Contact>();
-                        using (labelManager.SetStatus("Updating Contact")) {
-                            Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.UpdateAsync((long)numOneID.Value, Converter.Convert(pgC.GetData()))));
-                            pgC.SetData(contact);
-                            AddOrUpdateData(contact).Selected = true;
-                        }
-                        break;
-                    case DisplayType.Deals:
-                        var pgD = GetPropertyGrid<Models.Deal>();
-                        using (labelManager.SetStatus("Updating Deal")) {
-                            Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.UpdateAsync((long)numOneID.Value, Converter.Convert(pgD.GetData()))));
-                            pgD.SetData(deal);
-                            AddOrUpdateData(deal).Selected = true;
-                        }
-                        break;
+            if (lstItems.SelectedItems.Count == 1) {
+                try {
+                    switch ((DisplayType)cbxType.SelectedIndex) {
+                        case DisplayType.Leads:
+                            var pgL = GetPropertyGrid<Models.Lead>();
+                            using (labelManager.SetStatus("Updating Lead")) {
+                                Models.Lead lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.UpdateAsync((long)numOneID.Value, Converter.Convert(pgL.GetData()))));
+                                pgL.SetData(lead);
+                                AddOrUpdateData(lead).Selected = true;
+                            }
+                            break;
+                        case DisplayType.Contacts:
+                            var pgC = GetPropertyGrid<Models.Contact>();
+                            using (labelManager.SetStatus("Updating Contact")) {
+                                Models.Contact contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.UpdateAsync((long)numOneID.Value, Converter.Convert(pgC.GetData()))));
+                                pgC.SetData(contact);
+                                AddOrUpdateData(contact).Selected = true;
+                            }
+                            break;
+                        case DisplayType.Deals:
+                            var pgD = GetPropertyGrid<Models.Deal>();
+                            using (labelManager.SetStatus("Updating Deal")) {
+                                Models.Deal deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.UpdateAsync((long)numOneID.Value, Converter.Convert(pgD.GetData()))));
+                                pgD.SetData(deal);
+                                AddOrUpdateData(deal).Selected = true;
+                            }
+                            break;
+                    }
+                } catch (Exception ex) {
+                    ErrorHandler.Handle(ex, $"Error updating {cbxType.Text.Remove(cbxType.Text.Length - 1)}! Error message: ");
+                } finally {
+                    btnUpdate.Enabled = true;
                 }
-            } catch (Exception ex) {
-                ErrorHandler.Handle(ex, $"Error updating {cbxType.Text.Remove(cbxType.Text.Length - 1)}! Error message: ");
-            } finally {
-                btnUpdate.Enabled = true;
+            } else {
+                try {
+                    int total = lstItems.SelectedItems.Count;
+                    int current = 1;
+
+                    foreach (ListViewItem item in lstItems.SelectedItems) {
+                        try {
+                            switch ((DisplayType)cbxType.SelectedIndex) {
+                                case DisplayType.Leads:
+                                    var lead = (Models.Lead)GetData(item);
+                                    var pgL = GetPropertyGrid<Models.Lead>();
+                                    lead = pgL.ApplyUpdate(lead);
+
+                                    using (labelManager.SetStatus($"Updating Lead {current}/{total}")) {
+                                        lead = Converter.Convert(ZendeskGet.Handle(await sellClient.Leads.UpdateAsync(lead.ID, Converter.Convert(lead))));
+                                        AddOrUpdateData(lead).Selected = true;
+                                    }
+                                    break;
+                                case DisplayType.Contacts:
+                                    var contact = (Models.Contact)GetData(item);
+                                    var pgC = GetPropertyGrid<Models.Contact>();
+                                    contact = pgC.ApplyUpdate(contact);
+
+                                    using (labelManager.SetStatus($"Updating Contact {current}/{total}")) {
+                                        contact = Converter.Convert(ZendeskGet.Handle(await sellClient.Contacts.UpdateAsync(contact.ID, Converter.Convert(contact))));
+                                        AddOrUpdateData(contact).Selected = true;
+                                    }
+                                    break;
+                                case DisplayType.Deals:
+                                    var deal = (Models.Deal)GetData(item);
+                                    var pgD = GetPropertyGrid<Models.Deal>();
+                                    deal = pgD.ApplyUpdate(deal);
+
+                                    using (labelManager.SetStatus($"Updating Deal {current}/{total}")) {
+                                        deal = Converter.Convert(ZendeskGet.Handle(await sellClient.Deals.UpdateAsync(deal.ID, Converter.Convert(deal))));
+                                        AddOrUpdateData(deal).Selected = true;
+                                    }
+                                    break;
+                            }
+                        } catch (Exception ex) {
+                            ErrorHandler.Handle(ex, $"Error updating {cbxType.Text.Remove(cbxType.Text.Length - 1)}! Error message: ");
+                        }
+                        current++;
+                    }
+                } finally {
+                    btnUpdate.Enabled = true;
+                }
             }
         }
 
@@ -532,39 +581,41 @@ namespace Forms {
                 SetPGEmptyData();
             } else {
                 try {
-                    int totalItems = lstItems.SelectedItems.Count;
-                    int currentItem = 1;
+                    ZendeskSell.Orders.OrderResponse order = null; // dealID doesn't change between items - only get once
+                    int total = lstItems.SelectedItems.Count;
+                    int current = 1;
+
                     foreach (ListViewItem item in lstItems.SelectedItems) {
                         long idToDelete = GetData(item).ID;
-                        string deleteText = $" {currentItem}/{totalItems}";
+                        try {
+                            switch ((DisplayType)cbxType.SelectedIndex) {
+                                case DisplayType.Leads:
+                                    using (labelManager.SetStatus($"Deleting Lead {current}/{total}"))
+                                        ZendeskGet.Handle(await sellClient.Leads.DeleteAsync(idToDelete));
+                                    break;
+                                case DisplayType.Contacts:
+                                    using (labelManager.SetStatus($"Deleting Contact {current}/{total}"))
+                                        ZendeskGet.Handle(await sellClient.Contacts.DeleteAsync(idToDelete));
+                                    break;
+                                case DisplayType.Deals:
+                                    using (labelManager.SetStatus($"Deleting Deal {current}/{total}"))
+                                        ZendeskGet.Handle(await sellClient.Deals.DeleteAsync(idToDelete));
+                                    break;
+                                case DisplayType.Line_Items:
+                                    if (order == null)
+                                        using (labelManager.SetStatus("Getting Order for DealID"))
+                                            order = await ZendeskGet.GetOrder(sellClient.Orders, (long)numDealID.Value);
+                                    using (labelManager.SetStatus($"Deleting LineItem {current}/{total}"))
+                                        ZendeskGet.Handle(await sellClient.LineItems.DeleteAsync(order.ID, idToDelete));
+                                    break;
+                            }
 
-                        switch ((DisplayType)cbxType.SelectedIndex) {
-                            case DisplayType.Leads:
-                                using (labelManager.SetStatus("Deleting Lead" + deleteText))
-                                    ZendeskGet.Handle(await sellClient.Leads.DeleteAsync(idToDelete));
-                                break;
-                            case DisplayType.Contacts:
-                                using (labelManager.SetStatus("Deleting Contact" + deleteText))
-                                    ZendeskGet.Handle(await sellClient.Contacts.DeleteAsync(idToDelete));
-                                break;
-                            case DisplayType.Deals:
-                                using (labelManager.SetStatus("Deleting Deal" + deleteText))
-                                    ZendeskGet.Handle(await sellClient.Deals.DeleteAsync(idToDelete));
-                                break;
-                            case DisplayType.Line_Items:
-                                ZendeskSell.Orders.OrderResponse order;
-                                using (labelManager.SetStatus("Getting Order for DealID"))
-                                    order = await ZendeskGet.GetOrder(sellClient.Orders, (long)numDealID.Value);
-                                using (labelManager.SetStatus("Deleting LineItem" + deleteText))
-                                    ZendeskGet.Handle(await sellClient.LineItems.DeleteAsync(order.ID, idToDelete));
-                                break;
+                            item.Remove();
+                        } catch (Exception ex) {
+                            ErrorHandler.Handle(ex, $"Error deleting {cbxType.Text}! Error message: ");
                         }
-
-                        item.Remove();
-                        currentItem++;
+                        current++;
                     }
-                } catch (Exception ex) {
-                    ErrorHandler.Handle(ex, $"Error deleting {cbxType.Text}! Error message: ");
                 } finally {
                     btnDelete.Enabled = true;
                 }
