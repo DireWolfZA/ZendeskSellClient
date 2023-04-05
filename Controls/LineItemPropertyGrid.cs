@@ -63,5 +63,8 @@ namespace Controls {
 
             return rtn;
         }
+
+        public override Models.LineItem ApplyUpdate(Models.LineItem data) =>
+            throw new System.NotImplementedException();
     }
 }

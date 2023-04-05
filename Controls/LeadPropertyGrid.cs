@@ -120,5 +120,54 @@ namespace Controls {
 
             return rtn;
         }
+
+        public override Models.Lead ApplyUpdate(Models.Lead data) {
+            if (users.ContainsValue(cbxOwner.Text))
+                data.OwnerID = users.First(kv => kv.Value == cbxOwner.Text).Key;
+            if (!string.IsNullOrWhiteSpace(txtFirstName.Text))
+                data.FirstName = txtFirstName.Text;
+            if (!string.IsNullOrWhiteSpace(txtLastName.Text))
+                data.LastName = txtLastName.Text;
+            if (!string.IsNullOrWhiteSpace(txtCompany.Text))
+                data.OrganizationName = txtCompany.Text;
+            if (!string.IsNullOrWhiteSpace(txtStatus.Text))
+                data.Status = txtStatus.Text;
+            if (sources.ContainsValue(cbxSource.Text))
+                data.SourceID = sources.First(kv => kv.Value == cbxSource.Text).Key;
+            if (unqualifiedReasons.ContainsValue(cbxUnqualifiedReason.Text))
+                data.UnqualifiedReasonID = unqualifiedReasons.First(kv => kv.Value == cbxUnqualifiedReason.Text).Key;
+            if (!string.IsNullOrWhiteSpace(txtTitle.Text))
+                data.Title = txtTitle.Text;
+            if (!string.IsNullOrWhiteSpace(txtDescription.Text))
+                data.Description = txtDescription.Text;
+            if (!string.IsNullOrWhiteSpace(txtIndustry.Text))
+                data.Industry = txtIndustry.Text;
+            if (!string.IsNullOrWhiteSpace(txtWebsite.Text))
+                data.Website = txtWebsite.Text;
+            if (!string.IsNullOrWhiteSpace(txtEmail.Text))
+                data.Email = txtEmail.Text;
+            if (!string.IsNullOrWhiteSpace(txtPhone.Text))
+                data.Phone = txtPhone.Text;
+            if (!string.IsNullOrWhiteSpace(txtMobile.Text))
+                data.Mobile = txtMobile.Text;
+            if (!string.IsNullOrWhiteSpace(txtFax.Text))
+                data.Fax = txtFax.Text;
+            if (!string.IsNullOrWhiteSpace(txtTwitter.Text))
+                data.Twitter = txtTwitter.Text;
+            if (!string.IsNullOrWhiteSpace(txtFacebook.Text))
+                data.Facebook = txtFacebook.Text;
+            if (!string.IsNullOrWhiteSpace(txtLinkedin.Text))
+                data.LinkedIn = txtLinkedin.Text;
+            if (!string.IsNullOrWhiteSpace(txtSkype.Text))
+                data.Skype = txtSkype.Text;
+            if (!string.IsNullOrWhiteSpace((txtAddress.Tag as Models.Address)?.ToTextMultiLine()?.Trim()))
+                data.Address = txtAddress.Tag as Models.Address;
+            if (!string.IsNullOrWhiteSpace(string.Concat(txtTags.Tag as IEnumerable<string> ?? Enumerable.Empty<string>())?.Trim()))
+                data.Tags = txtTags.Tag as IEnumerable<string>;
+
+            data.CustomFields = ZendeskPropertyGridMethods.ApplyCustomFieldValues(customFields, customFieldControls, data.CustomFields);
+
+            return data;
+        }
     }
 }

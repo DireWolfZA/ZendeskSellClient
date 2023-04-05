@@ -126,5 +126,42 @@ namespace Controls {
 
             return rtn;
         }
+
+        public override Models.Deal ApplyUpdate(Models.Deal data) {
+            if (users.ContainsValue(cbxOwner.Text))
+                data.OwnerID = users.First(kv => kv.Value == cbxOwner.Text).Key;
+            if (contacts.ContainsValue(cbxContact.Text))
+                data.ContactID = contacts.First(kv => kv.Value == cbxContact.Text).Key;
+            if (sources.ContainsValue(cbxSource.Text))
+                data.SourceID = sources.First(kv => kv.Value == cbxSource.Text).Key;
+            if (!string.IsNullOrWhiteSpace(txtName.Text))
+                data.Name = txtName.Text;
+            if (!string.IsNullOrWhiteSpace(txtCurrency.Text))
+                data.Currency = txtCurrency.Text;
+            if (!string.IsNullOrWhiteSpace(txtValue.Text))
+                data.Value = txtValue.Text;
+            if (stages.ContainsValue(cbxStage.Text))
+                data.StageID = stages.First(kv => kv.Value == cbxStage.Text).Key;
+            if (chkHot.CheckState != CheckState.Indeterminate)
+                data.Hot = chkHot.Checked;
+            if (!string.IsNullOrWhiteSpace(txtLastStageChangeAt.Text))
+                data.LastStageChangeAt = txtLastStageChangeAt.Text;
+            if (!string.IsNullOrWhiteSpace(txtAddedAt.Text))
+                data.AddedAt = txtAddedAt.Text;
+            if (lossReasons.ContainsValue(cbxLossReason.Text))
+                data.LossReasonID = lossReasons.First(kv => kv.Value == cbxLossReason.Text).Key;
+            if (unqualifiedReasons.ContainsValue(cbxUnqualifiedReason.Text))
+                data.UnqualifiedReasonID = unqualifiedReasons.First(kv => kv.Value == cbxUnqualifiedReason.Text).Key;
+            if (!string.IsNullOrWhiteSpace(txtEstimatedCloseDate.Text))
+                data.EstimatedCloseDate = txtEstimatedCloseDate.Text;
+            if (!string.IsNullOrWhiteSpace(txtCustomizedWinLikelihood.Text))
+                data.CustomizedWinLikelihood = int.Parse(txtCustomizedWinLikelihood.Text);
+            if (!string.IsNullOrWhiteSpace(string.Concat(txtTags.Tag as IEnumerable<string> ?? Enumerable.Empty<string>())?.Trim()))
+                data.Tags = txtTags.Tag as IEnumerable<string>;
+
+            data.CustomFields = ZendeskPropertyGridMethods.ApplyCustomFieldValues(customFields, customFieldControls, data.CustomFields);
+
+            return data;
+        }
     }
 }

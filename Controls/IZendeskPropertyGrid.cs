@@ -10,9 +10,11 @@ namespace Controls {
     public abstract class IZendeskPropertyGrid<T> : IZendeskPropertyGrid where T : Models.Base {
         public abstract void SetData(T data);
         public abstract T GetData();
+        public abstract T ApplyUpdate(T data);
     }
 
     static class ZendeskPropertyGridMethods {
+        #region Event Handlers
         internal static void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo {
                 FileName = ((LinkLabel)sender).Text,
@@ -62,6 +64,7 @@ namespace Controls {
                 txtTags.Text = string.Join(',', tags); ;
             }
         }
+        #endregion
 
         #region Custom Fields
         internal static void CreateCustomFields(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields, Dictionary<string, Control> customFieldControls,
@@ -145,7 +148,7 @@ namespace Controls {
                 Type type = ZendeskSell.CustomFields.ZendeskTypeToDotNetType.GetType(field.Type);
 
                 if (type == typeof(bool))
-                    rtn.Add(field.Name, ((CheckBox)customFieldControls[field.Name]).Checked);
+                    rtn.Add(field.Name, ((CheckBox)control).Checked);
                 else if (type == typeof(Models.Address))
                     rtn.Add(field.Name, new ZendeskSell.Models.Address((Models.Address)control.Tag));
                 else
@@ -153,6 +156,25 @@ namespace Controls {
             }
 
             return rtn;
+        }
+
+        internal static Dictionary<string, object> ApplyCustomFieldValues(IEnumerable<ZendeskSell.CustomFields.CustomFieldResponse> customFields,
+                                                                          Dictionary<string, Control> customFieldControls,
+                                                                          Dictionary<string, object> currentValues) {
+
+            foreach (var field in customFields) {
+                Control control = customFieldControls[field.Name];
+                Type type = ZendeskSell.CustomFields.ZendeskTypeToDotNetType.GetType(field.Type);
+
+                if (type == typeof(bool) && ((CheckBox)control).CheckState != CheckState.Indeterminate)
+                    currentValues[field.Name] = ((CheckBox)control).Checked;
+                else if (type == typeof(Models.Address) && !string.IsNullOrWhiteSpace(((Models.Address)control.Tag)?.ToTextMultiLine()?.Trim()))
+                    currentValues[field.Name] = new ZendeskSell.Models.Address((Models.Address)control.Tag);
+                else if (!string.IsNullOrEmpty(control.Text))
+                    currentValues[field.Name] = control.Text;
+            }
+
+            return currentValues;
         }
         #endregion
     }
