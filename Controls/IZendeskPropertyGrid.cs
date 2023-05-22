@@ -178,7 +178,7 @@ namespace Controls {
                     currentValues[field.Name] = ((CheckBox)control).Checked;
                 else if (type == typeof(Models.Address) && !string.IsNullOrWhiteSpace(((Models.Address)control.Tag)?.ToTextMultiLine()?.Trim()))
                     currentValues[field.Name] = new ZendeskSell.Models.Address((Models.Address)control.Tag);
-                else if (!string.IsNullOrEmpty(control.Text))
+                else if (!string.IsNullOrWhiteSpace(control.Text))
                     currentValues[field.Name] = control.Text;
             }
 
